@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:06 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/04/07 13:01:25 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/04/08 14:55:30 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,13 @@ int	main(void)
 		// 	printf("token %d : %s\n", suprem_knowledge->rl_lst->index, suprem_knowledge->rl_lst->rl_arg);
 		// 	suprem_knowledge->rl_lst = suprem_knowledge->rl_lst->prev;
 		// }
+		if (*str)
+			free_data(&suprem_knowledge);
 		rl_lst_clear(&token);
 		free (str);
 	}
 	free_data(&suprem_knowledge);
+	free(suprem_knowledge);
 	rl_lst_clear(&token);
 	printf("exit\n");
 	return (0);
