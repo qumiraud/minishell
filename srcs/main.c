@@ -6,7 +6,7 @@
 /*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:06 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/04/08 14:55:30 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/04/10 11:10:27 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,35 @@ void handle_sigint(int signum)
 
 }
 
+void	handle_str(char *str, t_data **s_k, t_lst_arg **token)
+{
+	add_history(str);
+	tokenize(str, token);
+	(*s_k)->rl_lst = (*token);
+	fill_suprem_knowledge(s_k, str);
+}
+
+void	handle_ending(t_data **s_k, t_lst_arg **token)
+{
+	free_data(s_k);
+	free(*s_k);
+	rl_lst_clear(token);
+	printf("exit\n");
+}
+
+int	handle_readline(char *str, t_data **s_k, t_lst_arg **token)
+{
+	if (*str)
+			handle_str(str, s_k, token);
+	if (token != NULL && !(strcmp((*token)->rl_arg, "exit")))
+	{
+		free(str);
+		return (1);
+	}
+	if (*str)
+		free_data(s_k);
+	return (0);
+}
 
 int	main(void)
 {
@@ -30,44 +59,15 @@ int	main(void)
 
 	init_suprem_knowledge(&suprem_knowledge);
 	if (!suprem_knowledge)
-		return (printf("mince alors\n"));
+		return (1);
 	token = NULL;
 	while ((str = readline("💾 minishell :")) != NULL)
 	{
-		if (*str)
-		{
-			add_history(str);
-			tokenize(str, &token);
-			suprem_knowledge->rl_lst = token;
-			fill_suprem_knowledge(&suprem_knowledge, str);
-		}
-		if (token != NULL && !(strcmp(token->rl_arg, "exit")))
-		{
-			free(str);
+		if (handle_readline(str, &suprem_knowledge, &token) == 1)
 			break;
-		}
-
-		// while (suprem_knowledge->rl_lst->next)
-		// {
-		// 	printf("token %d : %s\n", suprem_knowledge->rl_lst->index, suprem_knowledge->rl_lst->rl_arg);
-		// 	suprem_knowledge->rl_lst = suprem_knowledge->rl_lst->next;
-		// }
-		// printf("fin : token %d : %s\n", suprem_knowledge->rl_lst->index, suprem_knowledge->rl_lst->rl_arg);
-		// sleep (1);
-		// while (suprem_knowledge->rl_lst->prev)
-		// {
-		// 	printf("retour\n");
-		// 	printf("token %d : %s\n", suprem_knowledge->rl_lst->index, suprem_knowledge->rl_lst->rl_arg);
-		// 	suprem_knowledge->rl_lst = suprem_knowledge->rl_lst->prev;
-		// }
-		if (*str)
-			free_data(&suprem_knowledge);
 		rl_lst_clear(&token);
 		free (str);
 	}
-	free_data(&suprem_knowledge);
-	free(suprem_knowledge);
-	rl_lst_clear(&token);
-	printf("exit\n");
+	handle_ending(&suprem_knowledge, &token);
 	return (0);
 }
