@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: quentin <quentin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:35 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/04/10 11:02:45 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/04/10 12:13:48 by quentin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef enum
 	FILES = 5
 } My_first_enum;
 
-//??????????STRUCTURES????????/
+//*********STRUCTURES*********/
 typedef struct s_lst_arg
 {
 	int					index;
@@ -54,7 +54,7 @@ typedef struct s_data
 
 
 
-//??????????SOURCES???????????/
+//*********SOURCES*********?/
 //**********MAIN.C************/
 int			main(void);
 

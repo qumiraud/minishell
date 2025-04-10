@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+         #
+#    By: quentin <quentin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/24 08:15:59 by qumiraud          #+#    #+#              #
-#    Updated: 2025/04/07 14:09:50 by qumiraud         ###   ########.fr        #
+#    Updated: 2025/04/10 12:27:16 by quentin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,17 +15,17 @@ NAME = minishell
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -g
 
-SRC = 	srcs/main.c\
-		srcs/lst_utils.c\
-		srcs/tokenize.c\
-		srcs/fill_suprem_knowledge.c\
-		srcs/utils.c\
+SRC = 	srcs/main/main.c\
+		srcs/utils/lst_utils.c\
+		srcs/utils/utils.c\
+		srcs/parsing/tokenize.c\
+		srcs/parsing/fill_suprem_knowledge.c\
 
 
 INC = includes
 
 OBJ_DIR = .obj
-OBJ = $(SRC:srcs/%.c=$(OBJ_DIR)/%.o)
+OBJ = $(SRC:srcs/%/%.c=$(OBJ_DIR)/%.o)
 
 
 LIBS = libft

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: quentin <quentin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:06 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/04/10 11:10:27 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/04/10 12:21:10 by quentin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 
 void handle_sigint(int signum)
@@ -41,7 +41,7 @@ int	handle_readline(char *str, t_data **s_k, t_lst_arg **token)
 {
 	if (*str)
 			handle_str(str, s_k, token);
-	if (token != NULL && !(strcmp((*token)->rl_arg, "exit")))
+	if ((*token) != NULL && !(strcmp((*token)->rl_arg, "exit")))
 	{
 		free(str);
 		return (1);

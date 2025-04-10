@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   fill_suprem_knowledge.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: quentin <quentin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:40:08 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/04/10 11:04:31 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/04/10 12:25:33 by quentin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 // void	fill_s_k_ws_lst(t_data **s_k)
 // {
@@ -92,9 +92,6 @@ void	free_data(t_data **s_k)
 
 void	init_suprem_knowledge(t_data **s_k)
 {
-	int	len;
-
-	len = 0;
 	(*s_k) = malloc(sizeof(t_data));
 	if (!s_k)
 	{
