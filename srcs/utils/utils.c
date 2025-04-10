@@ -6,7 +6,7 @@
 /*   By: quentin <quentin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 13:53:00 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/04/10 13:14:37 by quentin          ###   ########.fr       */
+/*   Updated: 2025/04/10 13:40:48 by quentin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,17 @@
 // 	printf("\n\n\n~~~countwords : %d~~~\n\n\n", count);
 // 	return (count);
 // }
+
+void	copy_word(char *dest, char **src)
+{
+	while (**src && !((**src >= 8 && **src <= 13) || **src == 32))
+	{
+		if (**src != '"' && **src != '\'')
+			*dest++ = **src;
+		(*src)++;
+	}
+	*dest = '\0';
+}
 
 int	count_words(const char *str)
 {

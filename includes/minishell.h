@@ -6,7 +6,7 @@
 /*   By: quentin <quentin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:35 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/04/10 12:13:48 by quentin          ###   ########.fr       */
+/*   Updated: 2025/04/10 13:55:11 by quentin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_lst_arg
 typedef struct s_data
 {
 	char		**rl_tab;
+	char		**tab_env;//copie de envp//
 	int			tab_len;
 	t_lst_arg	*rl_lst;
 	t_lst_arg	*ws_lst;
@@ -56,7 +57,7 @@ typedef struct s_data
 
 //*********SOURCES*********?/
 //**********MAIN.C************/
-int			main(void);
+int			main(int argc, char **argv, char **envp);
 
 //**********LST_UTILS.C*******/
 void		rl_lst_addback(t_lst_arg **lst, t_lst_arg *new);
@@ -69,13 +70,19 @@ void	tokenize(char *str, t_lst_arg **token);
 int	is_whitespace(char c);
 
 //**********FILL_SUPREM_KNOWLEDGE.C****/
-void	init_suprem_knowledge(t_data **s_k);
+void	init_suprem_knowledge(t_data **s_k, char **envp);
 void free_data(t_data **s_k);
 void	fill_suprem_knowledge(t_data **s_k, char *str);
 void	fill_s_k_tab(t_data **s_k, char *str);
 
 //**********UTILS.C****/
 int	count_words(const char *str);
+void	copy_word(char *dest, char **src);
+
+//**********FILL_TAB_ENV.C****/
+void	fill_tab_env(t_data **s_k, char **envp);
+
+
 
 
 

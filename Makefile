@@ -6,7 +6,7 @@
 #    By: quentin <quentin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/24 08:15:59 by qumiraud          #+#    #+#              #
-#    Updated: 2025/04/10 12:27:16 by quentin          ###   ########.fr        #
+#    Updated: 2025/04/10 13:54:23 by quentin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRC = 	srcs/main/main.c\
 		srcs/utils/utils.c\
 		srcs/parsing/tokenize.c\
 		srcs/parsing/fill_suprem_knowledge.c\
+		srcs/parsing/fill_tab_env.c
 
 
 INC = includes

@@ -6,7 +6,7 @@
 /*   By: quentin <quentin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:40:08 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/04/10 12:25:33 by quentin          ###   ########.fr       */
+/*   Updated: 2025/04/10 14:00:36 by quentin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,6 @@
 // {
 
 // }
-
-void	copy_word(char *dest, char **src)
-{
-	while (**src && !((**src >= 8 && **src <= 13) || **src == 32))
-	{
-		if (**src != '"' && **src != '\'')
-			*dest++ = **src;
-		(*src)++;
-	}
-	*dest = '\0';
-}
 
 int	ref_fill_s_k_tab(int k, int count, char *str)
 {
@@ -90,7 +79,7 @@ void	free_data(t_data **s_k)
 		free(data->rl_tab);
 }
 
-void	init_suprem_knowledge(t_data **s_k)
+void	init_suprem_knowledge(t_data **s_k, char **envp)
 {
 	(*s_k) = malloc(sizeof(t_data));
 	if (!s_k)
@@ -99,5 +88,8 @@ void	init_suprem_knowledge(t_data **s_k)
 		return ;
 	}
 	(*s_k)->rl_tab = NULL;
+	(*s_k)->tab_env = NULL;
+	fill_tab_env(s_k, envp);
+	
 	(*s_k)->tab_len = 0;
 }
