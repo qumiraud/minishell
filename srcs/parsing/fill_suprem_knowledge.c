@@ -6,7 +6,7 @@
 /*   By: quentin <quentin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:40:08 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/04/10 14:00:36 by quentin          ###   ########.fr       */
+/*   Updated: 2025/04/10 16:23:17 by quentin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ void	free_data(t_data **s_k)
 	}
 	if (data->rl_tab)
 		free(data->rl_tab);
+	// if (data->rl_tab)
+		free_tab((*s_k)->tab_env);
 }
 
 void	init_suprem_knowledge(t_data **s_k, char **envp)

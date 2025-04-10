@@ -6,7 +6,7 @@
 /*   By: quentin <quentin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:41:43 by quentin           #+#    #+#             */
-/*   Updated: 2025/04/10 14:41:38 by quentin          ###   ########.fr       */
+/*   Updated: 2025/04/10 14:52:54 by quentin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,8 @@ void	fill_tab_env(t_data **s_k, char **envp)
 	int	j;
 	
 	i = 0;
-	printf("coucou\n");
 	while (envp[i])
 		i++;
-	printf("i : %d\n", i);
 	(*s_k)->tab_env = malloc(sizeof(char *) * (i + 1));
 	if (!(*s_k)->tab_env)
 	return ;
@@ -29,8 +27,8 @@ void	fill_tab_env(t_data **s_k, char **envp)
 	while (envp[i])
 	{
 		j = 0;
-		(*s_k)->tab_env[i] = malloc(sizeof(char) * (ft_strlen(envp[i])));
-		if ((*s_k)->tab_env[i])
+		(*s_k)->tab_env[i] = malloc(sizeof(char) * (ft_strlen(envp[i])) + 1);
+		if (!(*s_k)->tab_env[i])
 		{
 			/******freeeeeeeeee*******/
 			return ; //free a prevoir//
@@ -41,7 +39,6 @@ void	fill_tab_env(t_data **s_k, char **envp)
 			j++;
 		}
 		(*s_k)->tab_env[i][j] = '\0';
-		printf("intheboucle env : %s\n", (*s_k)->tab_env[i]);
 		i++;
 	}
 	(*s_k)->tab_env[i] = NULL;

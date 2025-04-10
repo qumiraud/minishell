@@ -6,7 +6,7 @@
 /*   By: quentin <quentin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:06 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/04/10 14:38:34 by quentin          ###   ########.fr       */
+/*   Updated: 2025/04/10 16:20:53 by quentin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,19 +65,10 @@ int	main(int argc, char **argv, char **envp)
 	init_suprem_knowledge(&suprem_knowledge, envp);
 	if (!suprem_knowledge)
 		return (1);
-	/////********test */
-	int i = 0;
-	while (suprem_knowledge->tab_env[i] != NULL)
-	{
-		printf("env : %s\n", suprem_knowledge->tab_env[i]);
-		free(suprem_knowledge->tab_env[i]);
-		i++;
-	}
-	free(suprem_knowledge->tab_env);
-	///***********test */
 	token = NULL;
-	while ((str = readline("💾 minishell :")) != NULL)
+	while (1)
 	{
+		str = readline("💾 minishell :");
 		if (handle_readline(str, &suprem_knowledge, &token) == 1)
 			break;
 		rl_lst_clear(&token);

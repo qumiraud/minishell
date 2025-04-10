@@ -6,7 +6,7 @@
 /*   By: quentin <quentin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 14:35:24 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/04/10 12:25:44 by quentin          ###   ########.fr       */
+/*   Updated: 2025/04/10 15:32:56 by quentin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,8 @@ void	tokenize(char *str, t_lst_arg **token)
 {
 	char	quote;
 	char	*start;
-	// t_lst_arg *nav;
 	int		i;
 
-	// nav = NULL;
 	quote = 0;		//" echo "bonjour" > text.txt | cat -e < text.txt
 	i = 0;
 	start = NULL;
@@ -41,6 +39,7 @@ void	tokenize(char *str, t_lst_arg **token)
 				rl_lst_addback(token, rl_lst_new(start, str, i));
 				quote = 0;
 				start = NULL;
+				(*token)->type = QUOTES;
 				i++;
 			}
 		}
@@ -73,11 +72,13 @@ void	tokenize(char *str, t_lst_arg **token)
 				rl_lst_addback(token, rl_lst_new(start, str, i));
 				i++;
 				str++;
+				(*token)->type = APPEND;
 			}
 			else
 			{
 				rl_lst_addback(token, rl_lst_new(start, str, i));
 				i++;
+				(*token)->type = OPERATORS;
 			}
 		}
 		else

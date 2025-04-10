@@ -6,7 +6,7 @@
 /*   By: quentin <quentin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:35 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/04/10 13:55:11 by quentin          ###   ########.fr       */
+/*   Updated: 2025/04/10 16:14:45 by quentin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@ typedef enum
 	OPTIONS = 2,
 	ARGUMENTS = 3,
 	OPERATORS = 4,
-	FILES = 5
+	FILES = 5,
+	QUOTES = 6,
+	APPEND = 7
 } My_first_enum;
 
 //*********STRUCTURES*********/
@@ -38,6 +40,7 @@ typedef struct s_lst_arg
 {
 	int					index;
 	char				*rl_arg;
+	int					type;
 	struct s_lst_arg	*next;
 	struct s_lst_arg	*prev;
 }	t_lst_arg;
@@ -78,6 +81,7 @@ void	fill_s_k_tab(t_data **s_k, char *str);
 //**********UTILS.C****/
 int	count_words(const char *str);
 void	copy_word(char *dest, char **src);
+void	free_tab(char **tab);
 
 //**********FILL_TAB_ENV.C****/
 void	fill_tab_env(t_data **s_k, char **envp);
