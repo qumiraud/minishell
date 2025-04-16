@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quentin <quentin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 13:53:00 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/04/10 16:13:35 by quentin          ###   ########.fr       */
+/*   Updated: 2025/04/15 13:48:30 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void	copy_word(char *dest, char **src)
 		(*src)++;
 	}
 	*dest = '\0';
+	while (**src && ((**src >= 8 && **src <= 13) || **src == 32))
+		src++;
 }
 
 int	count_words(const char *str)

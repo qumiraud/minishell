@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quentin <quentin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:35 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/04/10 16:14:45 by quentin          ###   ########.fr       */
+/*   Updated: 2025/04/15 13:33:54 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,11 @@ typedef struct s_data
 //*********SOURCES*********?/
 //**********MAIN.C************/
 int			main(int argc, char **argv, char **envp);
+void		print_tab(t_data *s_k);
+void	print_env(t_data *s_k);
+void	print_all(t_data *s_k);
+
+
 
 //**********LST_UTILS.C*******/
 void		rl_lst_addback(t_lst_arg **lst, t_lst_arg *new);
@@ -77,6 +82,7 @@ void	init_suprem_knowledge(t_data **s_k, char **envp);
 void free_data(t_data **s_k);
 void	fill_suprem_knowledge(t_data **s_k, char *str);
 void	fill_s_k_tab(t_data **s_k, char *str);
+int	count_letters(int k, int count, char *str);
 
 //**********UTILS.C****/
 int	count_words(const char *str);

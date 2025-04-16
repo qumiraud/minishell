@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quentin <quentin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 14:35:24 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/04/10 15:32:56 by quentin          ###   ########.fr       */
+/*   Updated: 2025/04/15 10:21:02 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,20 +63,21 @@ void	tokenize(char *str, t_lst_arg **token)
 		{
 			if (start)
 			{
-				rl_lst_addback(token, rl_lst_new(start, str, i));
+				rl_lst_addback(token, rl_lst_new(start, str - 1, i));
 				i++;
 				start = NULL;
 			}
-			if (*(str + 1) == '>' && *str == '>' )
+			if ((*(str + 1) == '>' && *str == '>') || (*(str + 1) == '<' && *str == '<'))
 			{
-				rl_lst_addback(token, rl_lst_new(start, str, i));
+				rl_lst_addback(token, rl_lst_new(str, str + 1, i));
 				i++;
 				str++;
+				start = NULL;
 				(*token)->type = APPEND;
 			}
 			else
 			{
-				rl_lst_addback(token, rl_lst_new(start, str, i));
+				rl_lst_addback(token, rl_lst_new(str, str, i));
 				i++;
 				(*token)->type = OPERATORS;
 			}

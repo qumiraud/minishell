@@ -15,6 +15,7 @@ SRC = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c \
 			   ft_lstdelone_bonus.c ft_lstclear_bonus.c ft_lstmap_bonus.c\
 			 ft_lstiter_bonus.c ft_solotnbrs.c ft_selectpf.c ft_printf.c \
 			 get_next_line.c get_next_line_utils.c ft_strcpy.c ft_tablen.c \
+			 ft_strncpy.c\
 
 OBJ = $(SRC:.c=.o)
 LIB = libft.h

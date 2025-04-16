@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quentin <quentin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:06 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/04/10 16:20:53 by quentin          ###   ########.fr       */
+/*   Updated: 2025/04/15 11:51:44 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 
-void handle_sigint(int signum)
-{
-	if (signum == 2)
-		printf("\n💾 minishell :");
-	// if
+// void handle_sigint(int signum)
+// {
+// 	if (signum == 2)
+// 		printf("\n💾 minishell :");
+// 	// if
 
-}
+// }
 
 void	handle_str(char *str, t_data **s_k, t_lst_arg **token)
 {
@@ -27,6 +27,7 @@ void	handle_str(char *str, t_data **s_k, t_lst_arg **token)
 	tokenize(str, token);
 	(*s_k)->rl_lst = (*token);
 	fill_suprem_knowledge(s_k, str);
+	print_tab(*s_k);
 }
 
 void	handle_ending(t_data **s_k, t_lst_arg **token)
@@ -39,6 +40,10 @@ void	handle_ending(t_data **s_k, t_lst_arg **token)
 
 int	handle_readline(char *str, t_data **s_k, t_lst_arg **token)
 {
+	int	i;
+	t_data	*data = *s_k;
+
+	i = 0;
 	if (*str)
 			handle_str(str, s_k, token);
 	if ((*token) != NULL && !(strcmp((*token)->rl_arg, "exit")))
@@ -47,7 +52,19 @@ int	handle_readline(char *str, t_data **s_k, t_lst_arg **token)
 		return (1);
 	}
 	if (*str)
-		free_data(s_k);
+	{
+		if ((*s_k)->rl_tab)
+		{
+			while (i <= (*s_k)->tab_len)
+			{
+				free((*s_k)->rl_tab[i]);
+				i++;
+			}
+			(*s_k)->tab_len = 0;
+		}
+		if (data->rl_tab)
+			free(data->rl_tab);
+	}
 	return (0);
 }
 
