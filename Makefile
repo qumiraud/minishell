@@ -6,7 +6,7 @@
 #    By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/24 08:15:59 by qumiraud          #+#    #+#              #
-#    Updated: 2025/04/15 11:31:48 by qumiraud         ###   ########.fr        #
+#    Updated: 2025/04/16 13:42:36 by qumiraud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,12 +16,13 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra -g
 
 SRC = 	srcs/main/main.c\
+		srcs/main/print_test.c
 		srcs/utils/lst_utils.c\
 		srcs/utils/utils.c\
 		srcs/parsing/tokenize.c\
 		srcs/parsing/fill_suprem_knowledge.c\
 		srcs/parsing/fill_tab_env.c\
-		srcs/main/print_test.c
+		srcs/exec/ft_exec.c\
 
 
 INC = includes

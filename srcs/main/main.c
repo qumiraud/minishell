@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:06 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/04/15 11:51:44 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/04/16 13:40:54 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ int	main(int argc, char **argv, char **envp)
 		str = readline("💾 minishell :");
 		if (handle_readline(str, &suprem_knowledge, &token) == 1)
 			break;
+		lauch_exec(suprem_knowledge);
 		rl_lst_clear(&token);
 		free (str);
 	}

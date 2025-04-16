@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:40:08 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/04/15 15:28:46 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/04/16 13:55:32 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,7 @@ void	init_suprem_knowledge(t_data **s_k, char **envp)
 	}
 	(*s_k)->rl_tab = NULL;
 	(*s_k)->tab_env = NULL;
+	init_pipefd((*s_k)->pipefd);
 	fill_tab_env(s_k, envp);
 
 	(*s_k)->tab_len = 0;
