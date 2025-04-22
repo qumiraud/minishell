@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:35 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/04/16 13:54:00 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/04/22 14:48:11 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,9 @@ typedef struct s_data
 	char		**rl_tab;
 	char		**tab_env;//copie de envp//
 	int			tab_len;
-	int			*pipefd;
+	int			pipefd[2];
+	int			pipe_nbr;
+	void		*pid;
 	t_lst_arg	*rl_lst;
 	t_lst_arg	*ws_lst;
 }	t_data;

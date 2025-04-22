@@ -16,7 +16,7 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra -g
 
 SRC = 	srcs/main/main.c\
-		srcs/main/print_test.c
+		srcs/main/print_test.c\
 		srcs/utils/lst_utils.c\
 		srcs/utils/utils.c\
 		srcs/parsing/tokenize.c\

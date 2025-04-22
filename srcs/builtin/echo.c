@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:34:30 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/03/25 13:02:31 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/04/22 15:04:27 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,16 @@ int	ft_echo_cmp(const char *str, char *cmp)
 
 void	ft_echo(char **tab)
 {
-	int	i;
-	pid_t	pid;
+// 	int	i; //TODO :de la merde tyout est a recommence, le seul truc conservable c'est le nom du fichier xD
+// 	pid_t	pid;
 
-	i = 0;
-	pid = fork();
-	if (pid < 0)
-	{
-		perror("PID error\n");
-		return ;
-	}
+// 	i = 0;
+// 	pid = fork();
+// 	if (pid < 0)
+// 	{
+// 		perror("PID error\n");
+// 		return ;
+// 	}
 
-		if (ft_echo_cmp(tab[0], "echo"))
+// 		if (ft_echo_cmp(tab[0], "echo"))
 }
