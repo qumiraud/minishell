@@ -6,13 +6,13 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 13:41:45 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/04/22 16:20:07 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/04/23 16:39:29 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int init_pipefd(int *pipefd)
+int	init_pipefd(int *pipefd)
 {
 	pipefd = malloc(2 * sizeof(int));
 	if (pipe(pipefd) == -1)
@@ -23,71 +23,109 @@ int init_pipefd(int *pipefd)
 	return (0);
 }
 
-int	ft_exec(t_data *s_k)
+int	ft_exec_multipipe(t_data *s_k)
 {
 	pid_t pid;
 	int		i;
+	int		status;
 
 	i = 0;
-	//?premier exec (STDIN--->pipefd)
-	if (init_pipefd(s_k->pipefd) != 0)
+	if (init_pipefd(s_k->pipefd1) != 0 || init_pipefd(s_k->pipefd2) != 0)
 		return (1); //TODO : code erreur?
-	pid = fork();
-	if (pid == -1)
-		return(-1); //TODO : code erreur?
-	else if (pid == 0)
+	while (i <= s_k->pipe_nbr && s_k->pipe_nbr > 0)
 	{
-		close(s_k->pipefd[0]);
-		dup2(s_k->pipefd[1], STDOUT_FILENO);
-		close(s_k->pipefd);
-		//TODO : chercher le chemin de commande dans l'env, puis execve
-	}
-	//?premier exec (STDIN--cmd-->pipefd[1])
-
-
-	//*boucle exec (pipefd[0]--cmd-->pipefd[1])
-	while (i < s_k->pipe_nbr)
-	{
-		//init_pipefd                            //*
-		// if (s_k->pipefd)                     //*--------->pas forcement necessaire peut etre peut on utiliser un seul pipe
-		// 	free(s_k->pipefd);                 //*
-		// if (init_pipefd(*s_k->pipefd) != 0)//*
-		// 	return (1); /TODO : code erreur? //*
-		//init_pipefd_end                   //*
-		//exec_loop(s_k){                  //*
+		printf("test && pipe_nbr=%d\n",s_k->pipe_nbr);
+		//exec_loop() {
 		pid = fork();
 		if (pid == -1)
 			return(-1); //TODO : code erreur?
 		else if (pid == 0)
 		{
-			close(s_k->pipefd[1]);
-			dup2(s_k->pipefd[0], STDIN_FILENO);
-			close(s_k->pipefd[0]);
-			open(s_k->pipefd[1], O_RDWR);
-			dup2(s_k->pipefd[1], STDOUT_FILENO);
-			close(s_k->pipefd[1]);
-			//TODO : chercher le chemin de commande dans l'env, puis execve
-
+			if (i % 2 == 0)
+			{
+				close(s_k->pipefd1[1]);
+				if (i != 0)
+					dup2(s_k->pipefd1[0], STDIN_FILENO);
+				close(s_k->pipefd1[0]);
+				close(s_k->pipefd2[0]);
+				if (i != s_k->pipe_nbr)
+					dup2(s_k->pipefd2[1], STDOUT_FILENO);
+				close(s_k->pipefd2[1]);
+				//TODO : chercher le chemin de commande dans l'env, puis execve
+			}
+			else
+			{
+				close(s_k->pipefd2[1]);
+				if (i != 0)
+					dup2(s_k->pipefd2[0], STDIN_FILENO);
+				close(s_k->pipefd2[0]);
+				close(s_k->pipefd1[0]);
+				if (i != s_k->pipe_nbr)
+					dup2(s_k->pipefd1[1], STDOUT_FILENO);
+				close(s_k->pipefd1[1]);
+				//TODO : chercher le chemin de commande dans l'env, puis execvs
+			}
 		}
 		//exec_loop_end }
 		i++;
 	}
-	//*boucle exec (pipefd[0]--cmd-->pipefd[1])
+	close(s_k->pipefd1[0]);
+	close(s_k->pipefd1[1]);
+	close(s_k->pipefd2[0]);
+	close(s_k->pipefd2[1]);
+	while (wait(&status) > 0)
+		;
+	free(s_k->pipefd1);
+	free(s_k->pipefd2);
+	return (0);
+}
 
+int	ft_exec_singlepipe(t_data *s_k)
+{
+	pid_t	pid;
+	int		status;
 
-	//?dernier exec (pipefd[0]--cmd-->STDOUT)
+	if (init_pipefd(s_k->pipefd1) != 0)
+		return (1);
 	pid = fork();
 	if (pid == -1)
-		return (-1); //TODO : code erreur ?
+		return (1);
 	else if (pid == 0)
 	{
-		close(s_k->pipefd[1]);
-		dup2(s_k->pipefd[0], STDIN_FILENO);
-		close(s_k->pipefd[0]);
-		//TODO : chercher le chemin de commande dans l'env, puis execve
+		close(s_k->pipefd1[0]);
+		dup2(s_k->pipefd1[1], STDOUT_FILENO);
+		close(s_k->pipefd1[1]);
+		//TODO :  chercher le chemin de commande dans l'env, puis execve
 	}
-	//?dernier exec (pipefd[0]--cmd-->STDOUT)
-	while (wait(NULL))
+	pid = fork();
+	if (pid == 0)
+		return (1);
+	else if (pid == 0)
+	{
+		close(s_k->pipefd1[1]);
+		dup2(s_k->pipefd1[0], STDIN_FILENO);
+		close(s_k->pipefd1[0]);
+		//TODO :  chercher le chemin de commande dans l'env, puis execve
+	}
+	while (wait(&status))
 		;
-	free(s_k->pipefd);
+	return (0);
+}
+
+int	ft_exec_nopipe(t_data *s_k)
+{
+	pid_t	pid;
+
+}
+
+int	handle_exec(t_data *s_k)
+{
+	printf("passage par handle_exec\n");
+	if (s_k->pipe_nbr > 1)
+		ft_exec_multipipe(s_k);
+	//else if (s_k->pipe_nbr == 1)
+	//	ft_exec_singlepipe(s_k);
+	else if (s_k->pipe_nbr == 0)
+		printf("no pipe\n");
+	return (0);
 }
