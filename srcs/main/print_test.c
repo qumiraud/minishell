@@ -20,12 +20,17 @@ void	print_tab(t_data *s_k)
 	i = 0;
 	while (s_k->rl_tab[i])
 	{
-		printf("rl_tab[%d]: %s\n",i, s_k->rl_tab[i]);
-		// printf("%s", s_k->rl_tab[i]);
+		printf("rl_tab[%d]: %s\n\n",i, s_k->rl_tab[i]);
+		i++;
+	}
+	i = 0;
+	while (s_k->glutto_tab[i])
+	{
+		printf("glutto_tab[%d]: %s\n\n",i, s_k->glutto_tab[i]);
 		i++;
 	}
 	// printf("\n");
-
+	// fichier a supprimer a la fing
 	return ;
 }
 

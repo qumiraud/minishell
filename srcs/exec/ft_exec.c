@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 13:41:45 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/04/24 13:02:01 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/04/24 14:56:38 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int	ft_exec_nopipe(t_data *s_k)
 
 	pid = fork();
 	if (pid == -1)
-		return (1);
+	return (1);
 	else if (pid == 0)
 	{
 		pathway = ft_strdup(get_way(s_k->tab_env, s_k->rl_tab));

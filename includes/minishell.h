@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:35 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/04/24 13:02:08 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/04/24 14:26:09 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,15 @@ typedef struct s_lst_arg
 typedef struct s_data
 {
 	char		**rl_tab;
+	char		**glutto_tab;
 	char		**tab_env;//copie de envp//
 	int			tab_len;
 	int			pipefd1[2];
 	int			pipefd2[2];
 	int			pipe_nbr;
 	void		*pid;
+	int			stat_quo;
+	int			pipe_quo;
 	t_lst_arg	*rl_lst;
 	t_lst_arg	*ws_lst;
 }	t_data;
@@ -88,12 +91,24 @@ void		init_suprem_knowledge(t_data **s_k, char **envp);
 void 		free_data(t_data **s_k);
 void		fill_suprem_knowledge(t_data **s_k, char *str);
 void		fill_s_k_tab(t_data **s_k, char *str);
-int			count_letters(int k, int count, char *str);
+// int			count_letters(int k, int count, char *str);
+int	count_letters(char *str);
+
+//**********GLUTTONY.C*******************************************/
+int		glt_count_letters(char *str);
+int		glt_count_words(const char *str);
+void	fill_tabs(t_data **s_k, char *str);
+void	fill_gluttony_tab(t_data **s_k, char *str);
+void	glt_copy_word(char *dest, char **src, int count_l);
+
 
 //**********UTILS.C****/
 int			count_words(const char *str);
-void		copy_word(char *dest, char **src);
+void		copy_word(char *dest, char **src, int count_l);
 void		free_tab(char **tab);
+
+int	quote_verif(char *str, t_data **s_k);
+int	pipe_quota(char *str, t_data **s_k);
 
 //**********FILL_TAB_ENV.C****/
 void		fill_tab_env(t_data **s_k, char **envp);
@@ -107,7 +122,8 @@ int			ft_exec_nopipe(t_data *s_k);
 char		*get_way(char **env, char **rl_tab);
 
 
-
+//**********CMD_NT_FD.C****************************************/
+int	cmd_nt_fd(char *str);//, t_data **s_k);
 
 
 

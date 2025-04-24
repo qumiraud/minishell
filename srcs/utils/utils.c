@@ -3,39 +3,75 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 13:53:00 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/04/15 13:48:30 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/04/24 14:24:35 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-// int	count_words(char *str)
-// {
-// 	int	i;
-// 	int	count;
+int	count_words(const char *str)
+{
 
-// 	count = 1; ///str=" bonjour "
-// 	i = 0;
-// 	while (str[i])
-// 	{
-// 		if ((str[i] == 32 || (str[i] >= 8 && str[i] <= 13)))
-// 		{
-// 			if (str[i - 1] > 32 && str[i + 1] != '\0')
-// 			// if (str[i + 1] != '\0')
+	int	i;
+	int	word;
+	int	quote;
+	int	quotes = 0;
+	char	c;
 
-// 			count++;
-
-// 		}
-// 		printf ("\n\n\n%c : ", str[i]);
-// 		printf("%d\n\n\n", count);
-// 		i++;
-// 	}
-// 	printf("\n\n\n~~~countwords : %d~~~\n\n\n", count);
-// 	return (count);
-// }
+	i = 0;
+	word = 0;
+	quote = 0;
+	while (str[i])
+	{
+		while (str[i] == 32 || (str[i] >= 8 && str[i] <= 13))
+			i++;
+		if (str[i] && (str[i] != 32 || (str[i] <= 8 || str[i] >= 13)))
+		{
+			word++;
+			quote = 0;
+			while ((str[i] && (str[i] != 32 && (str[i] <= 8 || str[i] >= 13))))
+			{
+				if (str[i] == '\'' || str[i] == '"')
+				{
+					quote = 1;
+					c = str[i];
+					while (str[i]) // && (str[i] != '\'' || str[i] != '"'))
+					{
+						i++;
+						if (str[i] == c) //((str[i] == '\'' || str[i] == '"'))
+						{
+							while (str[i])
+							{
+								if (str[i] == 32 && (quotes % 2) == 0)
+								{
+									quote = 0;
+									break;
+								}
+								i++;
+								if (str[i] == c) //((str[i] == '\'' || str[i] == '"'))
+								{
+									quotes++;
+								}
+							}
+						}
+						if (quote == 0)
+						{
+							word++;
+							break ;
+						}
+					}
+				}
+				if (str[i] != '\0')
+					i++;
+			}
+		}
+	}
+	// printf("\nword : %d\n\n", word);
+	return (word);
+}
 
 void	free_tab(char **tab)
 {
@@ -50,36 +86,24 @@ void	free_tab(char **tab)
 	free(tab);
 }
 
-void	copy_word(char *dest, char **src)
+void	copy_word(char *dest, char **src, int count_l)
 {
-	while (**src && !((**src >= 8 && **src <= 13) || **src == 32))
+	int	i = 0;
+
+	// printf ("count_l : %d\n", count_l);
+	
+	while (**src && i != count_l)// && !((**src >= 8 && **src <= 13) || **src == 32))
 	{
+		if (**src == '"' && **src == '\'')
+			count_l++;
 		if (**src != '"' && **src != '\'')
 			*dest++ = **src;
 		(*src)++;
+		i++;
 	}
 	*dest = '\0';
 	while (**src && ((**src >= 8 && **src <= 13) || **src == 32))
 		src++;
 }
 
-int	count_words(const char *str)
-{
-	int	i;
-	int	word;
 
-	i = 0;
-	word = 0;
-	while (str && str[i])
-	{
-		if ((str[i] != 32) && !(str[i] >= 8 && str[i] <= 13))
-		{
-			word++;
-			while (((str[i] != 32) && !(str[i] >= 8 && str[i] <= 13)) && str[i])
-				i++;
-		}
-		else
-			i++;
-	}
-	return (word);
-}

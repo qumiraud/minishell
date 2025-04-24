@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_suprem_knowledge.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:40:08 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/04/23 16:21:05 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/04/24 14:19:38 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,74 +17,163 @@
 
 // }
 
-int	count_letters(int k, int count, char *str)
+int	count_letters(char *str)
 {
-	while (str[k] && (str[k] > 13 || str[k] < 8) && str[k] != 32)
+	int	i;
+	int	word;
+	int	quote;
+	char	c;
+
+	i = 0;
+	word = 0;
+	quote = 0;
+	while (str[i] && word == 0)
 	{
-		if (str[k] != '"' && str[k] != '\'')
-			count++;
-		k++;
+		while (str[i] == 32 || (str[i] >= 8 && str[i] <= 13))
+			i++;
+		if (str[i] && (str[i] != 32 || (str[i] <= 8 || str[i] >= 13)))
+		{
+			// word++;
+			if (word == 1)
+				return (i);
+			quote = 0;
+			while ((str[i] && (str[i] != 32 && (str[i] <= 8 || str[i] >= 13))))
+			{
+				if (str[i] == '\'' || str[i] == '"')
+				{
+					quote = 1;
+					c = str[i];
+
+					while (str[i]) // && (str[i] != '\'' || str[i] != '"'))
+					{
+						i++;
+						if (str[i] == c) //((str[i] == '\'' || str[i] == '"'))
+						{
+							quote = 0;
+
+							while (str[i])
+							{
+								if (str[i] == 32 && (quote % 2) == 0)
+								{
+									quote = 0;
+									break;
+								}
+								i++;
+								if (str[i] == c) //((str[i] == '\'' || str[i] == '"'))
+								{
+									quote++;
+								}
+							}
+						}
+						if (quote == 0)
+						{
+							word++;
+							if (word == 1)
+								return (i);
+							break ;
+						}
+					}
+				}
+				if(str[i] != '\0')
+					i++;
+			}
+			word++;
+		}
 	}
-	return (count);
+	// printf ("i : %d\n", i);
+	return (i);
 }
+
+int	pipe_quota(char *str, t_data **s_k)
+{
+	int	i = 0;
+	int	pipe = 0;
+
+	if(!str)
+		return (1);
+	while (str[i])
+	{
+		if (str[i] == '\'')
+		{
+			i++;
+			while (str[i] != '\'')
+				i++;
+		}
+		if (str[i] == '"')
+		{
+			i++;
+			while (str[i] != '"')
+				i++;
+		}
+		if (str[i] == '|')
+			pipe++;
+		i++;
+	}
+	(*s_k)->pipe_quo = pipe;
+	printf ("pipe_quo : %d\n\n", (*s_k)->pipe_quo);
+	return (0);
+}
+
+int	quote_verif(char *str, t_data **s_k)
+{
+	int	i;
+	int	quote;
+	int	d_quote;
+	
+	i = 0;
+	quote = 0;
+	d_quote = 0;
+	if(!str)
+		return (1);
+	while (str[i])
+	{
+		if (str[i] == '"')
+			d_quote++;
+		if (str[i] == '\'')
+			quote++;
+		i++;
+	}
+	(*s_k)->stat_quo = d_quote + quote;
+	printf ("stat_quo : %d\n\n", (*s_k)->stat_quo);
+	if (quote % 2 != 0)
+		return (printf("missing quote\n"));
+	if (d_quote % 2 != 0)
+		return (printf("missing double quote\n"));
+	return (0);
+}
+
 
 void	fill_s_k_tab(t_data **s_k, char *str)
 {
-	int	quote;
 	int	i;
-	char *start;
+	int	k;
+	int	count_l;
+	int	count_w;
 
 	i = 0;
-	quote = 0;
-	start = NULL;
-	while ((*str >= 8 && *str <= 13) || *str == 32)
-		str++;
-	(*s_k)->rl_tab = ft_calloc(sizeof(char *), 70000);
-	printf("%s\n", str);
-	while (*str != '\0')
+	(*s_k)->tab_len = 0;
+	count_w = 0;
+	count_w = count_words(str);
+	(*s_k)->rl_tab = malloc(sizeof(char *) * (count_w + 1));
+	while (str[0] == 32 || (str[0] >= 8  && str[0] <= 13 ))
 	{
-		if (quote == 0 && (*str == '\'' || *str == '"'))
-		{
-			if (*str == '\'')
-			{
-				start = str + 1;
-				quote = 1;
-			}
-			else
-			{
-				start = str + 1;
-				quote = 2;
-			}
-		}
-		else if ((quote == 1 || quote == 2) && (*str == '\'' || *str == '"'))
-		{
-			if (quote == 1 && *str == '\'')
-			{
-				quote = 0;
-				// (*s_k)->rl_tab[i] = malloc(sizeof(char) * ((str - start) + 1));
-				ft_strncpy((*s_k)->rl_tab[i], start, (&str - &start)); //!!!!!!!!!!fonction a remplacer par une de nos mains!!!!!!!!!!!!!!!!*/
-				start = NULL;
-			}
-			else if (quote == 2 && *str == '"')
-			{
-				quote = 0;
-				// (*s_k)->rl_tab[i] = malloc(sizeof(char) * ((str - start) + 1));
-				ft_strncpy((*s_k)->rl_tab[i], start, (&str - &start)); //!!!!!!!!!!fonction a remplacer par une de nos mains!!!!!!!!!!!!!!!!*/
-				start =NULL;
-			}
-		}
-		else if (start == NULL && *str > 32)
-		{
-			start = str;
-		}
-		else if (start && (*(str + 1) == 32 || (*(str + 1) >= 8 && *(str + 1) <= 13) || *(str + 1) == '\0'))
-		{
-			// (*s_k)->rl_tab[i] = malloc(sizeof(char) * ((str - start) + 1));
-			// printf("%ld\n", (str - start));
-			ft_strncpy((*s_k)->rl_tab[i], start, ((str - start) + 1));
-		}
 		str++;
 	}
+	while (str[0])
+	{
+		k = 0;
+		count_l = 0;
+		count_l = count_letters(str);
+		// printf ("count_l : %d\n", count_l);
+		(*s_k)->rl_tab[i] = malloc(sizeof(char) * (count_l + 1));
+		copy_word((*s_k)->rl_tab[i], &str, count_l);
+		if (count_l)
+			i++;
+		while (*str && ((*str >= 8 && *str <= 13) || *str == 32))
+			str++;
+	}
+	(*s_k)->rl_tab[i] = NULL;
+	(*s_k)->tab_len = i;
 }
 
 
@@ -125,28 +214,61 @@ void	fill_suprem_knowledge(t_data **s_k, char *str)
 {
 	if (!s_k || !(*s_k))
 		return ;
-	fill_s_k_tab(s_k, str);
+	
+	// fill_s_k_tab(s_k, str);
+	fill_tabs(s_k, str);
 }
 
-void	free_data(t_data **s_k)
+void	free_glt(t_data **s_k)
 {
 	int	i;
-	t_data	*data = *s_k;
-
+	int	len;
+	
 	i = 0;
+	len = (*s_k)->tab_len;
+	if ((*s_k)->glutto_tab)
+	{
+		while (i <= len)
+		{
+			free((*s_k)->glutto_tab[i]);
+			i++;
+		}
+		// (*s_k)->tab_len = 0;
+		len = 0;
+	}
+	if ((*s_k)->glutto_tab)
+		free((*s_k)->glutto_tab);
+	// if ((*s_k)->tab_env)
+	// 	free_tab((*s_k)->tab_env);
+}
+
+void	free_s_k(t_data **s_k)
+{
+	int	i;
+	int	len;
+	
+	i = 0;
+	len = (*s_k)->tab_len;
 	if ((*s_k)->rl_tab)
 	{
-		while (i <= (*s_k)->tab_len)
+		while (i <= len)
 		{
 			free((*s_k)->rl_tab[i]);
 			i++;
 		}
-		(*s_k)->tab_len = 0;
+		len = 0;
 	}
-	if (data->rl_tab)
-		free(data->rl_tab);
-	if (data->tab_env)
-		free_tab(data->tab_env);
+	if ((*s_k)->rl_tab)
+		free((*s_k)->rl_tab);
+	if ((*s_k)->tab_env)
+		free_tab((*s_k)->tab_env);
+}
+
+
+void	free_data(t_data **s_k)
+{
+	free_s_k(s_k);
+	free_glt(s_k);
 }
 
 void	init_suprem_knowledge(t_data **s_k, char **envp)
@@ -158,10 +280,14 @@ void	init_suprem_knowledge(t_data **s_k, char **envp)
 		return ;
 	}
 	(*s_k)->rl_tab = NULL;
+	(*s_k)->glutto_tab = NULL;
 	(*s_k)->tab_env = NULL;
 	(*s_k)->pipe_nbr = 0;
 	*(*s_k)->pipefd1 = 0;
 	*(*s_k)->pipefd2 = 0;
+	(*s_k)->stat_quo = 0;
+	(*s_k)->pipe_quo = 0;
 	fill_tab_env(s_k, envp);
+
 	(*s_k)->tab_len = 0;
 }

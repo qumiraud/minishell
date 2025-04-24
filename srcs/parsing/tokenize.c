@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 14:35:24 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/04/15 10:21:02 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/04/24 14:23:33 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,13 @@ void	tokenize(char *str, t_lst_arg **token)
 		rl_lst_addback(token, rl_lst_new(start, str, i));
 		i++;
 	}
-	// nav = (*token);
-	// while (nav)
-	// {
-	// 	printf("~%s~\n\n", nav->rl_arg);
-	// 	nav = nav->next;
-	// }
+// 	t_lst_arg	*nav;
+// 	nav = (*token);
+// 	i = 0;
+// 	while (nav)
+// 	{
+// 		printf("token[%d]: %s\n", i, nav->rl_arg);
+// 		nav = nav->next;
+// 		i++;
+// 	}
 }

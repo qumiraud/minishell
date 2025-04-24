@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pathway.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 09:41:48 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/04/24 13:41:52 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/04/24 15:00:18 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ char	*get_way(char **env, char **rl_tab)
 		if (ft_strncmp(env[i], "PATH=", 5) == 0)
 		{
 			pathtab = ft_split(&env[i][5], ':');
-			printf("pathtab[1] : %s\npathtab[2] : %s\npathtab[3] : %s\netc.\n", pathtab[0], pathtab[1], pathtab[2]);
 			while (pathtab[j])
 			{
+				printf("pathtab[1] : %s\npathtab[2] : %s\npathtab[3] : %s\netc.\n", pathtab[0], pathtab[1], pathtab[2]);
 				tmp = ft_strjoin(pathtab[j], "/");
 				absolut_path = ft_strjoin(tmp, rl_tab[0]);
-				printf(" %s <---tmp | %s <---rl_tab[0] | %s <---find\n", tmp, rl_tab[0], absolut_path);
+				printf(" %s <---tmp | %s <---find\n", tmp, absolut_path);
 				if (access(absolut_path, X_OK) == 0)
 				{
 					printf("%s <---find and is X_OK\n", absolut_path);
