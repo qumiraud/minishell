@@ -6,7 +6,7 @@
 #    By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/24 08:15:59 by qumiraud          #+#    #+#              #
-#    Updated: 2025/04/16 13:42:36 by qumiraud         ###   ########.fr        #
+#    Updated: 2025/04/24 12:39:57 by qumiraud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRC = 	srcs/main/main.c\
 		srcs/parsing/fill_suprem_knowledge.c\
 		srcs/parsing/fill_tab_env.c\
 		srcs/exec/ft_exec.c\
+		srcs/exec/pathway.c\
 
 
 INC = includes

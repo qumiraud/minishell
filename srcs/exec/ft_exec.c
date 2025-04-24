@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 13:41:45 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/04/23 16:39:29 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/04/24 13:02:01 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,18 @@ int	ft_exec_singlepipe(t_data *s_k)
 int	ft_exec_nopipe(t_data *s_k)
 {
 	pid_t	pid;
+	char	*pathway;
 
+	pid = fork();
+	if (pid == -1)
+		return (1);
+	else if (pid == 0)
+	{
+		pathway = ft_strdup(get_way(s_k->tab_env, s_k->rl_tab));
+		printf("apres pathway, dans exec_nopipe\n");
+	}
+	wait (NULL);
+	return (0);
 }
 
 int	handle_exec(t_data *s_k)
@@ -126,6 +137,6 @@ int	handle_exec(t_data *s_k)
 	//else if (s_k->pipe_nbr == 1)
 	//	ft_exec_singlepipe(s_k);
 	else if (s_k->pipe_nbr == 0)
-		printf("no pipe\n");
+		ft_exec_nopipe(s_k);
 	return (0);
 }

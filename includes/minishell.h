@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:35 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/04/23 10:55:17 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/04/24 13:02:08 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,13 @@ void		fill_tab_env(t_data **s_k, char **envp);
 
 //**********EXEC_DIRECTORY****/
 int			init_pipefd(int *pipefd);
-int			ft_exec(t_data *s_k);
 int			handle_exec(t_data *s_k);
+int			ft_exec_multipipe(t_data *s_k);
+int			ft_exec_singlepipe(t_data *s_k);
+int			ft_exec_nopipe(t_data *s_k);
+char		*get_way(char **env, char **rl_tab);
+
+
 
 
 
