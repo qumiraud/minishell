@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_suprem_knowledge.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:40:08 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/04/24 14:19:38 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/04/28 09:46:01 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int	quote_verif(char *str, t_data **s_k)
 	int	i;
 	int	quote;
 	int	d_quote;
-	
+
 	i = 0;
 	quote = 0;
 	d_quote = 0;
@@ -146,7 +146,6 @@ int	quote_verif(char *str, t_data **s_k)
 void	fill_s_k_tab(t_data **s_k, char *str)
 {
 	int	i;
-	int	k;
 	int	count_l;
 	int	count_w;
 
@@ -161,7 +160,6 @@ void	fill_s_k_tab(t_data **s_k, char *str)
 	}
 	while (str[0])
 	{
-		k = 0;
 		count_l = 0;
 		count_l = count_letters(str);
 		// printf ("count_l : %d\n", count_l);
@@ -214,7 +212,7 @@ void	fill_suprem_knowledge(t_data **s_k, char *str)
 {
 	if (!s_k || !(*s_k))
 		return ;
-	
+
 	// fill_s_k_tab(s_k, str);
 	fill_tabs(s_k, str);
 }
@@ -223,7 +221,7 @@ void	free_glt(t_data **s_k)
 {
 	int	i;
 	int	len;
-	
+
 	i = 0;
 	len = (*s_k)->tab_len;
 	if ((*s_k)->glutto_tab)
@@ -246,7 +244,7 @@ void	free_s_k(t_data **s_k)
 {
 	int	i;
 	int	len;
-	
+
 	i = 0;
 	len = (*s_k)->tab_len;
 	if ((*s_k)->rl_tab)

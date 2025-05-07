@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:35 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/04/24 14:26:09 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/05/06 12:29:03 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,19 @@ typedef struct s_data
 	t_lst_arg	*ws_lst;
 }	t_data;
 
-
+typedef struct s_echo_data
+{
+	int	i;
+	int	j;
+	int	n;
+	int	n_def;
+}	t_echo_data;
 
 
 
 //*********SOURCES*********?/
 //**********MAIN.C************/
-int			main(int argc, char **argv, char **envp);
+int			main(int argc, char **argv/*, char **envp*/);
 void		print_tab(t_data *s_k);
 void		print_env(t_data *s_k);
 void		print_all(t_data *s_k);

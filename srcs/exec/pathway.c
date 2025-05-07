@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pathway.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 09:41:48 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/04/24 15:00:18 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/05/05 10:42:36 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,15 @@ char	*get_way(char **env, char **rl_tab)
 			pathtab = ft_split(&env[i][5], ':');
 			while (pathtab[j])
 			{
-				printf("pathtab[1] : %s\npathtab[2] : %s\npathtab[3] : %s\netc.\n", pathtab[0], pathtab[1], pathtab[2]);
+				printf("test\n");
 				tmp = ft_strjoin(pathtab[j], "/");
+				printf("tmp :%s\n", tmp);
 				absolut_path = ft_strjoin(tmp, rl_tab[0]);
 				printf(" %s <---tmp | %s <---find\n", tmp, absolut_path);
 				if (access(absolut_path, X_OK) == 0)
 				{
 					printf("%s <---find and is X_OK\n", absolut_path);
+					free(pathtab);
 					return (absolut_path);
 				}
 				free(tmp);

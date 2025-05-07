@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gluttony.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:20:50 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/04/24 14:21:02 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/04/28 09:45:40 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ void	glt_copy_word(char *dest, char **src, int count_l)
 	int	i = 0;
 
 	// printf ("count_l : %d\n", count_l);
-	
+
 	while (**src && i != count_l)// && !((**src >= 8 && **src <= 13) || **src == 32))
 	{
 		// if (**src == '"' && **src == '\'')
@@ -176,7 +176,6 @@ void	glt_copy_word(char *dest, char **src, int count_l)
 void	fill_gluttony_tab(t_data **s_k, char *str)
 {
 	int	i;
-	int	k;
 	int	count_l;
 	int	count_w;
 
@@ -192,7 +191,6 @@ void	fill_gluttony_tab(t_data **s_k, char *str)
 	}
 	while (str[0])
 	{
-		k = 0;
 		count_l = 0;
 		count_l = glt_count_letters(str);
 		printf ("count_l : %d\n", count_l);

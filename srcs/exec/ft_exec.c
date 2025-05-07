@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 13:41:45 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/04/24 14:56:38 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/04/28 11:05:36 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 
 int	init_pipefd(int *pipefd)
 {
-	pipefd = malloc(2 * sizeof(int));
 	if (pipe(pipefd) == -1)
 	{
-		free(pipefd);
+		perror("pipe");
 		return (1);
 	}
 	return (0);
@@ -75,8 +74,6 @@ int	ft_exec_multipipe(t_data *s_k)
 	close(s_k->pipefd2[1]);
 	while (wait(&status) > 0)
 		;
-	free(s_k->pipefd1);
-	free(s_k->pipefd2);
 	return (0);
 }
 
@@ -123,6 +120,7 @@ int	ft_exec_nopipe(t_data *s_k)
 	else if (pid == 0)
 	{
 		pathway = ft_strdup(get_way(s_k->tab_env, s_k->rl_tab));
+		printf("%s\n", pathway);
 		printf("apres pathway, dans exec_nopipe\n");
 	}
 	wait (NULL);
