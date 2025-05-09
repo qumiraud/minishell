@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:35 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/06 12:29:03 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/05/08 12:30:46 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ typedef struct s_echo_data
 
 //*********SOURCES*********?/
 //**********MAIN.C************/
-int			main(int argc, char **argv/*, char **envp*/);
+int			main(void);
 void		print_tab(t_data *s_k);
 void		print_env(t_data *s_k);
 void		print_all(t_data *s_k);

@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 13:41:45 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/04/28 11:05:36 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/05/08 13:59:01 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ int	ft_exec_singlepipe(t_data *s_k)
 		close(s_k->pipefd1[0]);
 		dup2(s_k->pipefd1[1], STDOUT_FILENO);
 		close(s_k->pipefd1[1]);
+		//TODO :  check si c'est un built ou non.
+		//TODO :  si built-in alors appelle de la fonction sinon:
 		//TODO :  chercher le chemin de commande dans l'env, puis execve
 	}
 	pid = fork();

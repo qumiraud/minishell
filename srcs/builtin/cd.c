@@ -6,11 +6,13 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 14:22:04 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/07 16:50:11 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/05/09 11:48:38 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+// #include "libft/libft.h"
+
 
 char	*ft_getenv(const char *name, char **envp)
 {
@@ -120,3 +122,64 @@ int	ft_cd(char **args, char ***envp)
 	}
 	return (0);
 }
+
+// int	main(int argc, char **argv, char **env)
+// {
+// 	if (argc < 1)
+// 	{
+// 		argv[1] = NULL;
+// 		return (1);
+// 	}
+// 	char	**my_env;
+// 	char	*val;
+// 	char	*args1[] = {"cd", NULL};
+// 	char	*args2[] = {"cd", "..", NULL};
+// 	char	*args3[] = {"cd", "-", NULL};
+
+// 	// Clone de env pour test modifiable
+// 	int count = 0;
+// 	while (env[count])
+// 		count++;
+// 	my_env = malloc(sizeof(char *) * (count + 1));
+// 	for (int i = 0; i < count; i++)
+// 		my_env[i] = ft_strdup(env[i]);
+// 	my_env[count] = NULL;
+
+// 	printf("=== TEST getenv ===\n");
+// 	val = ft_getenv("PATH", my_env);
+// 	if (val)
+// 		printf("PATH = %s\n", val);
+// 	else
+// 		printf("PATH not found\n");
+// 	free(val);
+
+// 	printf("\n=== TEST setenv ===\n");
+// 	ft_setenv("MYTEST", "/home/user/test", &my_env);
+// 	val = ft_getenv("MYTEST", my_env);
+// 	printf("MYTEST = %s\n", val);
+// 	free(val);
+
+// 	printf("\n=== TEST cd (to HOME) ===\n");
+// 	ft_cd(args1, &my_env);
+// 	val = ft_getenv("PWD", my_env);
+// 	printf("PWD after cd: %s\n", val);
+// 	free(val);
+
+// 	printf("\n=== TEST cd .. ===\n");
+// 	ft_cd(args2, &my_env);
+// 	val = ft_getenv("PWD", my_env);
+// 	printf("PWD after cd ..: %s\n", val);
+// 	free(val);
+
+// 	printf("\n=== TEST cd - ===\n");
+// 	ft_cd(args3, &my_env);
+// 	val = ft_getenv("PWD", my_env);
+// 	printf("PWD after cd -: %s\n", val);
+// 	free(val);
+
+// 	// Libération de my_env
+// 	for (int i = 0; my_env[i]; i++)
+// 		free(my_env[i]);
+// 	free(my_env);
+// 	return 0;
+// }
