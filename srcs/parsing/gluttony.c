@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gluttony.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:20:50 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/04/28 09:45:40 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/05/09 06:36:11 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,41 @@ int	glt_count_letters(char *str)
 	quote = 0;
 	while (str[i] && word == 0)
 	{
+		// printf ("1_word : %d\n", word);
 		while (str[i] == 32 || (str[i] >= 8 && str[i] <= 13))
 		i++;
 		if (str[i] && (str[i] != 32 || (str[i] <= 8 || str[i] >= 13)))
 		{
 			// word++;
 			if (word == 1)
-			return (i);
+				return (i);
 			quote = 0;
 			while ((str[i] && (str[i] != 32 && (str[i] <= 8 || str[i] >= 13))))
 			{
+				// printf ("2_word : %d\n", word);
+				// usleep(500000);
+				if (i == 0 && ((str[i] == '>' && str[i + 1] == '>') || (str[i] == '<' && str[i + 1] == '<')))
+				{
+					i += 2;
+					return (i);
+				}
+				if (i != 0 && ((str[i] == '>' && str[i + 1] == '>') || (str[i] == '<' && str[i + 1] == '<')))
+				{
+					word = i; // modif a faire on peut pas laisser word
+					i += 2;
+					return (word);
+				}
+				if (i == 0 && (str[i] == '>' || str[i] =='<' || str[i] =='|'))
+				{
+					i++;
+					return (i);
+				}
+				if (i != 0 && (str[i] == '>' || str[i] =='<' || str[i] =='|'))
+				{
+					word = i;
+					i++;
+					return (word);
+				}
 				if (str[i] == '\'' || str[i] == '"')
 				{
 					// printf("HALLO???\n\n\n");
@@ -82,7 +107,7 @@ int	glt_count_letters(char *str)
 			word++;
 		}
 	}
-	// printf ("i : %d\n", i);
+	// printf ("glt_i : %d\n", i);
 	return (i);
 }
 
@@ -109,6 +134,31 @@ int	glt_count_words(const char *str)
 			quote = 0;
 			while ((str[i] && (str[i] != 32 && (str[i] <= 8 || str[i] >= 13))))
 			{
+				if ((str[i] == '>' && str[i + 1] == '>') || (str[i] == '<' && str[i + 1] == '<'))
+				{
+					if(str[i + 2] == ' ' || (str[i - 1] != ' ' && str[i + 2] != ' '))
+						word += 2;
+					else
+						word++;
+					if ((str[i - 1] == ' ' && str[i + 2] == ' '))
+						word--;
+					i += 2;
+				}
+				else if ((str[i] == '>' && str[i - 1] != ' ' && str[i + 1] != ' ')
+					|| (str[i] == '<' && str[i - 1] != ' ' && str[i + 1] != ' ')
+						|| (str[i] == '|' && str[i - 1] != ' ' && str[i + 1] != ' '))// || str[i] == '<' || str[i] == '|')
+				{
+					word +=2;
+				}
+				else if ((str[i] == '>' && str[i - 1] == ' ' && str[i + 1] != ' ')
+							|| (str[i] == '>' && str[i - 1] != ' ' && str[i + 1] == ' ')
+								|| (str[i] == '<' && str[i - 1] == ' ' && str[i + 1] != ' ')
+									|| (str[i] == '<' && str[i - 1] != ' ' && str[i + 1] == ' ')
+										|| (str[i] == '|' && str[i - 1] == ' ' && str[i + 1] != ' ')
+											|| (str[i] == '|' && str[i - 1] != ' ' && str[i + 1] == ' '))
+				{
+					word++;
+				}
 				if (str[i] == '\'' || str[i] == '"')
 				{
 					quote = 1;
@@ -144,7 +194,7 @@ int	glt_count_words(const char *str)
 			}
 		}
 	}
-	printf("\nword : %d\n\n", word);
+	// printf("\nglt_word : %d\n\n", word);
 	return (word);
 }
 
@@ -154,7 +204,7 @@ void	glt_copy_word(char *dest, char **src, int count_l)
 	int	i = 0;
 
 	// printf ("count_l : %d\n", count_l);
-
+	
 	while (**src && i != count_l)// && !((**src >= 8 && **src <= 13) || **src == 32))
 	{
 		// if (**src == '"' && **src == '\'')
@@ -176,6 +226,7 @@ void	glt_copy_word(char *dest, char **src, int count_l)
 void	fill_gluttony_tab(t_data **s_k, char *str)
 {
 	int	i;
+	// int	k;
 	int	count_l;
 	int	count_w;
 
@@ -183,7 +234,7 @@ void	fill_gluttony_tab(t_data **s_k, char *str)
 	(*s_k)->tab_len = 0;
 	count_w = 0;
 	count_w = glt_count_words(str);
-	printf ("count_w : %d\n\n", count_w);
+	// printf ("\nglt_count_w : %d\n", count_w);
 	(*s_k)->glutto_tab = malloc(sizeof(char *) * (count_w + 1));
 	while (str[0] == 32 || (str[0] >= 8  && str[0] <= 13 ))
 	{
@@ -191,9 +242,10 @@ void	fill_gluttony_tab(t_data **s_k, char *str)
 	}
 	while (str[0])
 	{
+		// k = 0;
 		count_l = 0;
 		count_l = glt_count_letters(str);
-		printf ("count_l : %d\n", count_l);
+		// printf ("glt_count_l : %d\n", count_l);
 		(*s_k)->glutto_tab[i] = malloc(sizeof(char) * (count_l + 1));
 		glt_copy_word((*s_k)->glutto_tab[i], &str, count_l);
 		if (count_l)

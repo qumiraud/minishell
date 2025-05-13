@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:35 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/08 12:30:46 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/05/09 11:08:38 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,33 @@ typedef struct s_lst_arg
 {
 	int					index;
 	char				*rl_arg;
+	// t_lst_arg			*cmd_arg;
+
+	char				*cmd_arg;
 	int					type;
 	struct s_lst_arg	*next;
 	struct s_lst_arg	*prev;
 }	t_lst_arg;
 
+
+// typedef struct s_cmd_arg
+// {
+
+
+
+
+
+	
+// }	t_cmg_arg;
+
+
+
+
 typedef struct s_data
 {
 	char		**rl_tab;
 	char		**glutto_tab;
+	char		**re_token;
 	char		**tab_env;//copie de envp//
 	int			tab_len;
 	int			pipefd1[2];
@@ -60,22 +78,46 @@ typedef struct s_data
 	int			stat_quo;
 	int			pipe_quo;
 	t_lst_arg	*rl_lst;
+	t_lst_arg	*cmd_arg;
 	t_lst_arg	*ws_lst;
 }	t_data;
 
-typedef struct s_echo_data
+
+
+
+
+
+
+
+
+#define MAX_ARGS 1024
+
+
+typedef struct s_cmd
 {
-	int	i;
-	int	j;
-	int	n;
-	int	n_def;
-}	t_echo_data;
+
+	// char *command;
+	int				argc;
+	char			*args[MAX_ARGS];
+	char			*input_file;
+	char			*output_file;
+	int				append;
+	int				here_doc; // '>>' = 1 ||| '>' = 0
+	int				nb_ope;
+	struct	s_cmd	*next;
+
+}				t_cmd;
+
+
+
+
+
 
 
 
 //*********SOURCES*********?/
 //**********MAIN.C************/
-int			main(void);
+int			main(int argc, char **argv, char **envp);
 void		print_tab(t_data *s_k);
 void		print_env(t_data *s_k);
 void		print_all(t_data *s_k);
@@ -90,6 +132,7 @@ void		rl_lst_addfront(t_lst_arg **lst, t_lst_arg *new);
 
 //**********TOKENIZE.C****/
 void		tokenize(char *str, t_lst_arg **token);
+// void		tokenize(t_data **s_k, t_lst_arg **token);
 int			is_whitespace(char c);
 
 //**********FILL_SUPREM_KNOWLEDGE.C****/
@@ -134,8 +177,15 @@ int	cmd_nt_fd(char *str);//, t_data **s_k);
 
 
 
+int	re_token_wd(t_data **s_k);
 
 
+
+
+void print_command_list(t_cmd *cmd_list);
+
+
+t_cmd *parse_cmd(char **token);
 
 
 

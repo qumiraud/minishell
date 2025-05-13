@@ -6,7 +6,7 @@
 /*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:06 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/04/24 14:07:35 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/05/09 12:22:56 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,37 +21,107 @@
 
 // }
 
-void	handle_str(char *str, t_data **s_k, t_lst_arg **token)
+void free_cmd(t_cmd *cmd)
+{
+	// tres problemes ca need correctifs asap
+	t_cmd *tmp;
+	int i;
+
+	i = 0;
+	while (cmd)
+	{
+		
+		// probleme sur des awd > awd > awd et aussi des awd | awd toi fatigue toi trouver quand energie plus
+		
+		
+		tmp = cmd->next;
+		printf ("cmd->argc : %d\n", cmd->argc);
+		printf ("cmd->nb_ope : %d\n", cmd->nb_ope);
+		while (i < (cmd->argc))//+ cmd->nb_ope))
+		{
+			
+			printf ("\n\n\nHALLO???\n\n\n");
+			free(cmd->args[i]);
+			cmd->args[i] = NULL;
+			i++;
+		//} <- while 
+
+			if (cmd->input_file)
+			{
+				free(cmd->input_file);
+				cmd->input_file = NULL;
+			}
+			if (cmd->output_file)
+			{
+				free(cmd->output_file);
+				cmd->output_file = NULL;
+			}
+		}
+
+		free(cmd);
+		cmd = tmp;
+
+
+	}
+}
+
+
+
+
+
+
+void	handle_str(char *str, t_data **s_k, t_lst_arg **token, t_cmd *cmd)
 {
 	add_history(str);
 	tokenize(str, token);
-	(*s_k)->rl_lst = (*token);
+	// (*s_k)->rl_lst = (*token);
 	fill_suprem_knowledge(s_k, str);
-	print_tab(*s_k);
+	// tokenize(s_k, token);
+	// (*s_k)->cmd_arg = (*token);
+	// re_token_wd(s_k);
+	
+	//t_cmd *
+	cmd = parse_cmd((*s_k)->rl_tab);
+
+	print_command_list(cmd);
+
+	// exec_command(cmd);
+
+	// print_tab(*s_k);
+
+
+	free_cmd(cmd);
+
+	print_command_list(cmd);
+
+	// free (cmd); // non pas la ???
 }
 
 void	handle_ending(t_data **s_k, t_lst_arg **token)
 {
 	free_data(s_k);
 	free(*s_k);
+	(*s_k) = NULL;
 	rl_lst_clear(token);
 	printf("exit\n");
 }
 
-int	handle_readline(char *str, t_data **s_k, t_lst_arg **token)
+int	handle_readline(char *str, t_data **s_k, t_lst_arg **token, t_cmd *cmd)
 {
 	int	i;
 	int	len;
 
 	i = 0;
-	len = (*s_k)->tab_len;
+	len = 0;
 	if (*str)
-			handle_str(str, s_k, token);
-	if ((*token) != NULL && !(strcmp((*token)->rl_arg, "exit")))
+		handle_str(str, s_k, token, cmd);
+	if ((*token) != NULL && !(ft_strncmp((*token)->rl_arg, "exit", 4)))
 	{
 		free(str);
+		str = NULL;
 		return (1);
 	}
+	len = (*s_k)->tab_len;
 	if (*str)
 	{
 		if ((*s_k)->rl_tab)
@@ -59,6 +129,7 @@ int	handle_readline(char *str, t_data **s_k, t_lst_arg **token)
 			while (i <= len)
 			{
 				free((*s_k)->rl_tab[i]);
+				(*s_k)->rl_tab[i] = NULL;
 				i++;
 			}
 			i = 0;
@@ -68,24 +139,71 @@ int	handle_readline(char *str, t_data **s_k, t_lst_arg **token)
 			while (i <= len)
 			{
 				free((*s_k)->glutto_tab[i]);
+				(*s_k)->glutto_tab[i] = NULL;
 				i++;
 			}
 		}
 		if ((*s_k)->glutto_tab)
+		{
 			free((*s_k)->glutto_tab);
+			(*s_k)->glutto_tab = NULL;
+		}
 		if ((*s_k)->rl_tab)
+		{
 			free((*s_k)->rl_tab);
+			(*s_k)->rl_tab = NULL;
+		}
 	}
+	// print_command_list(*cmd);
+	
+	
+	// if (cmd)
+	// {
+	// 	printf ("\n\n\nHALLO???\n\n\n");
+	// 	// if (cmd->args[cmd->argc])
+	// 	// {
+	// 	// 	while (cmd->args[cmd->argc])
+	// 	// 	{
+	// 	// 		free (cmd->args[cmd->argc]);
+	// 	// 		cmd->args[cmd->argc] = NULL;
+	// 	// 		cmd->args[cmd->argc++];
+	// 	// 	}
+
+
+	// 	// }
+
+
+
+	// 	free (cmd);
+	// }
+
+
+	
 	return (0);
 }
+
+// void	handle_cmd_list(char **token)
+// {
+// 	// parse_cmd(token);
+
+// 	// print_command_list(cmd);
+
+
+
+
+// }
+
+
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_data		*suprem_knowledge;
 	t_lst_arg	*token;
+	t_cmd		*cmd;
 	char		*str;
 
 	str = NULL;
+	cmd = NULL;
 	if (argc > 1)
 	{
 		argv[0] = NULL;
@@ -105,7 +223,7 @@ int	main(int argc, char **argv, char **envp)
 			continue;
 		}
 		pipe_quota(str, &suprem_knowledge);
-		if (cmd_nt_fd(str) != 0) //, &suprem_knowledge) != 0)
+		if (cmd_nt_fd(str) != 0)
 		{
 			add_history(str);
 			continue;
@@ -117,11 +235,13 @@ int	main(int argc, char **argv, char **envp)
 			continue;
 		}
 
-		if (handle_readline(str, &suprem_knowledge, &token) == 1)
+		if (handle_readline(str, &suprem_knowledge, &token, cmd) == 1)
 			break;
-		handle_exec(suprem_knowledge);
+		// handle_cmd_list(suprem_knowledge->rl_tab);
+		// handle_exec(suprem_knowledge);
 		rl_lst_clear(&token);
 		free (str);
+		str = NULL;
 	}
 	handle_ending(&suprem_knowledge, &token);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 13:53:00 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/04/24 14:24:35 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/05/08 13:00:06 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,31 @@ int	count_words(const char *str)
 			quote = 0;
 			while ((str[i] && (str[i] != 32 && (str[i] <= 8 || str[i] >= 13))))
 			{
+				if ((str[i] == '>' && str[i + 1] == '>') || (str[i] == '<' && str[i + 1] == '<'))
+				{
+					if(str[i + 2] == ' ' || (str[i - 1] != ' ' && str[i + 2] != ' '))
+						word += 2;
+					else
+						word++;
+					if ((str[i - 1] == ' ' && str[i + 2] == ' '))
+						word--;
+					i += 2;
+				}
+				else if ((str[i] == '>' && str[i - 1] != ' ' && str[i + 1] != ' ')
+					|| (str[i] == '<' && str[i - 1] != ' ' && str[i + 1] != ' ')
+						|| (str[i] == '|' && str[i - 1] != ' ' && str[i + 1] != ' '))// || str[i] == '<' || str[i] == '|')
+				{
+					word +=2;
+				}
+				else if ((str[i] == '>' && str[i - 1] == ' ' && str[i + 1] != ' ')
+							|| (str[i] == '>' && str[i - 1] != ' ' && str[i + 1] == ' ')
+								|| (str[i] == '<' && str[i - 1] == ' ' && str[i + 1] != ' ')
+									|| (str[i] == '<' && str[i - 1] != ' ' && str[i + 1] == ' ')
+										|| (str[i] == '|' && str[i - 1] == ' ' && str[i + 1] != ' ')
+											|| (str[i] == '|' && str[i - 1] != ' ' && str[i + 1] == ' '))
+				{
+					word++;
+				}
 				if (str[i] == '\'' || str[i] == '"')
 				{
 					quote = 1;

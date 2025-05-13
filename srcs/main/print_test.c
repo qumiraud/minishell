@@ -47,9 +47,80 @@ void	print_env(t_data *s_k)
 	return;
 }
 
+
+
 void	print_all(t_data *s_k)
 {
 	print_tab(s_k);
 	print_env(s_k);
 	return;
 }
+
+
+
+
+
+
+
+
+
+
+void print_command_list(t_cmd *cmd_list)
+{
+	int i;
+	int cmd_num = 1;
+
+
+	printf("\n\nIN print_command_list\n\n");
+	while (cmd_list)
+	{
+        printf("=== Commande %d ===\n", cmd_num);
+
+		// Affichage des arguments
+		printf("Arguments :");
+		if (cmd_list->argc == 0)
+		{
+			printf(" (aucun)\n");
+		}
+		else
+		{
+			for (i = 0; i < cmd_list->argc; i++)
+			{
+				printf(" '%s'", cmd_list->args[i]);
+			}
+			printf("\n");
+		}
+
+		// Fichier d'entrée
+		if (cmd_list->input_file)
+			printf("Fichier d'entrée : '%s'\n", cmd_list->input_file);
+		else
+			printf("Fichier d'entrée : (aucun)\n");
+
+		// Fichier de sortie
+		if (cmd_list->output_file)
+		{
+			printf("Fichier de sortie : '%s'\n", cmd_list->output_file);
+			printf("Mode d'écriture   : %s\n", cmd_list->here_doc ? "append (>>)" : "overwrite (>)");
+		}
+		else
+		{
+			printf("Fichier de sortie : (aucun)\n");
+		}
+
+		// Passage à la commande suivante (pipe)
+		if (cmd_list->next)
+			printf("Piped vers la commande suivante.\n");
+		else
+			printf("Pas de commande suivante.\n");
+
+		printf("\n");
+		cmd_list = cmd_list->next;
+		cmd_num++;
+	}
+}
+
+
+
+
+
