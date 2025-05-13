@@ -51,18 +51,6 @@ typedef struct s_lst_arg
 }	t_lst_arg;
 
 
-// typedef struct s_cmd_arg
-// {
-
-
-
-
-
-	
-// }	t_cmg_arg;
-
-
-
 
 typedef struct s_data
 {
@@ -83,10 +71,13 @@ typedef struct s_data
 }	t_data;
 
 
-
-
-
-
+typedef struct s_echo_data
+{
+	int	i;
+	int	j;
+	int	n;
+	int	n_def;
+}	t_echo_data;
 
 
 
@@ -141,7 +132,7 @@ void 		free_data(t_data **s_k);
 void		fill_suprem_knowledge(t_data **s_k, char *str);
 void		fill_s_k_tab(t_data **s_k, char *str);
 // int			count_letters(int k, int count, char *str);
-int	count_letters(char *str);
+int			count_letters(char *str);
 
 //**********GLUTTONY.C*******************************************/
 int		glt_count_letters(char *str);
