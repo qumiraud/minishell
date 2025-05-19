@@ -6,7 +6,7 @@
 /*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:35 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/09 11:08:38 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/05/15 11:31:42 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,36 +51,6 @@ typedef struct s_lst_arg
 }	t_lst_arg;
 
 
-
-typedef struct s_data
-{
-	char		**rl_tab;
-	char		**glutto_tab;
-	char		**re_token;
-	char		**tab_env;//copie de envp//
-	int			tab_len;
-	int			pipefd1[2];
-	int			pipefd2[2];
-	int			pipe_nbr;
-	void		*pid;
-	int			stat_quo;
-	int			pipe_quo;
-	t_lst_arg	*rl_lst;
-	t_lst_arg	*cmd_arg;
-	t_lst_arg	*ws_lst;
-}	t_data;
-
-
-typedef struct s_echo_data
-{
-	int	i;
-	int	j;
-	int	n;
-	int	n_def;
-}	t_echo_data;
-
-
-
 #define MAX_ARGS 1024
 
 
@@ -102,12 +72,45 @@ typedef struct s_cmd
 
 
 
+typedef struct s_data
+{
+	char		**rl_tab;
+	char		**glutto_tab;
+	char		**re_token;
+	char		**tab_env;//copie de envp//
+	int			tab_len;
+	int			pipefd1[2];
+	int			pipefd2[2];
+	int			pipe_nbr;
+	void		*pid;
+	int			stat_quo;
+	int			pipe_quo;
+	t_lst_arg	*rl_lst;
+	t_lst_arg	*cmd_arg;
+	t_lst_arg	*ws_lst;
+	t_cmd		*cmd;
+}	t_data;	
+
+
+typedef struct s_echo_data
+{
+	int	i;
+	int	j;
+	int	n;
+	int	n_def;
+}	t_echo_data;	
+
+
+
+
 
 
 
 
 //*********SOURCES*********?/
-//**********MAIN.C************/
+
+
+//**********MAIN.C*************************************************/
 int			main(int argc, char **argv, char **envp);
 void		print_tab(t_data *s_k);
 void		print_env(t_data *s_k);
@@ -115,18 +118,27 @@ void		print_all(t_data *s_k);
 
 
 
-//**********LST_UTILS.C*******/
+//**********LST_UTILS.C********************************************/
 void		rl_lst_addback(t_lst_arg **lst, t_lst_arg *new);
 t_lst_arg	*rl_lst_new(char *start, char *str, int i);
 void		rl_lst_clear(t_lst_arg **lst);
 void		rl_lst_addfront(t_lst_arg **lst, t_lst_arg *new);
 
-//**********TOKENIZE.C****/
+
+
+
+
+
+//**********TOKENIZE.C*********************************************/
 void		tokenize(char *str, t_lst_arg **token);
 // void		tokenize(t_data **s_k, t_lst_arg **token);
 int			is_whitespace(char c);
 
-//**********FILL_SUPREM_KNOWLEDGE.C****/
+
+
+
+
+//**********FILL_SUPREM_KNOWLEDGE.C********************************/
 void		init_suprem_knowledge(t_data **s_k, char **envp);
 void 		free_data(t_data **s_k);
 void		fill_suprem_knowledge(t_data **s_k, char *str);
@@ -134,7 +146,11 @@ void		fill_s_k_tab(t_data **s_k, char *str);
 // int			count_letters(int k, int count, char *str);
 int			count_letters(char *str);
 
-//**********GLUTTONY.C*******************************************/
+
+
+
+
+//**********GLUTTONY.C*********************************************/
 int		glt_count_letters(char *str);
 int		glt_count_words(const char *str);
 void	fill_tabs(t_data **s_k, char *str);
@@ -142,7 +158,10 @@ void	fill_gluttony_tab(t_data **s_k, char *str);
 void	glt_copy_word(char *dest, char **src, int count_l);
 
 
-//**********UTILS.C****/
+
+
+
+//**********UTILS.C************************************************/
 int			count_words(const char *str);
 void		copy_word(char *dest, char **src, int count_l);
 void		free_tab(char **tab);
@@ -150,10 +169,17 @@ void		free_tab(char **tab);
 int	quote_verif(char *str, t_data **s_k);
 int	pipe_quota(char *str, t_data **s_k);
 
-//**********FILL_TAB_ENV.C****/
+
+
+
+
+//**********FILL_TAB_ENV.C*****************************************/
 void		fill_tab_env(t_data **s_k, char **envp);
 
-//**********EXEC_DIRECTORY****/
+
+
+
+//**********EXEC_DIRECTORY*****************************************/
 int			init_pipefd(int *pipefd);
 int			handle_exec(t_data *s_k);
 int			ft_exec_multipipe(t_data *s_k);
@@ -162,8 +188,15 @@ int			ft_exec_nopipe(t_data *s_k);
 char		*get_way(char **env, char **rl_tab);
 
 
-//**********CMD_NT_FD.C****************************************/
+//**********CMD_NT_FD.C********************************************/
 int	cmd_nt_fd(char *str);//, t_data **s_k);
+
+
+
+//**********SIGNALS.C**********************************************/
+
+void	setup_signal(void);
+
 
 
 

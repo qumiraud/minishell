@@ -91,8 +91,41 @@ t_cmd *parse_cmd(char **token)
 			// current->argc++;
 		
 		}
+		else if (ft_strncmp(token[i], "<<", 2) == 0 && token[i + 1])
+		{
+			if (current->output_file)
+			{
+				free (current->output_file);
+				current->output_file = NULL;
+			}
+			current->output_file = ft_strdup(token[i + 1]);
+			current->append = 1;
+			i += 2;
+			current->nb_ope++;
+			// current->argc++;
+
+		}
+		else if (ft_strncmp(token[i], ">>", 2) == 0 && token[i + 1])
+		{
+			if (current->input_file)
+			{
+				free (current->input_file);
+				current->input_file = NULL;
+			}
+			current->input_file = ft_strdup(token[i + 1]);
+			current->here_doc = 1;
+			i += 2;
+			current->nb_ope++;
+			// current->argc++;
+
+		}
 		else if (ft_strncmp(token[i], "<", 1) == 0 && token[i + 1])
 		{
+			if (current->input_file)
+			{
+				free (current->input_file);
+				current->input_file = NULL;
+			}
 			current->input_file = ft_strdup(token[i + 1]);
 			i += 2;
 			current->nb_ope++;
@@ -103,26 +136,13 @@ t_cmd *parse_cmd(char **token)
 		}
 		else if (ft_strncmp(token[i], ">", 1) == 0 && token[i + 1])
 		{
+			if (current->output_file)
+			{
+				free (current->output_file);
+				current->output_file = NULL;
+			}
 			current->output_file = ft_strdup(token[i + 1]);
 			current->append = 0;
-			i += 2;
-			current->nb_ope++;
-			// current->argc++;
-
-		}
-		else if (ft_strncmp(token[i], ">>", 2) == 0 && token[i + 1])
-		{
-			current->output_file = ft_strdup(token[i + 1]);
-			current->append = 1;
-			i += 2;
-			current->nb_ope++;
-			// current->argc++;
-
-		}
-		else if (ft_strncmp(token[i], ">>", 2) == 0 && token[i + 1])
-		{
-			current->input_file = ft_strdup(token[i + 1]);
-			current->here_doc = 1;
 			i += 2;
 			current->nb_ope++;
 			// current->argc++;

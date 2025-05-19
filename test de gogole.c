@@ -28,9 +28,13 @@ s Fgdrg g drg dthsthxfth
 
 
 
+ls>out |cat -e | rev | grep "$"<in|rev|cat|ls | a | ls<truc >> apend << heredoc | plein de trucs avec des espaces en + "couc ou  "             tab     |dw>d< sd
 
 
+ls>out |cat -e | rev | grep "$" <in|rev|cat|ls | a | ls<truc >> apend << heredoc | plein de trucs avec des espaces en + "couc ou  "              tab |dw>d< sd
 
+
+ls<truc >> apend << heredoc
 
 
 
@@ -159,7 +163,34 @@ exit
 
 */
 
-/**/
+/*
+
+
+==292635== 
+==292635== HEAP SUMMARY:
+==292635==     in use at exit: 208,558 bytes in 232 blocks
+==292635==   total heap usage: 813 allocs, 581 frees, 254,140 bytes allocated
+==292635== 
+==292635== 5 bytes in 1 blocks are definitely lost in loss record 1 of 70
+==292635==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==292635==    by 0x405A60: ft_calloc (in /home/pjurdana/Desktop/Tronc commun/minishell_pl/minishell)
+==292635==    by 0x40534C: ft_strdup (in /home/pjurdana/Desktop/Tronc commun/minishell_pl/minishell)
+==292635==    by 0x405069: parse_cmd (tokens_to_list.c:96)
+==292635==    by 0x401369: handle_str (main.c:92)
+==292635==    by 0x401447: handle_readline (main.c:129)
+==292635==    by 0x401750: main (main.c:250)
+==292635== 
+==292635== LEAK SUMMARY:
+==292635==    definitely lost: 5 bytes in 1 blocks
+==292635==    indirectly lost: 0 bytes in 0 blocks
+==292635==      possibly lost: 0 bytes in 0 blocks
+==292635==    still reachable: 0 bytes in 0 blocks
+==292635==         suppressed: 208,553 bytes in 231 blocks
+==292635== 
+==292635== For lists of detected and suppressed errors, rerun with: -s
+
+
+*/
 
 
 /**/

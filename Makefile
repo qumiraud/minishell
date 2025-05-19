@@ -6,7 +6,7 @@
 #    By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/24 08:15:59 by qumiraud          #+#    #+#              #
-#    Updated: 2025/04/24 14:27:03 by pjurdana         ###   ########.fr        #
+#    Updated: 2025/05/15 11:33:18 by pjurdana         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,10 @@ SRC = 	srcs/main/main.c\
 		srcs/exec/ft_exec.c\
 		srcs/exec/pathway.c\
 		srcs/parsing/gluttony.c\
-		srcs/parsing/cmd_nt_fd.c
+		srcs/parsing/cmd_nt_fd.c\
+		srcs/parsing/tokens_to_list.c\
+		srcs/parsing/re_token.c\
+		srcs/signals/signals.c\
 
 
 INC = includes
