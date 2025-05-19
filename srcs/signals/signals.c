@@ -16,7 +16,7 @@ void	signal_handler(int signal)
 {
 	(void)signal;
 	printf("\n");
-	rl_replace_line("exit"/*""*/, 0); // temporaire ca doit rien ecrire ca juste des guillemets !!!!
+	rl_replace_line("", 0); // temporaire ca doit rien ecrire ca juste des guillemets !!!!
 	rl_on_new_line();
 	rl_redisplay();	
 }

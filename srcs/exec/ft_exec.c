@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 13:41:45 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/09 06:45:40 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/05/19 15:47:45 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,33 +113,58 @@ int	ft_exec_singlepipe(t_data *s_k)
 	return (0);
 }
 
-int	ft_exec_nopipe(t_data *s_k)
+int	ft_exec_nopipe(t_data *s_k, t_cmd *cmd)
 {
 	pid_t	pid;
+	int		fd1;
 	char	*pathway;
 
-	pid = fork();
-	if (pid == -1)
-	return (1);
-	else if (pid == 0)
+	fd1 = 0; // Tout passer dans un processus fils 
+	if (!cmd->args[0])
+		return (0);
+	if (cmd->output_file)
 	{
-		pathway = ft_strdup(get_way(s_k->tab_env, s_k->rl_tab));
-		printf("%s\n", pathway);
-		printf("apres pathway, dans exec_nopipe\n");
+		fd1 = open(cmd->output_file, O_RDWR | O_CREAT, 0644);
+		dup2(fd1, STDOUT_FILENO);
 	}
-	wait (NULL);
+	if (ft_is_builtin(cmd->args[0]))
+		ft_exec_builtin(s_k, cmd);
+	else
+	{
+		pid = fork();
+		if (pid == -1)
+			return (1);
+		else if (pid == 0)
+		{
+			pathway = ft_strdup(get_way(s_k->tab_env, s_k->rl_tab));
+
+			// printf("%s\n", pathway);
+			printf("apres pathway, dans exec_nopipe\n");
+			if (execve(pathway, cmd->args, s_k->tab_env) == -1)
+			{
+				free (pathway);
+				perror("execve:");
+			}
+		}
+		// dup2(STDOUT_FILENO, fd1);
+		close (fd1);
+
+		wait (NULL);
+	}
+	// dup2(STDOUT_FILENO, fd1);
+	// close (fd1);
 	return (0);
 }
 
-int	handle_exec(t_data *s_k)
+int	handle_exec(t_data *s_k, t_cmd *cmd)
 {
-	printf("passage par handle_exec\n");
+	printf("passage par handle_exec\n\n\n");
 	if (s_k->pipe_nbr > 1)
 		ft_exec_multipipe(s_k);
-	//else if (s_k->pipe_nbr == 1)
-	//	ft_exec_singlepipe(s_k);
+	else if (s_k->pipe_nbr == 1)
+		ft_exec_singlepipe(s_k);
 	else if (s_k->pipe_nbr == 0)
-		ft_exec_nopipe(s_k);
+		ft_exec_nopipe(s_k, cmd);
 	return (0);
 }
 

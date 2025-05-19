@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pathway.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 09:41:48 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/09 06:45:43 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:15:41 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*get_way(char **env, char **rl_tab)
 		}
 		i++;
 	}
-	return (NULL);
+	return (rl_tab[0]);
 }
 
 // int	main(int argc, char **argv, char **envp)

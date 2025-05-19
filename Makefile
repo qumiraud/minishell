@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+         #
+#    By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/24 08:15:59 by qumiraud          #+#    #+#              #
-#    Updated: 2025/05/15 11:33:18 by pjurdana         ###   ########.fr        #
+#    Updated: 2025/05/19 12:34:51 by qumiraud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,11 +24,20 @@ SRC = 	srcs/main/main.c\
 		srcs/parsing/fill_tab_env.c\
 		srcs/exec/ft_exec.c\
 		srcs/exec/pathway.c\
+		srcs/exec/utils_exec.c\
 		srcs/parsing/gluttony.c\
 		srcs/parsing/cmd_nt_fd.c\
 		srcs/parsing/tokens_to_list.c\
 		srcs/parsing/re_token.c\
 		srcs/signals/signals.c\
+		srcs/builtin/echo.c\
+		srcs/builtin/cd.c\
+		srcs/builtin/pwd.c\
+		srcs/builtin/export.c\
+		srcs/builtin/unset.c\
+		srcs/builtin/env.c\
+
+
 
 
 INC = includes

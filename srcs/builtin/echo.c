@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:34:30 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/05 14:44:31 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/05/19 11:27:28 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,13 @@ int	ft_echo(char **str)
 	return (0);
 }
 
-int	main(int argc, char **argv)
-{
-	if (argc < 2)
-		return (1);
-	else
-	{
-		ft_echo(argv + 1);
-		return (0);
-	}
-}
+// int	main(int argc, char **argv)
+// {
+// 	if (argc < 2)
+// 		return (1);
+// 	else
+// 	{
+// 		ft_echo(argv + 1);
+// 		return (0);
+// 	}
+// }
