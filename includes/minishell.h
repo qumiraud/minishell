@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:35 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/19 14:02:30 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/05/20 12:20:21 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ typedef struct s_cmd
 	char			*args[MAX_ARGS];
 	char			*input_file;
 	char			*output_file;
-	int				append;
-	int				here_doc; // '>>' = 1 ||| '>' = 0
+	int				append; // '>>' = 1 ||| '>' = 0
+	int				here_doc; // '<<' = 1 ||| '>' = 0
 	int				nb_ope;
 	struct	s_cmd	*next;
 
@@ -115,6 +115,8 @@ int			main(int argc, char **argv, char **envp);
 void		print_tab(t_data *s_k);
 void		print_env(t_data *s_k);
 void		print_all(t_data *s_k);
+void		free_cmd(t_cmd *cmd);
+
 
 
 

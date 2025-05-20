@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 13:41:45 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/19 15:47:45 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/05/20 12:23:37 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,46 +119,73 @@ int	ft_exec_nopipe(t_data *s_k, t_cmd *cmd)
 	int		fd1;
 	char	*pathway;
 
-	fd1 = 0; // Tout passer dans un processus fils 
-	if (!cmd->args[0])
-		return (0);
-	if (cmd->output_file)
+	// printf("cmd_outputfile: %s\n", cmd->output_file);
+	pid = fork();
+	fd1 = 0; // Tout passer dans un processus fils
+	if (pid == -1)
+	return (1);
+	else if (pid == 0)
 	{
-		fd1 = open(cmd->output_file, O_RDWR | O_CREAT, 0644);
-		dup2(fd1, STDOUT_FILENO);
-	}
-	if (ft_is_builtin(cmd->args[0]))
-		ft_exec_builtin(s_k, cmd);
-	else
-	{
-		pid = fork();
-		if (pid == -1)
-			return (1);
-		else if (pid == 0)
+		if (!cmd->args[0] && !cmd->output_file)
+		{
+			// printf("passage par exec_nopipe\n");
+			return (0);
+		}
+		if (cmd->output_file)
+		{
+			if (cmd->append == 0)
+			{
+				// printf("if - cmd->append : %d\n", cmd->append);
+				fd1 = open(cmd->output_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+				if (fd1 == -1)
+					return (1);
+				dup2(fd1, STDOUT_FILENO);
+				close (fd1);
+
+			}
+			else
+			{
+				// printf("else - cmd->append : %d\n", cmd->append);
+				fd1 = open(cmd->output_file, O_RDWR | O_CREAT | O_APPEND, 0644);
+				if (fd1 == -1)
+					return (1);
+				dup2(fd1, STDOUT_FILENO);
+				close (fd1);
+			}
+
+		}
+		if (ft_is_builtin(cmd->args[0]))
+			ft_exec_builtin(s_k, cmd);
+			// printf("apres pathway, dans exec_nopipe\n");
+		else
 		{
 			pathway = ft_strdup(get_way(s_k->tab_env, s_k->rl_tab));
-
-			// printf("%s\n", pathway);
-			printf("apres pathway, dans exec_nopipe\n");
-			if (execve(pathway, cmd->args, s_k->tab_env) == -1)
+			if (!pathway)
 			{
-				free (pathway);
-				perror("execve:");
+				perror("command not found");
+				free_data(&s_k);
+				free_cmd(cmd);
+				exit (127);
 			}
+			if (execve(pathway, cmd->args, s_k->tab_env) == -1)
+			free (pathway);
+			perror("execve:");
 		}
-		// dup2(STDOUT_FILENO, fd1);
-		close (fd1);
-
+		free_data(&s_k);
+		free(s_k);
+		free_cmd(cmd);
+		exit(0);
+	}
+	else
+	{
 		wait (NULL);
 	}
-	// dup2(STDOUT_FILENO, fd1);
-	// close (fd1);
 	return (0);
 }
 
 int	handle_exec(t_data *s_k, t_cmd *cmd)
 {
-	printf("passage par handle_exec\n\n\n");
+	// printf("passage par handle_exec\n");
 	if (s_k->pipe_nbr > 1)
 		ft_exec_multipipe(s_k);
 	else if (s_k->pipe_nbr == 1)

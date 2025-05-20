@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 12:53:23 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/05/19 15:46:48 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/05/20 12:10:04 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,20 +91,18 @@ t_cmd *parse_cmd(char **token)
 			// current->argc++;
 
 		}
-		else if (ft_strncmp(token[i], "<", 1) == 0 && token[i + 1])
+		else if (ft_strncmp(token[i], ">>", 2) == 0 && token[i + 1])
 		{
-			if (current->input_file)
+			if (current->output_file)
 			{
-				free (current->input_file);
-				current->input_file = NULL;
+				free (current->output_file);
+				current->output_file = NULL;
 			}
-			current->input_file = ft_strdup(token[i + 1]);
+			current->output_file = ft_strdup(token[i + 1]);
+			current->append = 1;
 			i += 2;
 			current->nb_ope++;
-			// printf ("HALLO \n\n\n\n");
-			// current->argc++; // a voir si je peux pas
-			//le mettre dans la while et pas les if
-			//agif a arg_to_cmd 09/05/2025
+			// current->argc++;
 
 		}
 		else if (ft_strncmp(token[i], ">", 1) == 0 && token[i + 1])
@@ -125,20 +123,6 @@ t_cmd *parse_cmd(char **token)
 		}
 		else if (ft_strncmp(token[i], "<<", 2) == 0 && token[i + 1])
 		{
-			if (current->output_file)
-			{
-				free (current->output_file);
-				current->output_file = NULL;
-			}
-			current->output_file = ft_strdup(token[i + 1]);
-			current->append = 1;
-			i += 2;
-			current->nb_ope++;
-			// current->argc++;
-
-		}
-		else if (ft_strncmp(token[i], ">>", 2) == 0 && token[i + 1])
-		{
 			if (current->input_file)
 			{
 				free (current->input_file);
@@ -149,6 +133,22 @@ t_cmd *parse_cmd(char **token)
 			i += 2;
 			current->nb_ope++;
 			// current->argc++;
+
+		}
+		else if (ft_strncmp(token[i], "<", 1) == 0 && token[i + 1])
+		{
+			if (current->input_file)
+			{
+				free (current->input_file);
+				current->input_file = NULL;
+			}
+			current->input_file = ft_strdup(token[i + 1]);
+			i += 2;
+			current->nb_ope++;
+			// printf ("HALLO \n\n\n\n");
+			// current->argc++; // a voir si je peux pas
+			//le mettre dans la while et pas les if
+			//agif a arg_to_cmd 09/05/2025
 
 		}
 		else

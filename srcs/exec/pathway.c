@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 09:41:48 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/19 13:15:41 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/05/20 10:53:17 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ char	*get_way(char **env, char **rl_tab)
 			pathtab = ft_split(&env[i][5], ':');
 			while (pathtab[j])
 			{
-				printf("test\n");
+				// printf("test\n");
 				tmp = ft_strjoin(pathtab[j], "/");
-				printf("tmp :%s\n", tmp);
+				// printf("tmp :%s\n", tmp);
 				absolut_path = ft_strjoin(tmp, rl_tab[0]);
-				printf(" %s <---tmp | %s <---find\n", tmp, absolut_path);
+				// printf(" %s <---tmp | %s <---find\n", tmp, absolut_path);
 				if (access(absolut_path, X_OK) == 0)
 				{
-					printf("%s <---find and is X_OK\n", absolut_path);
+					// printf("%s <---find and is X_OK\n", absolut_path);
 					free(pathtab);
 					return (absolut_path);
 				}
@@ -52,7 +52,7 @@ char	*get_way(char **env, char **rl_tab)
 		}
 		i++;
 	}
-	return (rl_tab[0]);
+	return (NULL);
 }
 
 // int	main(int argc, char **argv, char **envp)

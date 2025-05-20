@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:06 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/19 15:47:21 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/05/20 12:22:05 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,8 +166,9 @@ void free_cmd(t_cmd *cmd)
 void	handle_str(char *str, t_data **s_k, t_lst_arg **token, t_cmd *cmd)
 {
 	add_history(str);
-	tokenize(str, token);
+	// tokenize(str, token);
 	// (*s_k)->rl_lst = (*token);
+	(void)token;
 	fill_suprem_knowledge(s_k, str);
 	// tokenize(s_k, token);
 	// (*s_k)->cmd_arg = (*token);
@@ -182,7 +183,7 @@ void	handle_str(char *str, t_data **s_k, t_lst_arg **token, t_cmd *cmd)
 
 
 
-	 print_command_list(cmd);
+	//  print_command_list(cmd);
 
 	// exec_command(cmd);
 
