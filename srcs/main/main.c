@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yeten <yeten@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:06 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/20 12:22:05 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/05/20 12:31:48 by yeten            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,7 @@ void free_cmd(t_cmd *cmd)
 
 void	handle_str(char *str, t_data **s_k, t_lst_arg **token, t_cmd *cmd)
 {
+	str++; // verifier que ca ne pose pas de probleme c'est pour supprimer l'espace rajouter, pour qu'il ne soit pas dans le add history
 	add_history(str);
 	// tokenize(str, token);
 	// (*s_k)->rl_lst = (*token);
@@ -297,6 +298,25 @@ int	handle_readline(char *str, t_data **s_k, t_lst_arg **token, t_cmd *cmd)
 
 // }
 
+char *input_with_space(char *str)
+{
+	int len;
+	char *new_str;
+
+	if (!str)
+		return NULL;
+	len = ft_strlen(str);
+	new_str = malloc(len + 2);
+	if (!new_str)
+		return NULL;
+	new_str[0] = ' ';
+	ft_strcpy(str, new_str + 1);
+	free(str);
+	return new_str;
+}
+
+
+
 
 
 int	main(int argc, char **argv, char **envp)
@@ -326,6 +346,10 @@ int	main(int argc, char **argv, char **envp)
 			printf("exit\n");
 			handle_ending(&suprem_knowledge, &token);
 			return (0);
+		}
+		if (str)
+		{
+			str = input_with_space(str);
 		}
 		if (quote_verif(str,&suprem_knowledge) != 0)
 		{
