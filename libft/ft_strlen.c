@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:52:51 by qumiraud          #+#    #+#             */
-/*   Updated: 2024/10/24 09:43:18 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/05/21 11:50:23 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 size_t	ft_strlen(const char *s)
 {
-	const char	*len;
+	size_t	i;
 
-	len = s;
-	while (*len)
+	i = 0;
+	while (s[i])
 	{
-		len++;
+		i++;
 	}
-	return (len - s);
+	return (i);
 }

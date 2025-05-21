@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 13:41:45 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/21 10:50:59 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/05/21 13:43:54 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ int	ft_exec_nopipe(t_data *s_k, t_cmd *cmd)
 		if (cmd->input_file)
 		{
 			fd_in = open(cmd->input_file, O_RDONLY);
-			printf("Input file: %s\n", cmd->input_file);
+			// printf("Input file: %s\n", cmd->input_file);
 			if (fd_in == -1)
 			{
 				perror("open input_file");
@@ -145,7 +145,7 @@ int	ft_exec_nopipe(t_data *s_k, t_cmd *cmd)
 			}
 			dup2(fd_in, STDIN_FILENO);
 			close(fd_in);
-			printf("Redirection stdin réussie vers %s\n", cmd->input_file);
+			// printf("Redirection stdin réussie vers %s\n", cmd->input_file);
 		}
 		if (cmd->output_file)
 		{
@@ -163,13 +163,14 @@ int	ft_exec_nopipe(t_data *s_k, t_cmd *cmd)
 		else
 		{
 			pathway = ft_strdup(get_way(s_k->tab_env, cmd->args));
-			printf("cmd->args : %s\n", cmd->args[0]);
-			printf("pathway : %s\n", pathway);
+			// printf("cmd->args : %s\n", cmd->args[0]);
+			// printf("pathway : %s\n", pathway);
 			if (!pathway)
 			{
 				perror("command not found");
 				free_data(&s_k);
 				free_cmd(cmd);
+				free(s_k);
 				exit (127);
 			}
 			if (execve(pathway, cmd->args, s_k->tab_env) == -1)
