@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 13:41:45 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/20 12:23:37 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/05/21 10:50:59 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,50 +116,55 @@ int	ft_exec_singlepipe(t_data *s_k)
 int	ft_exec_nopipe(t_data *s_k, t_cmd *cmd)
 {
 	pid_t	pid;
-	int		fd1;
+	int		fd_in;
+	int		fd_out;
 	char	*pathway;
 
+
+	fd_out = 0;
+	fd_in = 0;
+	if (ft_is_builtin(cmd->args[0]) && !cmd->input_file && !cmd->output_file)
+	{
+		ft_exec_builtin(s_k, cmd);
+		return (0);
+	}
 	// printf("cmd_outputfile: %s\n", cmd->output_file);
 	pid = fork();
-	fd1 = 0; // Tout passer dans un processus fils
 	if (pid == -1)
-	return (1);
+		return (1);
 	else if (pid == 0)
 	{
-		if (!cmd->args[0] && !cmd->output_file)
+		if (cmd->input_file)
 		{
-			// printf("passage par exec_nopipe\n");
-			return (0);
+			fd_in = open(cmd->input_file, O_RDONLY);
+			printf("Input file: %s\n", cmd->input_file);
+			if (fd_in == -1)
+			{
+				perror("open input_file");
+				exit(1);
+			}
+			dup2(fd_in, STDIN_FILENO);
+			close(fd_in);
+			printf("Redirection stdin réussie vers %s\n", cmd->input_file);
 		}
 		if (cmd->output_file)
 		{
 			if (cmd->append == 0)
-			{
-				// printf("if - cmd->append : %d\n", cmd->append);
-				fd1 = open(cmd->output_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-				if (fd1 == -1)
-					return (1);
-				dup2(fd1, STDOUT_FILENO);
-				close (fd1);
-
-			}
+				fd_out = open(cmd->output_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 			else
-			{
-				// printf("else - cmd->append : %d\n", cmd->append);
-				fd1 = open(cmd->output_file, O_RDWR | O_CREAT | O_APPEND, 0644);
-				if (fd1 == -1)
-					return (1);
-				dup2(fd1, STDOUT_FILENO);
-				close (fd1);
-			}
-
+				fd_out = open(cmd->output_file, O_RDWR | O_CREAT | O_APPEND, 0644);
+			if (fd_out == -1)
+			return (1);
+			dup2(fd_out, STDOUT_FILENO);
+			close (fd_out);
 		}
 		if (ft_is_builtin(cmd->args[0]))
 			ft_exec_builtin(s_k, cmd);
-			// printf("apres pathway, dans exec_nopipe\n");
 		else
 		{
-			pathway = ft_strdup(get_way(s_k->tab_env, s_k->rl_tab));
+			pathway = ft_strdup(get_way(s_k->tab_env, cmd->args));
+			printf("cmd->args : %s\n", cmd->args[0]);
+			printf("pathway : %s\n", pathway);
 			if (!pathway)
 			{
 				perror("command not found");
@@ -168,8 +173,10 @@ int	ft_exec_nopipe(t_data *s_k, t_cmd *cmd)
 				exit (127);
 			}
 			if (execve(pathway, cmd->args, s_k->tab_env) == -1)
-			free (pathway);
-			perror("execve:");
+			{
+				free (pathway);
+				perror("execve:");
+			}
 		}
 		free_data(&s_k);
 		free(s_k);

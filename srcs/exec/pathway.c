@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 09:41:48 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/20 10:53:17 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/05/21 10:49:36 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ char	*get_way(char **env, char **rl_tab)
 					free(pathtab);
 					return (absolut_path);
 				}
+				printf("pathway : %s\n", absolut_path);
 				free(tmp);
 				free(absolut_path);
 				j++;
