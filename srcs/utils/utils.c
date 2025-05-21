@@ -6,117 +6,80 @@
 /*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 13:53:00 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/21 10:36:19 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/05/21 13:37:32 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	count_words(const char *str)
-{
 
+void	free_glt(t_data **s_k)
+{
 	int	i;
-	int	word;
-	int	quote;
-	int	quotes = 0;
-	char	c;
-
+	int	len;
+	
 	i = 0;
-	word = 0;
-	quote = 0;
-	while (str[i])
+	len = (*s_k)->tab_len;
+	if ((*s_k)->glutto_tab)
 	{
-		while (str[i] == 32 || (str[i] >= 8 && str[i] <= 13))
-			i++;
-		if (str[i] && (str[i] != 32 || (str[i] <= 8 || str[i] >= 13)))
+		while (i <= len)
 		{
-			word++;
-			quote = 0;
-			while ((str[i] && (str[i] != 32 && (str[i] <= 8 || str[i] >= 13))))
-			{
-				if ((str[i] == '>' && str[i + 1] == '>') || (str[i] == '<' && str[i + 1] == '<'))
-				{
-					if(str[i + 2] == ' ' || (str[i - 1] != ' ' && str[i + 2] != ' '))
-						word += 2;
-					else
-						word++;
-					if ((str[i - 1] == ' ' && str[i + 2] == ' '))
-						word--;
-					i += 2;
-				}
-				else if ((str[i] == '>' && str[i - 1] != ' ' && str[i + 1] != ' ')
-					|| (str[i] == '<' && str[i - 1] != ' ' && str[i + 1] != ' ')
-						|| (str[i] == '|' && str[i - 1] != ' ' && str[i + 1] != ' '))// || str[i] == '<' || str[i] == '|')
-				{
-					word +=2;
-				}
-				else if ((str[i] == '>' && str[i - 1] == ' ' && str[i + 1] != ' ')
-							|| (str[i] == '>' && str[i - 1] != ' ' && str[i + 1] == ' ')
-								|| (str[i] == '<' && str[i - 1] == ' ' && str[i + 1] != ' ')
-									|| (str[i] == '<' && str[i - 1] != ' ' && str[i + 1] == ' ')
-										|| (str[i] == '|' && str[i - 1] == ' ' && str[i + 1] != ' ')
-											|| (str[i] == '|' && str[i - 1] != ' ' && str[i + 1] == ' '))
-				{
-					word++;
-				}
-				if (str[i] == '\'' || str[i] == '"')
-				{
-					quote = 1;
-					c = str[i];
-					while (str[i]) // && (str[i] != '\'' || str[i] != '"'))
-					{
-						i++;
-						if (str[i] == c) //((str[i] == '\'' || str[i] == '"'))
-						{
-							while (str[i])
-							{
-								if (str[i] == 32 && (quotes % 2) == 0)
-								{
-									quote = 0;
-									break;
-								}
-								i++;
-								if (str[i] == c) //((str[i] == '\'' || str[i] == '"'))
-								{
-									quotes++;
-								}
-							}
-						}
-						if (quote == 0)
-						{
-							word++;
-							break ;
-						}
-					}
-				}
-				if (str[i] != '\0')
-					i++;
-			}
+			free((*s_k)->glutto_tab[i]);
+			(*s_k)->glutto_tab[i] = NULL;
+			i++;
 		}
+		// (*s_k)->tab_len = 0;
+		len = 0;
 	}
-	// printf("\nword : %d\n\n", word);
-	return (word);
+	if ((*s_k)->glutto_tab)
+	{
+		free((*s_k)->glutto_tab);
+		(*s_k)->glutto_tab = NULL;
+	}
+		// if ((*s_k)->tab_env)
+	// 	free_tab((*s_k)->tab_env);
 }
 
-void	copy_word(char *dest, char **src, int count_l)
+
+
+void	free_s_k(t_data **s_k)
 {
-	int	i = 0;
+	int	i;
+	int	len;
 	
-	// printf ("count_l : %d\n", count_l);
-	
-	while (**src && i != count_l)// && !((**src >= 8 && **src <= 13) || **src == 32))
+	i = 0;
+	len = (*s_k)->tab_len;
+	if ((*s_k)->rl_tab)
 	{
-		if (**src == '"' && **src == '\'')
-		count_l++;
-		if (**src != '"' && **src != '\'')
-		*dest++ = **src;
-		(*src)++;
-		i++;
+		while (i <= len)
+		{
+			free((*s_k)->rl_tab[i]);
+			(*s_k)->rl_tab[i] = NULL;
+			i++;
+		}
+		len = 0;
 	}
-	*dest = '\0';
-	while (**src && ((**src >= 8 && **src <= 13) || **src == 32))
-	src++;
+	if ((*s_k)->rl_tab)
+	{
+		free((*s_k)->rl_tab);
+		(*s_k)->rl_tab = NULL;
+	}
+	if ((*s_k)->tab_env)
+	{
+		free_tab((*s_k)->tab_env);
+		(*s_k)->tab_env = NULL;
+	}
 }
+
+
+
+void	free_data(t_data **s_k)
+{
+	free_s_k(s_k);
+	free_glt(s_k);
+}
+
+
 
 
 

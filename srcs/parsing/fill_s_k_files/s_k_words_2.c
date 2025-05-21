@@ -1,24 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   glt_words_2.c                                      :+:      :+:    :+:   */
+/*   s_k_words_2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/21 10:30:06 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/05/21 11:27:20 by pjurdana         ###   ########.fr       */
+/*   Created: 2025/05/21 11:44:22 by pjurdana          #+#    #+#             */
+/*   Updated: 2025/05/21 13:35:19 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-void	skip_spaces_w(const char *str, int *i)
-{
-	while (str[*i] == 32 || (str[*i] >= 8 && str[*i] <= 13))
-		(*i)++;
-}
-
-void	handle_double_redir_w(const char *str, int *i, int *word)
+void	double_redir_w(const char *str, int *i, int *word)
 {
 	if ((str[*i] == '>' && str[*i + 1] == '>')
 		|| (str[*i] == '<' && str[*i + 1] == '<'))
@@ -33,7 +27,7 @@ void	handle_double_redir_w(const char *str, int *i, int *word)
 	}
 }
 
-void	handle_single_redir_no_space(const char *str, int *i, int *word)
+void	single_redir_no_space(const char *str, int *i, int *word)
 {
 	if ((str[*i] == '>' && str[*i - 1] != ' ' && str[*i + 1] != ' ')
 		|| (str[*i] == '<' && str[*i - 1] != ' ' && str[*i + 1] != ' ')
@@ -43,7 +37,7 @@ void	handle_single_redir_no_space(const char *str, int *i, int *word)
 	}
 }
 
-void	handle_single_redir_partial_space_1(const char *str, int *i, int *word)
+void	single_redir_partial_space_1(const char *str, int *i, int *word)
 {
 	if ((str[*i] == '>' && str[*i - 1] == ' ' && str[*i + 1] != ' ')
 		|| (str[*i] == '>' && str[*i - 1] != ' ' && str[*i + 1] == ' ')
@@ -53,7 +47,7 @@ void	handle_single_redir_partial_space_1(const char *str, int *i, int *word)
 	}
 }
 
-void	handle_single_redir_partial_space_2(const char *str, int *i, int *word)
+void	single_redir_partial_space_2(const char *str, int *i, int *word)
 {
 	if ((str[*i] == '<' && str[*i - 1] != ' ' && str[*i + 1] == ' ')
 		|| (str[*i] == '|' && str[*i - 1] == ' ' && str[*i + 1] != ' ')

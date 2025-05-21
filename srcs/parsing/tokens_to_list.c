@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens_to_list.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 12:53:23 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/05/20 12:10:04 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/05/21 13:41:20 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,30 +21,17 @@ t_cmd *new_cmd(void)
 
 	cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
-	{
-		printf ("ALED\n\n\n"); // NON
 		return (0);
-	}
-
 	cmd->argc = 0;
 	cmd->args[0] = NULL;
 	cmd->input_file = NULL;
 	cmd->output_file = NULL;
 	cmd->append = 0;
 	cmd->here_doc = 0;
-
 	cmd->nb_ope = 0;
-
-
 	cmd->next = NULL;
-
-
 	return (cmd);
-
 }
-
-
-
 
 void	arg_to_cmd(t_cmd *cmd, char *arg)
 {
@@ -54,18 +41,15 @@ void	arg_to_cmd(t_cmd *cmd, char *arg)
 		printf("too much args.\n");
 		return;
 	}
-
 	cmd->args[cmd->argc] = ft_strdup(arg);
 	if (!cmd->args[cmd->argc])
 	{
 		perror("strdup");
 		exit(EXIT_FAILURE);
 	}
-
 	cmd->argc++;
 	cmd->args[cmd->argc] = NULL;
 	// printf ("\n\ncmd->argc : %d\n\n", cmd->argc);
-
 }
 
 

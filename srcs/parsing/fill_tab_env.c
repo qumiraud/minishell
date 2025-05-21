@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_tab_env.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quentin <quentin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:41:43 by quentin           #+#    #+#             */
-/*   Updated: 2025/04/10 14:52:54 by quentin          ###   ########.fr       */
+/*   Updated: 2025/05/21 13:39:53 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,7 @@ void	fill_tab_env(t_data **s_k, char **envp)
 		j = 0;
 		(*s_k)->tab_env[i] = malloc(sizeof(char) * (ft_strlen(envp[i])) + 1);
 		if (!(*s_k)->tab_env[i])
-		{
-			/******freeeeeeeeee*******/
-			return ; //free a prevoir//
-		}
+			return ;
 		while (envp[i][j])
 		{
 			(*s_k)->tab_env[i][j] = envp[i][j];
@@ -42,13 +39,4 @@ void	fill_tab_env(t_data **s_k, char **envp)
 		i++;
 	}
 	(*s_k)->tab_env[i] = NULL;
-	// /////********test */
-	// i = 0;
-	// while ((*s_k)->tab_env[i])
-	// {
-	// 	free((*s_k)->tab_env[i]);
-	// 	i++;
-	// }
-	// free((*s_k)->tab_env);
-	// ///***********test */
 }
