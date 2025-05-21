@@ -6,7 +6,7 @@
 /*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 12:53:23 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/05/21 13:41:20 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/05/21 14:32:02 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,6 @@ t_cmd *parse_cmd(char **token)
 			current = current->next;
 			i++;
 			current->nb_ope++;
-			// current->argc++;
-
 		}
 		else if (ft_strncmp(token[i], ">>", 2) == 0 && token[i + 1])
 		{
@@ -86,8 +84,6 @@ t_cmd *parse_cmd(char **token)
 			current->append = 1;
 			i += 2;
 			current->nb_ope++;
-			// current->argc++;
-
 		}
 		else if (ft_strncmp(token[i], ">", 1) == 0 && token[i + 1])
 		{
@@ -100,10 +96,6 @@ t_cmd *parse_cmd(char **token)
 			current->append = 0;
 			i += 2;
 			current->nb_ope++;
-			// printf ("HALLO \n\n\n\n");
-
-			// current->argc++;
-
 		}
 		else if (ft_strncmp(token[i], "<<", 2) == 0 && token[i + 1])
 		{
@@ -116,8 +108,6 @@ t_cmd *parse_cmd(char **token)
 			current->here_doc = 1;
 			i += 2;
 			current->nb_ope++;
-			// current->argc++;
-
 		}
 		else if (ft_strncmp(token[i], "<", 1) == 0 && token[i + 1])
 		{
@@ -129,19 +119,12 @@ t_cmd *parse_cmd(char **token)
 			current->input_file = ft_strdup(token[i + 1]);
 			i += 2;
 			current->nb_ope++;
-			// printf ("HALLO \n\n\n\n");
-			// current->argc++; // a voir si je peux pas
-			//le mettre dans la while et pas les if
-			//agif a arg_to_cmd 09/05/2025
-
 		}
 		else
 		{
 			arg_to_cmd(current, token[i]);
 			i++;
 		}
-		// i++;
-
 	}
 	return (head);
 }

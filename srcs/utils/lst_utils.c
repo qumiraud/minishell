@@ -6,7 +6,7 @@
 /*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 13:06:05 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/04/30 11:54:55 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/05/21 14:32:45 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 t_lst_arg	*rl_lst_new(char *start, char *str, int i)
 {
 	t_lst_arg	*rl_lst;
-	// int	index;
 	int length;
 	int	j;
 

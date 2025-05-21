@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:06 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/21 13:57:21 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/05/21 16:25:40 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,12 +93,22 @@ void	handle_str(char *str, t_data **s_k, t_lst_arg **token, t_cmd *cmd)
 
 
 	// print_tab(*s_k);
-
-	handle_exec(*s_k, cmd);
+	// free (str);
+	// str = NULL;
+	// printf ("\"%s\"\n\n\n", str);
 
 	// printf ("HALLO\n\n\n");
 
+
+	handle_exec(*s_k, cmd);
+	
+	
+	
+	printf ("HALLO\n\n\n");
+
 	free_cmd(cmd);
+	// free (str);
+	// str = NULL;
 
 	// print_command_list(cmd);
 
@@ -113,6 +123,7 @@ void	handle_ending(t_data **s_k, t_lst_arg **token)
 	rl_lst_clear(token);
 	// printf ("HALLO\n\n\n");
 	printf("exit\n");
+
 }
 
 int	handle_readline(char *str, t_data **s_k, t_lst_arg **token, t_cmd *cmd)
@@ -124,15 +135,22 @@ int	handle_readline(char *str, t_data **s_k, t_lst_arg **token, t_cmd *cmd)
 	len = 0;
 	if (*str)
 		handle_str(str, s_k, token, cmd);
+	
+
+
+	// free_cmd(cmd);
+
+	free (str);
+	str = NULL;
 		// if ((*s_k)->rl_tab != NULL && !(ft_strncmp((*s_k)->rl_tab[0], "exit", 4)))
-	if ((*token) != NULL && !(ft_strncmp((*token)->rl_arg, "exit", 4)))
-	{
-		free(str);
-		str = NULL;
-		return (1);
-	}
+	// if ((*token) != NULL && !(ft_strncmp((*token)->rl_arg, "exit", 4)))
+	// {
+	// 	free (str);
+	// 	str = NULL;
+	// 	return (1);
+	// }
 	len = (*s_k)->tab_len;
-	if (*str)
+	if (*s_k)
 	{
 		if ((*s_k)->rl_tab)
 		{
@@ -164,6 +182,8 @@ int	handle_readline(char *str, t_data **s_k, t_lst_arg **token, t_cmd *cmd)
 			(*s_k)->rl_tab = NULL;
 		}
 	}
+	free (str);
+	str = NULL;
 	// print_command_list(*cmd);
 
 
@@ -217,8 +237,10 @@ char *input_with_space(char *str)
 		return (NULL);
 	// new_str[0] = ' ';
 	// ft_strcpy(str, new_str + 1);
-	free(str);
-	return new_str;
+	free (str);
+	str = NULL;
+	// printf ("%s\n\n", new_str);
+	return (new_str);
 }
 
 
@@ -247,41 +269,63 @@ int	main(int argc, char **argv, char **envp)
 	{
 		setup_signal();
 		str = readline("💾 minishell :");
+		printf ("%s\n\n", str);
+		if (ft_strcmp(str, "exit") == 1)
+		{
+			free (str);
+			str = NULL;
+			handle_ending(&suprem_knowledge, &token);
+
+			return (0);
+		}
 		if (!str)
 		{
 			printf("exit\n");
+			free_cmd (cmd);
 			handle_ending(&suprem_knowledge, &token);
 			return (0);
 		}
 		if (str && str[0] != 0)
 		{
+			// free (str);
+			// printf ("\"%s\"\n\n", str);
 			str = input_with_space(str);
+			// free (str);
+			// printf ("\"%s\"\n\n", str);
+			// exit (EXIT_FAILURE);
+			
 		}
 		if (quote_verif(str,&suprem_knowledge) != 0)
 		{
+			str++;
 			add_history(str);
+			// free (str);
 			continue;
 		}
 		pipe_quota(str, &suprem_knowledge);
-		if (cmd_nt_fd(str) != 0)
-		{
-			add_history(str);
-			continue;
-		}
-		if (ft_strncmp(str, "CLEAR", 5) == 0 || ft_strncmp(str, "clear", 5) == 0)
-		{
-			add_history(str);
-			printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-			continue;
-		}
+		// if (cmd_nt_fd(str) != 0)
+		// {
+		// 	add_history(str);
+		// 	continue;
+		// }
+		// if (ft_strncmp(str, " CLEAR", 5) == 0 || ft_strncmp(str, " clear", 5) == 0)
+		// {
+		// 	add_history(str);
+		// 	printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+		// 	continue;
+		// }
 
 		if (handle_readline(str, &suprem_knowledge, &token, cmd) == 1)
 			break;
+		// free_cmd (cmd);
 		// handle_cmd_list(suprem_knowledge->rl_tab);
 		// handle_exec(suprem_knowledge);
 		rl_lst_clear(&token);
-		free (str);
-		str = NULL;
+
+		// free (str);
+		// str = NULL;
+		// printf ("\"%s\"\n\n\n", str);
+
 	}
 	handle_ending(&suprem_knowledge, &token);
 	return (0);
