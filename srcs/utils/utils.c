@@ -6,7 +6,7 @@
 /*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 13:53:00 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/08 13:00:06 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/05/21 10:36:19 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,28 @@ int	count_words(const char *str)
 	return (word);
 }
 
+void	copy_word(char *dest, char **src, int count_l)
+{
+	int	i = 0;
+	
+	// printf ("count_l : %d\n", count_l);
+	
+	while (**src && i != count_l)// && !((**src >= 8 && **src <= 13) || **src == 32))
+	{
+		if (**src == '"' && **src == '\'')
+		count_l++;
+		if (**src != '"' && **src != '\'')
+		*dest++ = **src;
+		(*src)++;
+		i++;
+	}
+	*dest = '\0';
+	while (**src && ((**src >= 8 && **src <= 13) || **src == 32))
+	src++;
+}
+
+
+
 void	free_tab(char **tab)
 {
 	int	i;
@@ -110,25 +132,3 @@ void	free_tab(char **tab)
 	}
 	free(tab);
 }
-
-void	copy_word(char *dest, char **src, int count_l)
-{
-	int	i = 0;
-
-	// printf ("count_l : %d\n", count_l);
-	
-	while (**src && i != count_l)// && !((**src >= 8 && **src <= 13) || **src == 32))
-	{
-		if (**src == '"' && **src == '\'')
-			count_l++;
-		if (**src != '"' && **src != '\'')
-			*dest++ = **src;
-		(*src)++;
-		i++;
-	}
-	*dest = '\0';
-	while (**src && ((**src >= 8 && **src <= 13) || **src == 32))
-		src++;
-}
-
-

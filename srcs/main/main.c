@@ -6,106 +6,11 @@
 /*   By: yeten <yeten@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:06 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/20 12:31:48 by yeten            ###   ########.fr       */
+/*   Updated: 2025/05/20 13:45:22 by yeten            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-
-
-
-
-
-
-
-// void exec_command(t_cmd *cmd)
-// {
-//     pid_t pid = fork();  // Crée un processus fils
-
-//     if (pid == -1)
-//     {
-//         perror("fork");
-//         exit(EXIT_FAILURE);
-//     }
-
-//     if (pid == 0)  // Processus fils
-//     {
-//         // Gérer les redirections de fichiers (si présentes)
-//         if (cmd->input_file)
-//         {
-//             int in_fd = open(cmd->input_file, O_RDONLY);
-//             if (in_fd == -1)
-//             {
-//                 perror("open input file");
-//                 exit(EXIT_FAILURE);
-//             }
-//             if (dup2(in_fd, STDIN_FILENO) == -1)
-//             {
-//                 perror("dup2 input file");
-//                 close(in_fd);
-//                 exit(EXIT_FAILURE);
-//             }
-//             close(in_fd);
-//         }
-
-//         if (cmd->output_file)
-//         {
-//             int out_fd;
-//             if (cmd->append)  // Si l'option 'append' est activée
-//                 out_fd = open(cmd->output_file, O_WRONLY | O_CREAT | O_APPEND, 0644);
-//             else  // Si l'option 'append' n'est pas activée
-//                 out_fd = open(cmd->output_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-
-//             if (out_fd == -1)
-//             {
-//                 perror("open output file");
-//                 exit(EXIT_FAILURE);
-//             }
-//             if (dup2(out_fd, STDOUT_FILENO) == -1)
-//             {
-//                 perror("dup2 output file");
-//                 close(out_fd);
-//                 exit(EXIT_FAILURE);
-//             }
-//             close(out_fd);
-//         }
-
-//         // Préparer les arguments pour execvp
-//         char *args[cmd->argc + 1];
-//         for (int i = 0; i < cmd->argc; i++)
-//         {
-//             args[i] = cmd->args[i];
-//         }
-//         args[cmd->argc] = NULL;  // Terminator pour execvp
-
-//         // Exécuter la commande
-//         if (execvp(args[0], args) == -1)
-//         {
-//             perror("execvp");
-//             exit(EXIT_FAILURE);
-//         }
-//     }
-//     else  // Processus parent
-//     {
-//         int status;
-//         waitpid(pid, &status, 0);  // Attendre que le processus fils termine
-//         if (WIFEXITED(status))
-//         {
-//             printf("Le processus fils a terminé avec le code de sortie %d\n", WEXITSTATUS(status));
-//         }
-//         else
-//         {
-//             printf("Le processus fils a échoué\n");
-//         }
-//     }
-// }
-
-
-
-
-
-
 
 
 
@@ -165,7 +70,7 @@ void free_cmd(t_cmd *cmd)
 
 void	handle_str(char *str, t_data **s_k, t_lst_arg **token, t_cmd *cmd)
 {
-	str++; // verifier que ca ne pose pas de probleme c'est pour supprimer l'espace rajouter, pour qu'il ne soit pas dans le add history
+	// str++; // verifier que ca ne pose pas de probleme c'est pour supprimer l'espace rajouter, pour qu'il ne soit pas dans le add history
 	add_history(str);
 	// tokenize(str, token);
 	// (*s_k)->rl_lst = (*token);
@@ -186,11 +91,10 @@ void	handle_str(char *str, t_data **s_k, t_lst_arg **token, t_cmd *cmd)
 
 	//  print_command_list(cmd);
 
-	// exec_command(cmd);
 
 	// print_tab(*s_k);
 
-	handle_exec(*s_k, cmd); //
+	handle_exec(*s_k, cmd);
 
 	// printf ("HALLO\n\n\n");
 
@@ -220,6 +124,7 @@ int	handle_readline(char *str, t_data **s_k, t_lst_arg **token, t_cmd *cmd)
 	len = 0;
 	if (*str)
 		handle_str(str, s_k, token, cmd);
+		// if ((*s_k)->rl_tab != NULL && !(ft_strncmp((*s_k)->rl_tab[0], "exit", 4)))
 	if ((*token) != NULL && !(ft_strncmp((*token)->rl_arg, "exit", 4)))
 	{
 		free(str);
@@ -298,22 +203,22 @@ int	handle_readline(char *str, t_data **s_k, t_lst_arg **token, t_cmd *cmd)
 
 // }
 
-char *input_with_space(char *str)
-{
-	int len;
-	char *new_str;
+// char *input_with_space(char *str)
+// {
+// 	int len;
+// 	char *new_str;
 
-	if (!str)
-		return NULL;
-	len = ft_strlen(str);
-	new_str = malloc(len + 2);
-	if (!new_str)
-		return NULL;
-	new_str[0] = ' ';
-	ft_strcpy(str, new_str + 1);
-	free(str);
-	return new_str;
-}
+// 	if (!str)
+// 		return NULL;
+// 	len = ft_strlen(str);
+// 	new_str = malloc(len + 2);
+// 	if (!new_str)
+// 		return NULL;
+// 	new_str[0] = ' ';
+// 	ft_strcpy(str, new_str + 1);
+// 	free(str);
+// 	return new_str;
+// }
 
 
 
@@ -347,10 +252,10 @@ int	main(int argc, char **argv, char **envp)
 			handle_ending(&suprem_knowledge, &token);
 			return (0);
 		}
-		if (str)
-		{
-			str = input_with_space(str);
-		}
+		// if (str)
+		// {
+		// 	str = input_with_space(str);
+		// }
 		if (quote_verif(str,&suprem_knowledge) != 0)
 		{
 			add_history(str);

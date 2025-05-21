@@ -6,7 +6,7 @@
 /*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:40:08 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/08 13:12:45 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/05/21 10:37:12 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,63 +106,23 @@ int	count_letters(char *str)
 	return (i);
 }
 
-int	pipe_quota(char *str, t_data **s_k)
-{
-	int	i = 0;
-	int	pipe = 0;
 
-	if(!str)
-		return (1);
-	while (str[i])
-	{
-		if (str[i] == '\'')
-		{
-			i++;
-			while (str[i] != '\'')
-				i++;
-		}
-		if (str[i] == '"')
-		{
-			i++;
-			while (str[i] != '"')
-				i++;
-		}
-		if (str[i] == '|')
-			pipe++;
-		i++;
-	}
-	(*s_k)->pipe_quo = pipe;
-	// printf ("pipe_quo : %d\n\n", (*s_k)->pipe_quo);
-	return (0);
-}
 
-int	quote_verif(char *str, t_data **s_k)
-{
-	int	i;
-	int	quote;
-	int	d_quote;
-	
-	i = 0;
-	quote = 0;
-	d_quote = 0;
-	if(!str)
-		return (1);
-	while (str[i])
-	{
-		if (str[i] == '"')
-			d_quote++;
-		if (str[i] == '\'')
-			quote++;
-		i++;
-	}
-	(*s_k)->stat_quo = d_quote + quote;
-	// printf ("stat_quo : %d\n\n", (*s_k)->stat_quo);
-	if (quote % 2 != 0)
-		return (printf("missing quote\n"));
-	if (d_quote % 2 != 0)
-		return (printf("missing double quote\n"));
-	return (0);
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 void	fill_s_k_tab(t_data **s_k, char *str)
@@ -207,35 +167,13 @@ void	fill_s_k_tab(t_data **s_k, char *str)
 
 
 
-// void	fill_s_k_tab(t_data **s_k, char *str)
-// {
-// 	// int	i;
-// 	// int	k;
-// 	// int	count;
 
-// 	// i = 0;
-// 	// (*s_k)->tab_len = 0;
-// 	// (*s_k)->rl_tab = malloc(sizeof(char *) * (count_words(str) + 1));
-// 	// while (str[0] == '"' || str[0] == '\'' || str[0] == 32 || (str[0] >= 8  && str[0] <= 13 ))
-// 	// {
-// 	// 	printf("%c\n", str[0]);
-// 	// 	str++;
-// 	// }
-// 	// while (str[0] /*&& str[0] != '"' && str[0] != '\''*/)
-// 	// {
-// 	// 	count = 0;
-// 	// 	k = 0;
-// 	// 	count = count_letters(k, count, str);
-// 	// 	(*s_k)->rl_tab[i] = malloc(sizeof(char) * (count + 1));
-// 	// 	copy_word((*s_k)->rl_tab[i], &str);
-// 	// 	if (count)
-// 	// 		i++;
-// 	// 	while (*str && ((*str >= 8 && *str <= 13) || *str == 32))
-// 	// 		str++;
-// 	// }
-// 	// (*s_k)->rl_tab[i] = NULL;
-// 	// (*s_k)->tab_len = i;
-// }
+
+
+
+
+
+
 
 void	fill_suprem_knowledge(t_data **s_k, char *str)
 {
@@ -245,6 +183,11 @@ void	fill_suprem_knowledge(t_data **s_k, char *str)
 	// fill_s_k_tab(s_k, str);
 	fill_tabs(s_k, str);
 }
+
+
+
+
+
 
 void	free_glt(t_data **s_k)
 {
@@ -272,6 +215,14 @@ void	free_glt(t_data **s_k)
 		// if ((*s_k)->tab_env)
 	// 	free_tab((*s_k)->tab_env);
 }
+
+
+
+
+
+
+
+
 
 void	free_s_k(t_data **s_k)
 {
@@ -303,18 +254,31 @@ void	free_s_k(t_data **s_k)
 }
 
 
+
+
+
+
+
+
+
 void	free_data(t_data **s_k)
 {
 	free_s_k(s_k);
 	free_glt(s_k);
 }
 
+
+
+
+
+
+
 void	init_suprem_knowledge(t_data **s_k, char **envp)
 {
 	(*s_k) = malloc(sizeof(t_data));
 	if (!s_k)
 	{
-		printf("mince alors\n");
+		printf("mince alors\n");// mauvais retour d'erreur en francais hallo ???
 		return ;
 	}
 	(*s_k)->rl_tab = NULL;
@@ -330,3 +294,8 @@ void	init_suprem_knowledge(t_data **s_k, char **envp)
 
 	(*s_k)->tab_len = 0;
 }
+
+
+
+
+
