@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+         #
+#    By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/24 08:15:59 by qumiraud          #+#    #+#              #
-#    Updated: 2025/05/21 11:25:08 by qumiraud         ###   ########.fr        #
+#    Updated: 2025/05/21 13:41:41 by pjurdana         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,13 +15,18 @@ NAME = minishell
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -g
 
-SRC = srcs/main/main.c\
+SRC =	srcs/main/main.c\
 		srcs/main/print_test.c\
 		srcs/utils/lst_utils.c\
 		srcs/utils/utils.c\
 		srcs/utils/verif.c\
 		srcs/parsing/tokenize.c\
-		srcs/parsing/fill_suprem_knowledge.c\
+		srcs/parsing/fill_s_k_files/fill_suprem_knowledge.c\
+		srcs/parsing/fill_s_k_files/s_k_letters.c\
+		srcs/parsing/fill_s_k_files/s_k_letters_2.c\
+		srcs/parsing/fill_s_k_files/s_k_letters_3.c\
+		srcs/parsing/fill_s_k_files/s_k_words.c\
+		srcs/parsing/fill_s_k_files/s_k_words_2.c\
 		srcs/parsing/fill_tab_env.c\
 		srcs/exec/ft_exec.c\
 		srcs/exec/pathway.c\
@@ -33,7 +38,6 @@ SRC = srcs/main/main.c\
 		srcs/parsing/gluttony_files/gluttony.c\
 		srcs/parsing/cmd_nt_fd.c\
 		srcs/parsing/tokens_to_list.c\
-		srcs/parsing/re_token.c\
 		srcs/signals/signals.c\
 		srcs/builtin/echo.c\
 		srcs/builtin/cd.c\

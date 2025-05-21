@@ -6,7 +6,7 @@
 /*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:35 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/21 11:17:46 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/05/21 13:30:52 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,12 +134,46 @@ int			is_whitespace(char c);
 //**********FILL_SUPREM_KNOWLEDGE.C********************************/
 void		init_suprem_knowledge(t_data **s_k, char **envp);
 void 		free_data(t_data **s_k);
-void		fill_suprem_knowledge(t_data **s_k, char *str);
-void		fill_s_k_tab(t_data **s_k, char *str);
-// int			count_letters(int k, int count, char *str);
-int			count_letters(char *str);
+// void		fill_suprem_knowledge(t_data **s_k, char *str);
+// void		fill_s_k_tab(t_data **s_k, char *str);
+// // int			count_letters(int k, int count, char *str);
+// int			count_letters(char *str);
 
+//**********FILL_S_K_FILES******************************************************************************************/
 
+//**********S_K_LETTERS.C*********************************************/
+
+// void	skip_spaces(char *str, int *i);
+int	double_redir_start(char *str, int i);
+int	double_redir_middle(char *str, int i);
+int	single_redir_start(char *str, int i);
+int	single_redir_middle(char *str, int i);
+int	quotes_part2(char *str, int *i, int *quote, char c);
+int	quotes(char *str, int *i, int *word);
+int	redirections_part1(char *str, int i, int *inc);
+int	redirections_part2(char *str, int i, int *inc);
+int	redirections(char *str, int i, int *inc);
+int	process_redir(char *str, int *i, int ret, int inc);
+int	process_word(char *str, int *i, int *word);
+int	count_letters(char *str);
+
+//**********S_K_WORDS.C*********************************************/
+
+void	double_redir_w(const char *str, int *i, int *word);
+void	single_redir_no_space(const char *str, int *i, int *word);
+void	single_redir_partial_space_1(const char *str, int *i, int *word);
+void	single_redir_partial_space_2(const char *str, int *i, int *word);
+void	quotes_part2_w(const char *str, int *i, int *quote, char c);
+void	quotes_w(const char *str, int *i, int *word, int *quote);
+void	redirections_w(const char *str, int *i, int *word);
+void	process_word_w(const char *str, int *i, int *word, int *quote);
+int		count_words(const char *str);
+
+//**********FILL_SUPPREM_KNOWLEDEGE.C*********************************************/
+
+void	fill_suprem_knowledge(t_data **s_k, char *str);
+void	copy_word(char *dest, char **src, int count_l);
+void	fill_s_k_tab(t_data **s_k, char *str);
 
 //**********GLUTTONY_FILES******************************************************************************************/
 
@@ -157,7 +191,7 @@ int	handle_double_redir(char *str, int i, int *inc);
 int	handle_single_redir(char *str, int i, int *inc);
 int	handle_redirections(char *str, int i, int *inc);
 int	process_word_part2(char *str, int *i, int *word, int redir_pos);
-int	process_word(char *str, int *i, int *word);
+int	glt_process_word(char *str, int *i, int *word);
 void	skip_spaces(char *str, int *i);
 int	glt_count_letters(char *str);
 
@@ -166,8 +200,8 @@ int	glt_count_letters(char *str);
 void	skip_spaces_w(const char *str, int *i);
 void	handle_double_redir_w(const char *str, int *i, int *word);
 void	handle_single_redir_no_space(const char *str, int *i, int *word);
-void	handle_single_redir_partial_space_part1(const char *str, int *i, int *word);
-void	handle_single_redir_partial_space_part2(const char *str, int *i, int *word);
+void	handle_single_redir_partial_space_1(const char *str, int *i, int *word);
+void	handle_single_redir_partial_space_2(const char *str, int *i, int *word);
 void	handle_quotes_part2_w(const char *str, int *i, int *quote, char c);
 void	handle_quotes_w(const char *str, int *i, int *word, int *quote);
 void	handle_redirections_w(const char *str, int *i, int *word);
@@ -185,8 +219,8 @@ int		glt_count_words(const char *str);
 // void	glt_copy_word(char *dest, char **src, int count_l);
 
 //**********UTILS.C************************************************/
-int			count_words(const char *str);
-void		copy_word(char *dest, char **src, int count_l);
+// int			count_words(const char *str);
+// void		copy_word(char *dest, char **src, int count_l);
 void		free_tab(char **tab);
 
 int	quote_verif(char *str, t_data **s_k);
