@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yeten <yeten@student.42.fr>                +#+  +:+       +#+        */
+/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:06 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/22 10:58:19 by yeten            ###   ########.fr       */
+/*   Updated: 2025/05/22 12:24:38 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,7 +213,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			str++;
 			add_history(str);
-			// free (str);
+			free (suprem_knowledge->str);
 			continue;
 		}
 		pipe_quota(str, &suprem_knowledge);

@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 13:41:45 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/22 10:38:51 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/05/22 14:16:07 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,38 +79,109 @@ int	ft_exec_multipipe(t_data *s_k)
 	return (0);
 }
 
-int	ft_exec_singlepipe(t_data *s_k)
+int	ft_exec_singlepipe(t_data *s_k, t_cmd *cmd)
 {
-	pid_t	pid;
-	int		status;
+	pid_t pid1, pid2;
+	int status;
 
 	if (init_pipefd(s_k->pipefd1) != 0)
 		return (1);
-	pid = fork();
-	if (pid == -1)
-		return (1);
-	else if (pid == 0)
+
+	pid1 = fork();
+	if (pid1 == 0)
 	{
+		// Commande gauche
 		close(s_k->pipefd1[0]);
 		dup2(s_k->pipefd1[1], STDOUT_FILENO);
 		close(s_k->pipefd1[1]);
-		//TODO :  check si c'est un built ou non.
-		//TODO :  si built-in alors appelle de la fonction sinon:
-		//TODO :  chercher le chemin de commande dans l'env, puis execve
+
+		if (cmd->output_file || cmd->input_file)
+			handle_redirection(cmd);  // À écrire → open + dup2
+
+		if (ft_is_builtin(cmd->args[0]))
+			exit(ft_exec_builtin(s_k, cmd));
+		else
+		{
+			char *pathway = ft_strdupandfree(get_way(s_k->tab_env, cmd->args));
+			if (!pathway)
+			{
+				str_error("bash :", cmd->args[0], "command not found");
+				exit(127);
+			}
+			execve(pathway, cmd->args, s_k->tab_env);
+			perror("execve");
+			exit(1);
+		}
 	}
-	pid = fork();
-	if (pid == 0)
-		return (1);
-	else if (pid == 0)
+
+	cmd = cmd->next;
+	pid2 = fork();
+	if (pid2 == 0)
 	{
+		// Commande droite
 		close(s_k->pipefd1[1]);
 		dup2(s_k->pipefd1[0], STDIN_FILENO);
 		close(s_k->pipefd1[0]);
-		//TODO :  chercher le chemin de commande dans l'env, puis execve
+
+		if (cmd->output_file || cmd->input_file)
+			handle_redirection(cmd);  // idem
+
+		if (ft_is_builtin(cmd->args[0]))
+			exit(ft_exec_builtin(s_k, cmd));
+		else
+		{
+			char *pathway = ft_strdupandfree(get_way(s_k->tab_env, cmd->args));
+			if (!pathway)
+			{
+				str_error("bash :", cmd->args[0], "command not found");
+				exit(127);
+			}
+			execve(pathway, cmd->args, s_k->tab_env);
+			perror("execve");
+			exit(1);
+		}
 	}
-	while (wait(&status))
-		;
+
+	close(s_k->pipefd1[0]);
+	close(s_k->pipefd1[1]);
+
+	waitpid(pid1, &status, 0);
+	waitpid(pid2, &status, 0);
 	return (0);
+
+	// pid_t	pid;
+	// int		status;
+
+	// if (init_pipefd(s_k->pipefd1) != 0)
+	// 	return (1);
+	// pid = fork();
+	// if (pid == -1)
+	// 	return (1);
+	// else if (pid == 0)
+	// {
+	// 	close(s_k->pipefd1[0]);
+	// 	dup2(s_k->pipefd1[1], STDOUT_FILENO);
+	// 	close(s_k->pipefd1[1]);
+	// 	//TODO :  check si c'est un built ou non.
+	// 	//TODO :  si built-in alors appelle de la fonction sinon:
+	// 	//TODO :  chercher le chemin de commande dans l'env, puis execve
+	// 	ft_exec_nopipe(s_k, cmd);
+	// }
+	// cmd = cmd->next;
+	// pid = fork();
+	// if (pid == 0)
+	// 	return (1);
+	// else if (pid == 0)
+	// {
+	// 	close(s_k->pipefd1[1]);
+	// 	dup2(s_k->pipefd1[0], STDIN_FILENO);
+	// 	close(s_k->pipefd1[0]);
+	// 	//TODO :  chercher le chemin de commande dans l'env, puis execve
+	// 	ft_exec_nopipe(s_k, cmd);
+	// }
+	// while (wait(&status))
+	// 	;
+	// return (0);
 }
 
 int	ft_exec_nopipe(t_data *s_k, t_cmd *cmd)
@@ -136,15 +207,24 @@ int	ft_exec_nopipe(t_data *s_k, t_cmd *cmd)
 	{
 		if (cmd->input_file)
 		{
-			fd_in = open(cmd->input_file, O_RDONLY);
-			// printf("Input file: %s\n", cmd->input_file);
-			if (fd_in == -1)
+			if (cmd->here_doc == 1)
 			{
-				perror("Error");
-				exit(1);
+				fd_in = ft_heredoc(cmd->input_file);
+				dup2(fd_in, STDIN_FILENO);
+				close(fd_in);
 			}
-			dup2(fd_in, STDIN_FILENO);
-			close(fd_in);
+			else
+			{
+				fd_in = open(cmd->input_file, O_RDONLY);
+				// printf("Input file: %s\n", cmd->input_file);
+				if (fd_in == -1)
+				{
+					perror("Error");
+					exit(1);
+				}
+				dup2(fd_in, STDIN_FILENO);
+				close(fd_in);
+			}
 			// printf("Redirection stdin réussie vers %s\n", cmd->input_file);
 		}
 		if (cmd->output_file)
@@ -162,21 +242,22 @@ int	ft_exec_nopipe(t_data *s_k, t_cmd *cmd)
 			ft_exec_builtin(s_k, cmd);
 		else
 		{
-			pathway = ft_strdup(get_way(s_k->tab_env, cmd->args));
-			printf("cmd->args : %s\n", cmd->args[0]);
-			// printf("pathway : %s\n", pathway);
+			pathway = ft_strdupandfree(get_way(s_k->tab_env, cmd->args));
 			if (!pathway)
 			{
-				//printf("%s\n", cmd->args[0]);
+				str_error("bash :", cmd->args[0], "command not found");
 				free_data(&s_k);
 				free_cmd(cmd);
 				free(s_k);
 				exit (127);
 			}
-			if (execve(pathway, cmd->args, s_k->tab_env) == -1)
+			else if (execve(pathway, cmd->args, s_k->tab_env) == -1)
 			{
+				if (cmd->args[0][0] == '.' && cmd->args[0][1] == '\0')
+					str_error("bash :", cmd->args[0], "filename argument required");
+				else
+					str_error("bash :", cmd->args[0], "command not found");
 				free (pathway);
-				perror("execve:");
 			}
 		}
 		free_data(&s_k);
@@ -194,11 +275,11 @@ int	ft_exec_nopipe(t_data *s_k, t_cmd *cmd)
 int	handle_exec(t_data *s_k, t_cmd *cmd)
 {
 	// printf("passage par handle_exec\n");
-	if (s_k->pipe_nbr > 1)
+	if (s_k->pipe_quo > 1)
 		ft_exec_multipipe(s_k);
-	else if (s_k->pipe_nbr == 1)
-		ft_exec_singlepipe(s_k);
-	else if (s_k->pipe_nbr == 0)
+	else if (s_k->pipe_quo == 1)
+		ft_exec_singlepipe(s_k, cmd);
+	else if (s_k->pipe_quo == 0)
 		ft_exec_nopipe(s_k, cmd);
 	return (0);
 }

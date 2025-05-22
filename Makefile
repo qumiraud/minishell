@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+         #
+#    By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/24 08:15:59 by qumiraud          #+#    #+#              #
-#    Updated: 2025/05/21 13:41:41 by pjurdana         ###   ########.fr        #
+#    Updated: 2025/05/22 12:14:39 by qumiraud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRC =	srcs/main/main.c\
 		srcs/utils/lst_utils.c\
 		srcs/utils/utils.c\
 		srcs/utils/verif.c\
+		srcs/utils/str_errors.c\
 		srcs/parsing/tokenize.c\
 		srcs/parsing/fill_s_k_files/fill_suprem_knowledge.c\
 		srcs/parsing/fill_s_k_files/s_k_letters.c\

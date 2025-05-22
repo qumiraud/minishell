@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yeten <yeten@student.42.fr>                +#+  +:+       +#+        */
+/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:35 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/22 10:57:58 by yeten            ###   ########.fr       */
+/*   Updated: 2025/05/22 14:15:51 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,6 +223,8 @@ int		glt_count_words(const char *str);
 // int			count_words(const char *str);
 // void		copy_word(char *dest, char **src, int count_l);
 void		free_tab(char **tab);
+void	str_error(char *str, char *cmd_args, char *msg);
+
 
 int	quote_verif(char *str, t_data **s_k);
 int	pipe_quota(char *str, t_data **s_k);
@@ -234,11 +236,15 @@ void		fill_tab_env(t_data **s_k, char **envp);
 int			init_pipefd(int *pipefd);
 int			handle_exec(t_data *s_k, t_cmd *cmd);
 int			ft_exec_multipipe(t_data *s_k);
-int			ft_exec_singlepipe(t_data *s_k);
+int			ft_exec_singlepipe(t_data *s_k, t_cmd *cmd);
 int			ft_exec_nopipe(t_data *s_k, t_cmd *cmd);
 char		*get_way(char **env, char **rl_tab);
-int	ft_exec_builtin(t_data *s_k, t_cmd *cmd);
-int	ft_is_builtin(char *cmd);
+int			ft_exec_builtin(t_data *s_k, t_cmd *cmd);
+int			ft_is_builtin(char *cmd);
+int			ft_heredoc(char *safeword);
+int			handle_redirection(t_cmd *cmd);
+
+
 
 //**********CMD_NT_FD.C********************************************/
 int	cmd_nt_fd(char *str);//, t_data **s_k);

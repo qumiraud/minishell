@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 09:41:48 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/21 11:56:00 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/05/22 12:41:21 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*get_way(char **env, char **rl_tab)
 
 	i = 0;
 	j = 0;
-	if (!rl_tab[0])
+	if (!rl_tab[0] || *rl_tab[0] == 0)
 		return (NULL);
 	absolut_path = NULL;
 	pathtab = NULL;
@@ -43,7 +43,8 @@ char	*get_way(char **env, char **rl_tab)
 				if (access(absolut_path, X_OK) == 0)
 				{
 					// printf("%s <---find and is X_OK\n", absolut_path);
-					free(pathtab);
+					free(tmp);
+					free_tab(pathtab);
 					return (absolut_path);
 				}
 				// printf("pathway : %s\n", absolut_path);
@@ -55,7 +56,7 @@ char	*get_way(char **env, char **rl_tab)
 		}
 		i++;
 	}
-	return (NULL);
+	return (rl_tab[0]);
 }
 
 // int	main(int argc, char **argv, char **envp)
