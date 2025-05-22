@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yeten <yeten@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:06 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/22 10:20:49 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/05/22 10:30:20 by yeten            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,8 @@ void	handle_ending(t_data **s_k, t_lst_arg **token)
 	free_data(s_k);
 	free(*s_k);
 	(*s_k) = NULL;
-	rl_lst_clear(token);
+	(void)token;
+	// rl_lst_clear(token);
 	// printf ("HALLO\n\n\n");
 	printf("exit\n");
 
@@ -320,7 +321,7 @@ int	main(int argc, char **argv, char **envp)
 		// free_cmd (cmd);
 		// handle_cmd_list(suprem_knowledge->rl_tab);
 		// handle_exec(suprem_knowledge);
-		rl_lst_clear(&token);
+		// rl_lst_clear(&token);
 
 		// free (str);
 		// str = NULL;
