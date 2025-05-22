@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 13:53:00 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/21 14:33:12 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/05/22 10:22:03 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	free_glt(t_data **s_k)
 {
 	int	i;
 	int	len;
-	
+
 	i = 0;
 	len = (*s_k)->tab_len;
 	if ((*s_k)->glutto_tab)
@@ -46,7 +46,7 @@ void	free_s_k(t_data **s_k)
 {
 	int	i;
 	int	len;
-	
+
 	i = 0;
 	len = (*s_k)->tab_len;
 	if ((*s_k)->rl_tab)
@@ -75,6 +75,7 @@ void	free_s_k(t_data **s_k)
 
 void	free_data(t_data **s_k)
 {
+	free((*s_k)->str);
 	free_s_k(s_k);
 	free_glt(s_k);
 }

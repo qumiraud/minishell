@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:35 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/21 13:30:52 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/05/22 10:19:54 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ typedef struct s_data
 	char		**glutto_tab;
 	char		**re_token;
 	char		**tab_env;//copie de envp//
+	char		*str;
 	int			tab_len;
 	int			pipefd1[2];
 	int			pipefd2[2];

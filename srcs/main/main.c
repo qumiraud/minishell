@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:06 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/21 16:25:40 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/05/22 10:20:49 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,10 +101,10 @@ void	handle_str(char *str, t_data **s_k, t_lst_arg **token, t_cmd *cmd)
 
 
 	handle_exec(*s_k, cmd);
-	
-	
-	
-	printf ("HALLO\n\n\n");
+
+
+
+	// printf ("HALLO\n\n\n");
 
 	free_cmd(cmd);
 	// free (str);
@@ -135,7 +135,7 @@ int	handle_readline(char *str, t_data **s_k, t_lst_arg **token, t_cmd *cmd)
 	len = 0;
 	if (*str)
 		handle_str(str, s_k, token, cmd);
-	
+
 
 
 	// free_cmd(cmd);
@@ -225,13 +225,12 @@ int	handle_readline(char *str, t_data **s_k, t_lst_arg **token, t_cmd *cmd)
 
 char *input_with_space(char *str)
 {
-	int len;
 	char *new_str;
 
 	new_str = NULL;
 	if (!str)
 		return (NULL);
-	len = ft_strlen(str);
+	// len = ft_strlen(str);
 	new_str = ft_strjoin(" ", str);
 	if (!new_str)
 		return (NULL);
@@ -269,7 +268,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		setup_signal();
 		str = readline("💾 minishell :");
-		printf ("%s\n\n", str);
+		// printf ("%s\n\n", str);
 		if (ft_strcmp(str, "exit") == 1)
 		{
 			free (str);
@@ -290,10 +289,11 @@ int	main(int argc, char **argv, char **envp)
 			// free (str);
 			// printf ("\"%s\"\n\n", str);
 			str = input_with_space(str);
+			suprem_knowledge->str = str;
 			// free (str);
 			// printf ("\"%s\"\n\n", str);
 			// exit (EXIT_FAILURE);
-			
+
 		}
 		if (quote_verif(str,&suprem_knowledge) != 0)
 		{

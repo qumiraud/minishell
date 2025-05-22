@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 14:49:23 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/04/15 15:29:05 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/05/22 10:12:04 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*ft_strncpy(char *dest, char *src, int size)
 {
-	printf("%d\n", size);
+	// printf("%d\n", size);
 	int	i;
 
 	i = 0;
