@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 13:41:45 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/22 14:16:07 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/05/22 15:22:47 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,6 +243,7 @@ int	ft_exec_nopipe(t_data *s_k, t_cmd *cmd)
 		else
 		{
 			pathway = ft_strdupandfree(get_way(s_k->tab_env, cmd->args));
+			// printf("pathway %s\n", pathway);
 			if (!pathway)
 			{
 				str_error("bash :", cmd->args[0], "command not found");
@@ -253,16 +254,16 @@ int	ft_exec_nopipe(t_data *s_k, t_cmd *cmd)
 			}
 			else if (execve(pathway, cmd->args, s_k->tab_env) == -1)
 			{
-				if (cmd->args[0][0] == '.' && cmd->args[0][1] == '\0')
-					str_error("bash :", cmd->args[0], "filename argument required");
-				else
-					str_error("bash :", cmd->args[0], "command not found");
+				// if (cmd->args[0][0] == '.' && cmd->args[0][1] == '\0')
+				// 	str_error("bash :", NULL, "filename argument required");
+				// else
+				// 	str_error("bash :", NULL, "command not found");
 				free (pathway);
 			}
 		}
 		free_data(&s_k);
 		free(s_k);
-		free_cmd(cmd);
+		// free_cmd(cmd);
 		exit(0);
 	}
 	else
