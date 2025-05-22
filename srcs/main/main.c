@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yeten <yeten@student.42.fr>                +#+  +:+       +#+        */
+/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:06 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/22 10:30:20 by yeten            ###   ########.fr       */
+/*   Updated: 2025/05/22 10:46:28 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ void	handle_str(char *str, t_data **s_k, t_lst_arg **token, t_cmd *cmd)
 
 void	handle_ending(t_data **s_k, t_lst_arg **token)
 {
+	// free((*s_k)->str);
 	free_data(s_k);
 	free(*s_k);
 	(*s_k) = NULL;
@@ -141,8 +142,8 @@ int	handle_readline(char *str, t_data **s_k, t_lst_arg **token, t_cmd *cmd)
 
 	// free_cmd(cmd);
 
-	free (str);
-	str = NULL;
+	// free (str);
+	// str = NULL;
 		// if ((*s_k)->rl_tab != NULL && !(ft_strncmp((*s_k)->rl_tab[0], "exit", 4)))
 	// if ((*token) != NULL && !(ft_strncmp((*token)->rl_arg, "exit", 4)))
 	// {
@@ -183,8 +184,8 @@ int	handle_readline(char *str, t_data **s_k, t_lst_arg **token, t_cmd *cmd)
 			(*s_k)->rl_tab = NULL;
 		}
 	}
-	free (str);
-	str = NULL;
+	// free (str);
+	// str = NULL;
 	// print_command_list(*cmd);
 
 
