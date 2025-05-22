@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   tokens_to_list.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yeten <yeten@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 12:53:23 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/05/21 14:32:02 by pjurdana         ###   ########.fr       */
+/*   Created: 2025/05/22 14:44:53 by yeten             #+#    #+#             */
+/*   Updated: 2025/05/22 14:55:22 by yeten            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../../includes/minishell.h"
 
@@ -54,77 +55,117 @@ void	arg_to_cmd(t_cmd *cmd, char *arg)
 
 
 
-t_cmd *parse_cmd(char **token)
+
+
+
+
+
+static void	handle_pipe(char **token, int *i, t_cmd **current)
+{
+	if (ft_strncmp(token[*i], "|", 1) == 0)
+	{
+		(*current)->next = new_cmd();
+		*current = (*current)->next;
+		(*i)++;
+		(*current)->nb_ope++;
+	}
+}
+
+static void	handle_append_output(char **token, int *i, t_cmd *current)
+{
+	if (ft_strncmp(token[*i], ">>", 2) == 0 && token[*i + 1])
+	{
+		if (current->output_file)
+		{
+			free(current->output_file);
+			current->output_file = NULL;
+		}
+		current->output_file = ft_strdup(token[*i + 1]);
+		current->append = 1;
+		*i += 2;
+		current->nb_ope++;
+	}
+}
+
+static void	handle_output(char **token, int *i, t_cmd *current)
+{
+	if (ft_strncmp(token[*i], ">", 1) == 0 && token[*i + 1])
+	{
+		if (current->output_file)
+		{
+			free(current->output_file);
+			current->output_file = NULL;
+		}
+		current->output_file = ft_strdup(token[*i + 1]);
+		current->append = 0;
+		*i += 2;
+		current->nb_ope++;
+	}
+}
+
+static void	handle_here_doc(char **token, int *i, t_cmd *current)
+{
+	if (ft_strncmp(token[*i], "<<", 2) == 0 && token[*i + 1])
+	{
+		if (current->input_file)
+		{
+			free(current->input_file);
+			current->input_file = NULL;
+		}
+		current->input_file = ft_strdup(token[*i + 1]);
+		current->here_doc = 1;
+		*i += 2;
+		current->nb_ope++;
+	}
+}
+
+static void	handle_input(char **token, int *i, t_cmd *current)
+{
+	if (ft_strncmp(token[*i], "<", 1) == 0 && token[*i + 1])
+	{
+		if (current->input_file)
+		{
+			free(current->input_file);
+			current->input_file = NULL;
+		}
+		current->input_file = ft_strdup(token[*i + 1]);
+		*i += 2;
+		current->nb_ope++;
+	}
+}
+
+static int	process_token(char **token, int i, t_cmd **current)
+{
+	handle_pipe(token, &i, current);
+	handle_append_output(token, &i, *current);
+	handle_output(token, &i, *current);
+	handle_here_doc(token, &i, *current);
+	handle_input(token, &i, *current);
+	return (i);
+}
+
+static void	handle_regular_arg(char **token, int *i, t_cmd *current)
+{
+	arg_to_cmd(current, token[*i]);
+	(*i)++;
+}
+
+t_cmd	*parse_cmd(char **token)
 {
 	t_cmd	*head;
 	t_cmd	*current;
 	int		i;
+	int		old_i;
 
 	head = new_cmd();
 	current = head;
 	i = 0;
-
 	while (token[i])
 	{
-		if (ft_strncmp(token[i], "|", 1) == 0)
-		{
-			current->next = new_cmd();
-			current = current->next;
-			i++;
-			current->nb_ope++;
-		}
-		else if (ft_strncmp(token[i], ">>", 2) == 0 && token[i + 1])
-		{
-			if (current->output_file)
-			{
-				free (current->output_file);
-				current->output_file = NULL;
-			}
-			current->output_file = ft_strdup(token[i + 1]);
-			current->append = 1;
-			i += 2;
-			current->nb_ope++;
-		}
-		else if (ft_strncmp(token[i], ">", 1) == 0 && token[i + 1])
-		{
-			if (current->output_file)
-			{
-				free (current->output_file);
-				current->output_file = NULL;
-			}
-			current->output_file = ft_strdup(token[i + 1]);
-			current->append = 0;
-			i += 2;
-			current->nb_ope++;
-		}
-		else if (ft_strncmp(token[i], "<<", 2) == 0 && token[i + 1])
-		{
-			if (current->input_file)
-			{
-				free (current->input_file);
-				current->input_file = NULL;
-			}
-			current->input_file = ft_strdup(token[i + 1]);
-			current->here_doc = 1;
-			i += 2;
-			current->nb_ope++;
-		}
-		else if (ft_strncmp(token[i], "<", 1) == 0 && token[i + 1])
-		{
-			if (current->input_file)
-			{
-				free (current->input_file);
-				current->input_file = NULL;
-			}
-			current->input_file = ft_strdup(token[i + 1]);
-			i += 2;
-			current->nb_ope++;
-		}
-		else
-		{
-			arg_to_cmd(current, token[i]);
-			i++;
-		}
+		old_i = i;
+		i = process_token(token, i, &current);
+		if (i == old_i)
+			handle_regular_arg(token, &i, current);
 	}
 	return (head);
 }
@@ -139,128 +180,118 @@ t_cmd *parse_cmd(char **token)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// char *t_to_l_strdup(const char *s)
+// t_cmd *parse_cmd(char **token)
 // {
-// 	int i;
-// 	char *copy;
-
-// 	i = 0;
-
-// 	while (s[i])
-// 		i++;
-// 	copy = malloc(i + 1);
-// 	if (!copy)
-// 		return NULL;
-// 	i = 0;
-// 	while (s[i])
-// 	{
-// 		copy[i] = s[i];
-// 		i++;
-// 	}
-// 	copy[i] = '\0';
-// 	return (copy);
-// }
-
-// void
-
-// void	tokenize(t_data **s_k, t_lst_arg **token)
-// {
+// 	t_cmd	*head;
+// 	t_cmd	*current;
 // 	int		i;
 
+// 	head = new_cmd();
+// 	current = head;
 // 	i = 0;
 
-// 	while ((*s_k)->rl_tab[i])
+// 	while (token[i])
 // 	{
-// 		printf("rl_tab[%d]: %s\n\n",i, (*s_k)->rl_tab[i]);
-
-// 		rl_lst_addback(token, rl_lst_new(&(*s_k)->rl_tab[i][0], (*s_k)->rl_tab[i], i));
-// 		printf ("HALLO????");
-// 		i++;
+// 		if (ft_strncmp(token[i], "|", 1) == 0)
+// 		{
+// 			current->next = new_cmd();
+// 			current = current->next;
+// 			i++;
+// 			current->nb_ope++;
+// 		}
+// 		else if (ft_strncmp(token[i], ">>", 2) == 0 && token[i + 1])
+// 		{
+// 			if (current->output_file)
+// 			{
+// 				free (current->output_file);
+// 				current->output_file = NULL;
+// 			}
+// 			current->output_file = ft_strdup(token[i + 1]);
+// 			current->append = 1;
+// 			i += 2;
+// 			current->nb_ope++;
+// 		}
+// 		else if (ft_strncmp(token[i], ">", 1) == 0 && token[i + 1])
+// 		{
+// 			if (current->output_file)
+// 			{
+// 				free (current->output_file);
+// 				current->output_file = NULL;
+// 			}
+// 			current->output_file = ft_strdup(token[i + 1]);
+// 			current->append = 0;
+// 			i += 2;
+// 			current->nb_ope++;
+// 		}
+// 		else if (ft_strncmp(token[i], "<<", 2) == 0 && token[i + 1])
+// 		{
+// 			if (current->input_file)
+// 			{
+// 				free (current->input_file);
+// 				current->input_file = NULL;
+// 			}
+// 			current->input_file = ft_strdup(token[i + 1]);
+// 			current->here_doc = 1;
+// 			i += 2;
+// 			current->nb_ope++;
+// 		}
+// 		else if (ft_strncmp(token[i], "<", 1) == 0 && token[i + 1])
+// 		{
+// 			if (current->input_file)
+// 			{
+// 				free (current->input_file);
+// 				current->input_file = NULL;
+// 			}
+// 			current->input_file = ft_strdup(token[i + 1]);
+// 			i += 2;
+// 			current->nb_ope++;
+// 		}
+// 		else
+// 		{
+// 			arg_to_cmd(current, token[i]);
+// 			i++;
+// 		}
 // 	}
-
-
-
-
-// 	t_lst_arg	*nav;
-// 	nav = (*token);
-// 	i = 0;
-// 	while (nav)
-// 	{
-// 		printf("\ntoken[%d]: %s\n\n\n\n", i, nav->rl_arg);
-// 		nav = nav->next;
-// 		i++;
-// 	}
+// 	return (head);
 // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
