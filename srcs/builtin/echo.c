@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:34:30 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/19 11:27:28 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/05/22 16:34:53 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,12 @@ void	init_echo_data(t_echo_data *data)
 
 void	print_echo(char **str, int n_def, int i)
 {
+
 	while (str[i])
 	{
 		if (str[i][0] == '\\' && str[i][1] == '$')
 			printf("$%s", str[i] + 2);
+
 		else if (str[i][0] == '$' && str[i][1] != '\0')
 		{
 			if (str[i][1] == '=' || str[i][1] == '-' || str[i][1] == '+'
@@ -39,6 +41,15 @@ void	print_echo(char **str, int n_def, int i)
 			else if (getenv(str[i] + 1) != NULL)
 				printf("%s", getenv(str[i] + 1));
 		}
+		// else if (str[i][0] == '$' && str[i][1] == '"')
+		// {
+		// 	len = strlen(str[i]);
+		// 	if (len > 2)
+		// 		write(1, &str[i][2], len - 3);
+		// 	else
+		// 		write(1, "", 0);
+		// }
+
 		else
 			printf("%s", str[i]);
 		if (str[i + 1] != NULL)

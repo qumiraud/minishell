@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:06 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/22 12:24:38 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/05/22 16:43:26 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ void	handle_str(char *str, t_data **s_k, t_cmd *cmd)
 	fill_suprem_knowledge(s_k, str);
 	// (*s_k)->cmd_arg = (*token);
 	// re_token_wd(s_k);
-	cmd = parse_cmd((*s_k)->rl_tab);
-	//  print_command_list(cmd);
+	cmd = parse_cmd((*s_k)->glutto_tab);
+	 print_command_list(cmd);
 	// print_tab(*s_k);
 	handle_exec(*s_k, cmd);
 	// printf ("HALLO\n\n\n");
@@ -217,17 +217,13 @@ int	main(int argc, char **argv, char **envp)
 			continue;
 		}
 		pipe_quota(str, &suprem_knowledge);
-		// if (cmd_nt_fd(str) != 0)
-		// {
-		// 	add_history(str);
-		// 	continue;
-		// }
-		// if (ft_strncmp(str, " CLEAR", 5) == 0 || ft_strncmp(str, " clear", 5) == 0)
-		// {
-		// 	add_history(str);
-		// 	printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-		// 	continue;
-		// }
+		if (cmd_nt_fd(str) != 0)
+		{
+			str++;
+			add_history(str);
+			free(suprem_knowledge->str);
+			continue;
+		}
 
 		if (handle_readline(str, &suprem_knowledge, cmd) == 1)
 			break;
