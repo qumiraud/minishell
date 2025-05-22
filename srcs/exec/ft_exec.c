@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 13:41:45 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/22 10:21:31 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/05/22 10:38:51 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ int	ft_exec_nopipe(t_data *s_k, t_cmd *cmd)
 			// printf("Input file: %s\n", cmd->input_file);
 			if (fd_in == -1)
 			{
-				perror("open input_file");
+				perror("Error");
 				exit(1);
 			}
 			dup2(fd_in, STDIN_FILENO);
@@ -163,11 +163,11 @@ int	ft_exec_nopipe(t_data *s_k, t_cmd *cmd)
 		else
 		{
 			pathway = ft_strdup(get_way(s_k->tab_env, cmd->args));
-			// printf("cmd->args : %s\n", cmd->args[0]);
+			printf("cmd->args : %s\n", cmd->args[0]);
 			// printf("pathway : %s\n", pathway);
 			if (!pathway)
 			{
-				perror("command not found");
+				//printf("%s\n", cmd->args[0]);
 				free_data(&s_k);
 				free_cmd(cmd);
 				free(s_k);
