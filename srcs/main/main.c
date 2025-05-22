@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yeten <yeten@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:06 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/22 10:46:28 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/05/22 10:58:19 by yeten            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,67 +68,36 @@ void free_cmd(t_cmd *cmd)
 
 
 
-void	handle_str(char *str, t_data **s_k, t_lst_arg **token, t_cmd *cmd)
+void	handle_str(char *str, t_data **s_k, t_cmd *cmd)
 {
 	str++; // verifier que ca ne pose pas de probleme c'est pour supprimer l'espace rajouter, pour qu'il ne soit pas dans le add history
 	add_history(str);
-	// tokenize(str, token);
 	// (*s_k)->rl_lst = (*token);
-	(void)token;
 	fill_suprem_knowledge(s_k, str);
-	// tokenize(s_k, token);
 	// (*s_k)->cmd_arg = (*token);
 	// re_token_wd(s_k);
-
-	//t_cmd *
 	cmd = parse_cmd((*s_k)->rl_tab);
-
-
-
-	// printf ("\npipe_quo : %d\n", (*s_k)->pipe_quo);
-
-
-
 	//  print_command_list(cmd);
-
-
 	// print_tab(*s_k);
-	// free (str);
-	// str = NULL;
-	// printf ("\"%s\"\n\n\n", str);
-
-	// printf ("HALLO\n\n\n");
-
-
 	handle_exec(*s_k, cmd);
-
-
-
 	// printf ("HALLO\n\n\n");
-
 	free_cmd(cmd);
-	// free (str);
-	// str = NULL;
-
 	// print_command_list(cmd);
 
-	// free (cmd); // non pas la ???
 }
 
-void	handle_ending(t_data **s_k, t_lst_arg **token)
+void	handle_ending(t_data **s_k)
 {
-	// free((*s_k)->str);
-	free_data(s_k);
+	// free_data(s_k);
+	free_s_k(s_k);
+	free_glt(s_k);
 	free(*s_k);
 	(*s_k) = NULL;
-	(void)token;
-	// rl_lst_clear(token);
-	// printf ("HALLO\n\n\n");
 	printf("exit\n");
 
 }
 
-int	handle_readline(char *str, t_data **s_k, t_lst_arg **token, t_cmd *cmd)
+int	handle_readline(char *str, t_data **s_k, t_cmd *cmd)
 {
 	int	i;
 	int	len;
@@ -136,21 +105,7 @@ int	handle_readline(char *str, t_data **s_k, t_lst_arg **token, t_cmd *cmd)
 	i = 0;
 	len = 0;
 	if (*str)
-		handle_str(str, s_k, token, cmd);
-
-
-
-	// free_cmd(cmd);
-
-	// free (str);
-	// str = NULL;
-		// if ((*s_k)->rl_tab != NULL && !(ft_strncmp((*s_k)->rl_tab[0], "exit", 4)))
-	// if ((*token) != NULL && !(ft_strncmp((*token)->rl_arg, "exit", 4)))
-	// {
-	// 	free (str);
-	// 	str = NULL;
-	// 	return (1);
-	// }
+		handle_str(str, s_k, cmd);
 	len = (*s_k)->tab_len;
 	if (*s_k)
 	{
@@ -184,46 +139,9 @@ int	handle_readline(char *str, t_data **s_k, t_lst_arg **token, t_cmd *cmd)
 			(*s_k)->rl_tab = NULL;
 		}
 	}
-	// free (str);
-	// str = NULL;
-	// print_command_list(*cmd);
-
-
-	// if (cmd)
-	// {
-	// 	printf ("\n\n\nHALLO???\n\n\n");
-	// 	// if (cmd->args[cmd->argc])
-	// 	// {
-	// 	// 	while (cmd->args[cmd->argc])
-	// 	// 	{
-	// 	// 		free (cmd->args[cmd->argc]);
-	// 	// 		cmd->args[cmd->argc] = NULL;
-	// 	// 		cmd->args[cmd->argc++];
-	// 	// 	}
-
-
-	// 	// }
-
-
-
-	// 	free (cmd);
-	// }
-
-
-
 	return (0);
 }
 
-// void	handle_cmd_list(char **token)
-// {
-// 	// parse_cmd(token);
-
-// 	// print_command_list(cmd);
-
-
-
-
-// }
 
 char *input_with_space(char *str)
 {
@@ -232,15 +150,11 @@ char *input_with_space(char *str)
 	new_str = NULL;
 	if (!str)
 		return (NULL);
-	// len = ft_strlen(str);
 	new_str = ft_strjoin(" ", str);
 	if (!new_str)
 		return (NULL);
-	// new_str[0] = ' ';
-	// ft_strcpy(str, new_str + 1);
 	free (str);
 	str = NULL;
-	// printf ("%s\n\n", new_str);
 	return (new_str);
 }
 
@@ -251,7 +165,6 @@ char *input_with_space(char *str)
 int	main(int argc, char **argv, char **envp)
 {
 	t_data		*suprem_knowledge;
-	t_lst_arg	*token;
 	t_cmd		*cmd;
 	char		*str;
 
@@ -265,7 +178,6 @@ int	main(int argc, char **argv, char **envp)
 	init_suprem_knowledge(&suprem_knowledge, envp);
 	if (!suprem_knowledge)
 		return (1);
-	token = NULL;
 	while (1)
 	{
 		setup_signal();
@@ -275,7 +187,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			free (str);
 			str = NULL;
-			handle_ending(&suprem_knowledge, &token);
+			handle_ending(&suprem_knowledge);
 
 			return (0);
 		}
@@ -283,7 +195,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			printf("exit\n");
 			free_cmd (cmd);
-			handle_ending(&suprem_knowledge, &token);
+			handle_ending(&suprem_knowledge);
 			return (0);
 		}
 		if (str && str[0] != 0)
@@ -317,18 +229,18 @@ int	main(int argc, char **argv, char **envp)
 		// 	continue;
 		// }
 
-		if (handle_readline(str, &suprem_knowledge, &token, cmd) == 1)
+		if (handle_readline(str, &suprem_knowledge, cmd) == 1)
 			break;
 		// free_cmd (cmd);
 		// handle_cmd_list(suprem_knowledge->rl_tab);
 		// handle_exec(suprem_knowledge);
 		// rl_lst_clear(&token);
 
-		// free (str);
-		// str = NULL;
+		free (str);
+		str = NULL;
 		// printf ("\"%s\"\n\n\n", str);
 
 	}
-	handle_ending(&suprem_knowledge, &token);
+	handle_ending(&suprem_knowledge);
 	return (0);
 }

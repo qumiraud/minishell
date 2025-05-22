@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yeten <yeten@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:35 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/22 10:19:54 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/05/22 10:57:58 by yeten            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -265,6 +265,17 @@ void print_command_list(t_cmd *cmd_list);
 
 
 t_cmd *parse_cmd(char **token);
+
+
+
+
+
+
+
+
+void	free_s_k(t_data **s_k);
+void	free_glt(t_data **s_k);
+
 
 
 
