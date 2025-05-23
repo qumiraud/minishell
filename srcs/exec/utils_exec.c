@@ -6,37 +6,100 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 10:56:52 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/23 12:29:36 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/05/23 14:07:33 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	setup_pipe(int i, int pipe_quo, int pipefd1[2], int pipefd2[2])
+
+
+
+
+void safe_close(int fd)
 {
-	if (i % 2 == 0)
+	if (fd > -1)
+		close(fd);
+}
+
+void setup_pipe(int i, int pipe_quo, int pipefd1[2], int pipefd2[2])
+{
+	if (i == 0)
 	{
-		close(pipefd1[1]);
-		if (i != 0)
-			dup2(pipefd1[0], STDIN_FILENO);
-		close(pipefd1[0]);
-		close(pipefd2[0]);
-		if (i != pipe_quo)
-			dup2(pipefd2[1], STDOUT_FILENO);
-		close(pipefd2[1]);
+		// Première commande : écrire dans pipefd2
+		if (dup2(pipefd2[1], STDOUT_FILENO) == -1)
+			perror("dup2 failed (cmd 0 output)");
+	}
+	else if (i < pipe_quo)
+	{
+		// Commande intermédiaire : lecture depuis une pipe, écriture dans l'autre
+		if (i % 2 == 0)
+		{
+			if (dup2(pipefd2[0], STDIN_FILENO) == -1)
+				perror("dup2 failed (cmd even input)");
+			if (dup2(pipefd1[1], STDOUT_FILENO) == -1)
+				perror("dup2 failed (cmd even output)");
+		}
+		else
+		{
+			if (dup2(pipefd1[0], STDIN_FILENO) == -1)
+				perror("dup2 failed (cmd odd input)");
+			if (dup2(pipefd2[1], STDOUT_FILENO) == -1)
+				perror("dup2 failed (cmd odd output)");
+		}
 	}
 	else
 	{
-		close(pipefd2[1]);
-		if (i != 0)
-			dup2(pipefd2[0], STDIN_FILENO);
-		close(pipefd2[0]);
-		close(pipefd1[0]);
-		if (i != pipe_quo)
-			dup2(pipefd1[1], STDOUT_FILENO);
-		close(pipefd1[1]);
+		// Dernière commande : lire depuis la bonne pipe, écrire dans STDOUT
+		if (i % 2 == 0)
+		{
+			if (dup2(pipefd2[0], STDIN_FILENO) == -1)
+				perror("dup2 failed (last even input)");
+		}
+		else
+		{
+			if (dup2(pipefd1[0], STDIN_FILENO) == -1)
+				perror("dup2 failed (last odd input)");
+		}
 	}
+
+	// Fermer tous les descripteurs inutiles (prévention de fuites)
+	safe_close(pipefd1[0]);
+	safe_close(pipefd1[1]);
+	safe_close(pipefd2[0]);
+	safe_close(pipefd2[1]);
 }
+
+
+
+
+
+// void	setup_pipe(int i, int pipe_quo, int pipefd1[2], int pipefd2[2])
+// {
+
+// 	if (i % 2 == 0)
+// 	{
+// 		close(pipefd1[1]);
+// 		if (i != 0)
+// 			dup2(pipefd1[0], STDIN_FILENO);
+// 		close(pipefd1[0]);
+// 		close(pipefd2[0]);
+// 		if (i != pipe_quo)
+// 			dup2(pipefd2[1], STDOUT_FILENO);
+// 		close(pipefd2[1]);
+// 	}
+// 	else
+// 	{
+// 		close(pipefd2[1]);
+// 		if (i != 0)
+// 			dup2(pipefd2[0], STDIN_FILENO);
+// 		close(pipefd2[0]);
+// 		close(pipefd1[0]);
+// 		if (i != pipe_quo)
+// 			dup2(pipefd1[1], STDOUT_FILENO);
+// 		close(pipefd1[1]);
+// 	}
+// }
 
 int	handle_redirection(t_cmd *cmd)
 {

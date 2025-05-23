@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 13:41:45 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/23 12:45:11 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/05/23 15:24:06 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,75 +24,169 @@ int	init_pipefd(int *pipefd)
 	return (0);
 }
 
-int	ft_exec_multipipe(t_data *s_k, t_cmd *cmd)
+int ft_exec_multipipe(t_data *s_k, t_cmd *cmd)
 {
-	pid_t pid;
-	int		i;
+	pid_t	pid;
+	int		i = 0;
 	int		status;
+	int		prev_pipe_read = -1;  // Lecture de la pipe précédente
+	int		current_pipe[2];      // Pipe courante
+	char	*pathway;
 
-	i = 0;
-	if (init_pipefd(s_k->pipefd1) != 0 || init_pipefd(s_k->pipefd2) != 0)
-		return (1); //TODO : code erreur?
-	while (cmd)
+	t_cmd *current_cmd = cmd;
+
+	while (current_cmd)
 	{
-		printf("test && pipe_quo=%d\n",s_k->pipe_quo);
-		if (i % 2 == 0)
+		// Créer une nouvelle pipe sauf pour la dernière commande
+		if (current_cmd->next)
 		{
-			if (pipe(s_k->pipefd2) == -1)
-				return (perror("pipe"), 1);
-		}
-		else
-		{
-			if (pipe(s_k->pipefd1) == -1)
-				return (perror("pipe"), 1);
+			if (pipe(current_pipe) == -1)
+			{
+				perror("pipe");
+				return 1;
+			}
 		}
 		pid = fork();
 		if (pid == -1)
-			return(-1); //TODO : code erreur?
-		else if (pid == 0)
 		{
-			if (!cmd || !cmd->args[0])
-				exit(0);
-			setup_pipe(i, s_k->pipe_quo, s_k->pipefd1, s_k->pipefd2);
-			if (cmd->output_file || cmd->input_file)
-				handle_redirection(cmd);
-			if (ft_is_builtin(cmd->args[0]))
-				exit(ft_exec_builtin(s_k, cmd));
+			perror("fork");
+			return 1;
+		}
+		if (pid == 0)
+		{ // CHILD
+			// Redirection d'entrée (depuis la pipe précédente)
+			if (prev_pipe_read != -1)
+			{
+				if (dup2(prev_pipe_read, STDIN_FILENO) == -1)
+				{
+					perror("dup2 input");
+					exit(1);
+				}
+				close(prev_pipe_read);
+			}
+			// Redirection de sortie (vers la pipe courante)
+			if (current_cmd->next)
+			{
+				if (dup2(current_pipe[1], STDOUT_FILENO) == -1)
+				{
+					perror("dup2 output");
+					exit(1);
+				}
+				close(current_pipe[1]);
+				close(current_pipe[0]);
+			}
+			// Gestion des redirections de fichiers
+			if (current_cmd->input_file || current_cmd->output_file)
+				handle_redirection(current_cmd);
+			// Exécution de la commande
+			if (ft_is_builtin(current_cmd->args[0]))
+				exit(ft_exec_builtin(s_k, current_cmd));
 			else
 			{
-				char *pathway = ft_strdupandfree(get_way(s_k->tab_env, cmd->args));
+				pathway = get_way(s_k->tab_env, current_cmd->args);
 				if (!pathway)
 				{
-					str_error("bash :", cmd->args[0], "command not found");
+					str_error("bash :", current_cmd->args[0], "command not found");
 					exit(127);
 				}
-				execve(pathway, cmd->args, s_k->tab_env);
-				perror("execve");
+				execve(pathway, current_cmd->args, s_k->tab_env);
+				str_error("bash :", current_cmd->args[0], "command not found");
 				exit(1);
 			}
 		}
-		if (i > 0)
+		// PARENT
+		// Fermer l'ancienne pipe de lecture
+		if (prev_pipe_read != -1)
+			close(prev_pipe_read);
+		// Si on a créé une nouvelle pipe, fermer l'écriture et garder la lecture
+		if (current_cmd->next)
 		{
-			if ((i - 1) % 2 == 0)
-			{
-				close(s_k->pipefd2[0]);
-				close(s_k->pipefd2[1]);
-			}
-			else
-			{
-				close(s_k->pipefd1[0]);
-				close(s_k->pipefd1[1]);
-			}
+			close(current_pipe[1]);  // Fermer l'écriture
+			prev_pipe_read = current_pipe[0];  // Garder la lecture pour la prochaine itération
 		}
-		if (!cmd->next)
-			break;
-		cmd = cmd->next;
+		current_cmd = current_cmd->next;
 		i++;
 	}
+	// Fermer la dernière pipe de lecture si elle existe
+	if (prev_pipe_read != -1)
+		close(prev_pipe_read);
+	// Attendre tous les enfants
 	while (wait(&status) > 0)
 		;
-	return (0);
+	return 0;
 }
+
+
+
+// int	ft_exec_multipipe(t_data *s_k, t_cmd *cmd)
+// {
+// 	pid_t pid;
+// 	int		i;
+// 	int		status;
+
+// 	i = 0;
+// 	if (init_pipefd(s_k->pipefd1) != 0 || init_pipefd(s_k->pipefd2) != 0)
+// 		return (1); //TODO : code erreur?
+// 	while (cmd)
+// 	{
+// 		printf("test && pipe_quo=%d\n",s_k->pipe_quo);
+// 		if (i % 2 == 0)
+// 		{
+// 			if (pipe(s_k->pipefd2) == -1)
+// 				return (perror("pipe"), 1);
+// 		}
+// 		else
+// 		{
+// 			if (pipe(s_k->pipefd1) == -1)
+// 				return (perror("pipe"), 1);
+// 		}
+// 		pid = fork();
+// 		if (pid == -1)
+// 			return(-1); //TODO : code erreur?
+// 		else if (pid == 0)
+// 		{
+// 			if (!cmd || !cmd->args[0])
+// 				exit(0);
+// 			setup_pipe(i, s_k->pipe_quo, s_k->pipefd1, s_k->pipefd2);
+// 			if (cmd->output_file || cmd->input_file)
+// 				handle_redirection(cmd);
+// 			if (ft_is_builtin(cmd->args[0]))
+// 				exit(ft_exec_builtin(s_k, cmd));
+// 			else
+// 			{
+// 				char *pathway = ft_strdupandfree(get_way(s_k->tab_env, cmd->args));
+// 				if (!pathway)
+// 				{
+// 					str_error("bash :", cmd->args[0], "command not found");
+// 					exit(127);
+// 				}
+// 				execve(pathway, cmd->args, s_k->tab_env);
+// 				perror("execve");
+// 				exit(1);
+// 			}
+// 		}
+// 		if (i > 0)
+// 		{
+// 			if ((i - 1) % 2 == 0)
+// 			{
+// 				close(s_k->pipefd2[0]);
+// 				close(s_k->pipefd2[1]);
+// 			}
+// 			else
+// 			{
+// 				close(s_k->pipefd1[0]);
+// 				close(s_k->pipefd1[1]);
+// 			}
+// 		}
+// 		if (!cmd->next)
+// 			break;
+// 		cmd = cmd->next;
+// 		i++;
+// 	}
+// 	while (wait(&status) > 0)
+// 		;
+// 	return (0);
+// }
 
 int	ft_exec_singlepipe(t_data *s_k, t_cmd *cmd)
 {
@@ -118,14 +212,14 @@ int	ft_exec_singlepipe(t_data *s_k, t_cmd *cmd)
 			exit(ft_exec_builtin(s_k, cmd));
 		else
 		{
-			char *pathway = ft_strdupandfree(get_way(s_k->tab_env, cmd->args));
+			char *pathway = get_way(s_k->tab_env, cmd->args);
 			if (!pathway)
 			{
 				str_error("bash :", cmd->args[0], "command not found");
 				exit(127);
 			}
-			execve(pathway, cmd->args, s_k->tab_env);
-			perror("execve");
+			if (execve(pathway, cmd->args, s_k->tab_env) == -1)
+				str_error("bash :", cmd->args[0], "command not found");
 			exit(1);
 		}
 	}
@@ -142,22 +236,22 @@ int	ft_exec_singlepipe(t_data *s_k, t_cmd *cmd)
 
 		if (cmd->output_file || cmd->input_file)
 			handle_redirection(cmd);  // idem
-		// for (int i = 0; cmd->args[i]; i++)
-			// printf("arg[%d] = '%s'\n", i, cmd->args[i]);
+
 		if (ft_is_builtin(cmd->args[0]))
 			exit(ft_exec_builtin(s_k, cmd));
 		else
 		{
-			char *pathway = ft_strdupandfree(get_way(s_k->tab_env, cmd->args));
+			char *pathway = get_way(s_k->tab_env, cmd->args);
+			// for (int i = 0; cmd->args[i]; i++)
+			// 	printf("arg[%d] = '%s'\n", i, cmd->args[i]);
 			if (!pathway)
 			{
 				str_error("bash :", cmd->args[0], "command not found");
 				exit(127);
 			}
-			if (cmd->args[1] && (cmd->args[1][0] == '\'' || cmd->args[1][0] == '\"'))
-				cmd->args[1] = ft_strtrim(cmd->args[1], "'\"");
-			execve(pathway, cmd->args, s_k->tab_env);
-			perror("execve");
+
+			if (execve(pathway, cmd->args, s_k->tab_env) == -1)
+				str_error("bash :", cmd->args[0], "command not found");
 			exit(1);
 		}
 	}
