@@ -6,11 +6,37 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 10:56:52 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/22 14:15:58 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/05/23 12:29:36 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	setup_pipe(int i, int pipe_quo, int pipefd1[2], int pipefd2[2])
+{
+	if (i % 2 == 0)
+	{
+		close(pipefd1[1]);
+		if (i != 0)
+			dup2(pipefd1[0], STDIN_FILENO);
+		close(pipefd1[0]);
+		close(pipefd2[0]);
+		if (i != pipe_quo)
+			dup2(pipefd2[1], STDOUT_FILENO);
+		close(pipefd2[1]);
+	}
+	else
+	{
+		close(pipefd2[1]);
+		if (i != 0)
+			dup2(pipefd2[0], STDIN_FILENO);
+		close(pipefd2[0]);
+		close(pipefd1[0]);
+		if (i != pipe_quo)
+			dup2(pipefd1[1], STDOUT_FILENO);
+		close(pipefd1[1]);
+	}
+}
 
 int	handle_redirection(t_cmd *cmd)
 {

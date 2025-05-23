@@ -1,1 +1,18 @@
-ligne1
+arg[0] = 'echo'
+arg[1] = 'salut ca farte'
+salut ca farte
+arg[0] = 'echo'
+arg[1] = 'bonjour ca farte'
+bonjour ca farte
+arg[0] = 'echo'
+arg[1] = 'bonjour ca farte'
+bonjour ca farte
+arg[0] = 'echo'
+arg[1] = 'bonjour ca farte'
+bonjour ca farte
+arg[0] = 'echo'
+arg[1] = 'ca farte'
+ca farte
+arg[0] = 'echo'
+arg[1] = 'ca farte'
+ca farte
