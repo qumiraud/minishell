@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 12:39:39 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/09 11:48:21 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/05/23 10:57:55 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,15 @@ int	ft_unset(char **args, char ***envp)
 	j = 0;
 	i = 1;
 	if (!args[1])
+	{
+		str_error("bash: ", args[1], ": not enough arguments");
 		return (0);
+	}
+	if (!args[1][0])
+	{
+		str_error("bash: ", args[1], ": not a valid identifier");
+		return (0);
+	}
 	while (args[i])
 	{
 		j = 0;

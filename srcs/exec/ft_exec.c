@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 13:41:45 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/22 15:53:12 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/05/23 11:10:53 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,8 @@ int	ft_exec_singlepipe(t_data *s_k, t_cmd *cmd)
 
 		if (cmd->output_file || cmd->input_file)
 			handle_redirection(cmd);  // À écrire → open + dup2
-
+		for (int i = 0; cmd->args[i]; i++)
+			printf("arg[%d] = '%s'\n", i, cmd->args[i]);
 		if (ft_is_builtin(cmd->args[0]))
 			exit(ft_exec_builtin(s_k, cmd));
 		else
@@ -113,7 +114,8 @@ int	ft_exec_singlepipe(t_data *s_k, t_cmd *cmd)
 			exit(1);
 		}
 	}
-
+	if (!cmd->next)
+		return (1);
 	cmd = cmd->next;
 	pid2 = fork();
 	if (pid2 == 0)
@@ -125,7 +127,8 @@ int	ft_exec_singlepipe(t_data *s_k, t_cmd *cmd)
 
 		if (cmd->output_file || cmd->input_file)
 			handle_redirection(cmd);  // idem
-
+		for (int i = 0; cmd->args[i]; i++)
+			printf("arg[%d] = '%s'\n", i, cmd->args[i]);
 		if (ft_is_builtin(cmd->args[0]))
 			exit(ft_exec_builtin(s_k, cmd));
 		else
@@ -136,6 +139,10 @@ int	ft_exec_singlepipe(t_data *s_k, t_cmd *cmd)
 				str_error("bash :", cmd->args[0], "command not found");
 				exit(127);
 			}
+			if (cmd->args[1] && (cmd->args[1][0] == '\'' || cmd->args[1][0] == '\"'))
+				cmd->args[1] = ft_strtrim(cmd->args[1], "'\"");
+			for (int i = 0; cmd->args[i]; i++)
+				printf("arg[%d] = '%s'\n", i, cmd->args[i]);
 			execve(pathway, cmd->args, s_k->tab_env);
 			perror("execve");
 			exit(1);
@@ -257,7 +264,7 @@ int	ft_exec_nopipe(t_data *s_k, t_cmd *cmd)
 					str_error("bash :", NULL, "filename argument required");
 				else
 					str_error("bash :", cmd->args[0], "command not found");
-				// free (pathway);
+				free (pathway);
 				free_data(&s_k);
 				free(s_k);
 				free_cmd(cmd);
