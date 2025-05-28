@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens_to_list.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yeten <yeten@student.42.fr>                +#+  +:+       +#+        */
+/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 14:44:53 by yeten             #+#    #+#             */
-/*   Updated: 2025/05/22 15:23:45 by yeten            ###   ########.fr       */
+/*   Updated: 2025/05/26 14:40:37 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,24 +52,6 @@ void	arg_to_cmd(t_cmd *cmd, char *arg)
 	cmd->args[cmd->argc] = NULL;
 	// printf ("\n\ncmd->argc : %d\n\n", cmd->argc);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 static void	handle_pipe(char **token, int *i, t_cmd **current)
 {

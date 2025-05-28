@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:35 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/23 14:12:00 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/05/26 09:38:00 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ void		rl_lst_clear(t_lst_arg **lst);
 void		rl_lst_addfront(t_lst_arg **lst, t_lst_arg *new);
 
 //**********TOKENIZE.C*********************************************/
-void		tokenize(char *str, t_lst_arg **token);
+// void		tokenize(char *str, t_lst_arg **token);
 // void		tokenize(t_data **s_k, t_lst_arg **token);
 int			is_whitespace(char c);
 
@@ -180,7 +180,7 @@ void	fill_s_k_tab(t_data **s_k, char *str);
 
 //**********GLUTTONY.C*********************************************/
 
-void	glt_copy_word(char *dest, char **src, int count_l);
+void	glt_copy_word(char *dest, char **src/*, int count_l*/);
 void	fill_gluttony_tab(t_data **s_k, char *str);
 
 //**********GLT_LETTERS.C*********************************************/
@@ -244,7 +244,7 @@ int			ft_is_builtin(char *cmd);
 int			ft_heredoc(char *safeword);
 int			handle_redirection(t_cmd *cmd);
 void		setup_pipe(int i, int pipe_nbr, int pipefd1[2], int pipefd2[2]);
-void safe_close(int fd);
+void		safe_close(int fd);
 
 
 

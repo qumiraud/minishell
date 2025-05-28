@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   glt_letters_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:29:14 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/05/21 10:34:19 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/05/26 15:13:14 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	fill_tabs(t_data **s_k, char *str)
 {
-	fill_s_k_tab(s_k, str);
+	// fill_s_k_tab(s_k, str);
 	fill_gluttony_tab(s_k, str);
 }
 

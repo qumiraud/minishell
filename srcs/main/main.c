@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:06 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/23 11:49:33 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/05/26 15:11:16 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,25 +23,18 @@ void free_cmd(t_cmd *cmd)
 	i = 0;
 	while (cmd)
 	{
-
 		// probleme sur des awd > awd > awd et aussi des awd | awd toi fatigue toi trouver quand energie plus
-
-
 		tmp = cmd->next;
 		// printf ("cmd->argc : %d\n", cmd->argc);
 		// printf ("cmd->nb_ope : %d\n", cmd->nb_ope);
-
-
 			while (i < (cmd->argc))//+ cmd->nb_ope))
 			{
-
 				// printf ("\n\n\nHALLO???\n\n\n");
 				if (cmd->args[i])
 					free(cmd->args[i]);
 				cmd->args[i] = NULL;
 				i++;
 			//} <- while
-
 				if (cmd->input_file)
 				{
 					free(cmd->input_file);
@@ -54,9 +47,6 @@ void free_cmd(t_cmd *cmd)
 				}
 			}
 			i = 0;
-
-
-
 		free(cmd);
 		cmd = tmp;
 
@@ -77,12 +67,11 @@ void	handle_str(char *str, t_data **s_k, t_cmd *cmd)
 	fill_suprem_knowledge(s_k, str);
 	// (*s_k)->cmd_arg = (*token);
 	// re_token_wd(s_k);
-	cmd = parse_cmd((*s_k)->rl_tab);
+	cmd = parse_cmd((*s_k)->glutto_tab);
 	//  print_command_list(cmd);
 	// print_tab(*s_k);
+	printf ("TEST LEAK >>>>>>>>>>\n\n\n");
 	handle_exec(*s_k, cmd);
-	// printf ("HALLO\n\n\n");
-	free_cmd(cmd);
 	// print_command_list(cmd);
 
 }
@@ -227,8 +216,10 @@ int	main(int argc, char **argv, char **envp)
 		}
 
 		if (handle_readline(str, &suprem_knowledge, cmd) == 1)
+		{
 			break;
-		// free_cmd (cmd);
+		}
+		// free_cmd(cmd);
 		// handle_cmd_list(suprem_knowledge->rl_tab);
 		// handle_exec(suprem_knowledge);
 		// rl_lst_clear(&token);

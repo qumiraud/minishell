@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 13:41:45 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/23 15:24:06 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/05/26 15:30:28 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,78 +115,6 @@ int ft_exec_multipipe(t_data *s_k, t_cmd *cmd)
 		;
 	return 0;
 }
-
-
-
-// int	ft_exec_multipipe(t_data *s_k, t_cmd *cmd)
-// {
-// 	pid_t pid;
-// 	int		i;
-// 	int		status;
-
-// 	i = 0;
-// 	if (init_pipefd(s_k->pipefd1) != 0 || init_pipefd(s_k->pipefd2) != 0)
-// 		return (1); //TODO : code erreur?
-// 	while (cmd)
-// 	{
-// 		printf("test && pipe_quo=%d\n",s_k->pipe_quo);
-// 		if (i % 2 == 0)
-// 		{
-// 			if (pipe(s_k->pipefd2) == -1)
-// 				return (perror("pipe"), 1);
-// 		}
-// 		else
-// 		{
-// 			if (pipe(s_k->pipefd1) == -1)
-// 				return (perror("pipe"), 1);
-// 		}
-// 		pid = fork();
-// 		if (pid == -1)
-// 			return(-1); //TODO : code erreur?
-// 		else if (pid == 0)
-// 		{
-// 			if (!cmd || !cmd->args[0])
-// 				exit(0);
-// 			setup_pipe(i, s_k->pipe_quo, s_k->pipefd1, s_k->pipefd2);
-// 			if (cmd->output_file || cmd->input_file)
-// 				handle_redirection(cmd);
-// 			if (ft_is_builtin(cmd->args[0]))
-// 				exit(ft_exec_builtin(s_k, cmd));
-// 			else
-// 			{
-// 				char *pathway = ft_strdupandfree(get_way(s_k->tab_env, cmd->args));
-// 				if (!pathway)
-// 				{
-// 					str_error("bash :", cmd->args[0], "command not found");
-// 					exit(127);
-// 				}
-// 				execve(pathway, cmd->args, s_k->tab_env);
-// 				perror("execve");
-// 				exit(1);
-// 			}
-// 		}
-// 		if (i > 0)
-// 		{
-// 			if ((i - 1) % 2 == 0)
-// 			{
-// 				close(s_k->pipefd2[0]);
-// 				close(s_k->pipefd2[1]);
-// 			}
-// 			else
-// 			{
-// 				close(s_k->pipefd1[0]);
-// 				close(s_k->pipefd1[1]);
-// 			}
-// 		}
-// 		if (!cmd->next)
-// 			break;
-// 		cmd = cmd->next;
-// 		i++;
-// 	}
-// 	while (wait(&status) > 0)
-// 		;
-// 	return (0);
-// }
 
 int	ft_exec_singlepipe(t_data *s_k, t_cmd *cmd)
 {
@@ -335,19 +263,33 @@ int	ft_exec_nopipe(t_data *s_k, t_cmd *cmd)
 			{
 				if (cmd->args[0][0] == '.' && cmd->args[0][1] == '\0')
 					str_error("bash :", NULL, "filename argument required");
+				else if ((cmd->args[0][0] == '>' || cmd->args[0][0] == '<') && (cmd->args[0][1] == '<' || cmd->args[0][1] == '>' || cmd->args[0][1] == '\0' || cmd->args[0][1] == ' '))
+				{
+					if ((cmd->args[0][2] == '>' || cmd->args[0][3] == '<'))
+					{
+						str_error("bash :", "syntax error near unexpected token `newline'", &cmd->args[0][3]);
+						free (pathway);
+						free_data(&s_k);
+						free(s_k);
+						free(cmd);
+						exit (2);
+					}
+					str_error("bash :", NULL, "syntax error near unexpected token `newline'");
+				}
 				else
 					str_error("bash :", cmd->args[0], "command not found");
+				if (cmd->output_file)
+					free(cmd->output_file);
 				free (pathway);
 				free_data(&s_k);
 				free(s_k);
-			//	if (cmd)
-			//		free_cmd(cmd);
+				free(cmd);
 				exit (127);
 			}
 		}
 		free_data(&s_k);
 		free(s_k);
-		free_cmd(cmd);
+		// free_cmd(cmd);
 		// free(cmd);
 		exit(0);
 	}
@@ -367,5 +309,6 @@ int	handle_exec(t_data *s_k, t_cmd *cmd)
 		ft_exec_singlepipe(s_k, cmd);
 	else if (s_k->pipe_quo == 0)
 		ft_exec_nopipe(s_k, cmd);
+	free_cmd(cmd);
 	return (0);
 }
