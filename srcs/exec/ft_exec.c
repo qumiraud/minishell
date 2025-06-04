@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 13:41:45 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/26 15:30:28 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/03 17:17:54 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,8 +170,6 @@ int	ft_exec_singlepipe(t_data *s_k, t_cmd *cmd)
 		else
 		{
 			char *pathway = get_way(s_k->tab_env, cmd->args);
-			// for (int i = 0; cmd->args[i]; i++)
-			// 	printf("arg[%d] = '%s'\n", i, cmd->args[i]);
 			if (!pathway)
 			{
 				str_error("bash :", cmd->args[0], "command not found");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yeten <yeten@student.42.fr>                +#+  +:+       +#+        */
+/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 13:53:00 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/22 10:55:02 by yeten            ###   ########.fr       */
+/*   Updated: 2025/06/04 12:10:55 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,14 @@ void	free_data(t_data **s_k)
 	free_glt(s_k);
 }
 
+// utils.c
+int find_closing_quote(char *str, char c)
+{
+	int i = 0;
+	while (str[i] && str[i] != c)
+		i++;
+	return i; // Retourne la position avant le guillemet fermant
+}
 
 
 

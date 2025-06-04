@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:35 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/26 09:38:00 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/04 12:13:12 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,6 +224,8 @@ int		glt_count_words(const char *str);
 // void		copy_word(char *dest, char **src, int count_l);
 void		free_tab(char **tab);
 void	str_error(char *str, char *cmd_args, char *msg);
+int		find_closing_quote(char *str, char c);
+
 
 
 int	quote_verif(char *str, t_data **s_k);

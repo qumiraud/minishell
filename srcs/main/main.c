@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:06 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/26 15:11:16 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/03 17:18:27 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,9 @@ void	handle_str(char *str, t_data **s_k, t_cmd *cmd)
 	// (*s_k)->cmd_arg = (*token);
 	// re_token_wd(s_k);
 	cmd = parse_cmd((*s_k)->glutto_tab);
-	//  print_command_list(cmd);
+	 print_command_list(cmd);
 	// print_tab(*s_k);
-	printf ("TEST LEAK >>>>>>>>>>\n\n\n");
+	// printf ("TEST LEAK >>>>>>>>>>\n\n\n");
 	handle_exec(*s_k, cmd);
 	// print_command_list(cmd);
 

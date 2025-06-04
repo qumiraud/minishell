@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   glt_words_2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:30:06 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/05/21 11:27:20 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/03 17:42:23 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,12 @@ void	handle_single_redir_partial_space_1(const char *str, int *i, int *word)
 	}
 }
 
-void	handle_single_redir_partial_space_2(const char *str, int *i, int *word)
-{
-	if ((str[*i] == '<' && str[*i - 1] != ' ' && str[*i + 1] == ' ')
-		|| (str[*i] == '|' && str[*i - 1] == ' ' && str[*i + 1] != ' ')
-		|| (str[*i] == '|' && str[*i - 1] != ' ' && str[*i + 1] == ' '))
-	{
-		(*word)++;
-	}
+void handle_single_redir_partial_space_2(const char *str, int *i, int *word) {
+    if (str[*i] == '|') {
+        if (str[*i - 1] != ' ' || str[*i + 1] != ' ') {
+            (*word)++;
+        }
+        (*i)++;
+    }
 }
+

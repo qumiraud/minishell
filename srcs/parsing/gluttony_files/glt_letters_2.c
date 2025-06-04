@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:29:14 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/05/26 15:13:14 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/03 17:42:19 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,11 @@ int	handle_double_redir(char *str, int i, int *inc)
 	return (0);
 }
 
-int	handle_single_redir(char *str, int i, int *inc)
-{
-	if (str[i] == '>' || str[i] == '<' || str[i] == '|')
-	{
-		*inc = 1;
-		return (1);
-	}
-	return (0);
+
+int handle_single_redir(char *str, int i, int *inc) {
+    if (str[i] == '>' || str[i] == '<' || str[i] == '|') {
+        *inc = 1;
+        return (1);
+    }
+    return (0);
 }
