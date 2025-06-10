@@ -6,14 +6,14 @@
 #    By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/24 08:15:59 by qumiraud          #+#    #+#              #
-#    Updated: 2025/06/10 12:49:35 by qumiraud         ###   ########.fr        #
+#    Updated: 2025/06/10 14:36:40 by qumiraud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -g
+CFLAGS = -Wall -Werror -Wextra -g #-fsanitize=address
 
 SRC =	srcs/main/main.c\
 		srcs/main/print_test.c\

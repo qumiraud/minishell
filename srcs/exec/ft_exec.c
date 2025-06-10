@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 13:41:45 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/10 13:03:57 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/10 14:40:56 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,15 +118,20 @@ int ft_exec_multipipe(t_data *s_k, t_cmd *cmd)
 
 int	ft_exec_singlepipe(t_data *s_k, t_cmd *cmd)
 {
-	pid_t pid1, pid2;
-	int status;
+	pid_t	pid1, pid2;
+	int		status;
+	t_cmd	*tmp;
 
+	tmp = cmd;
 	if (init_pipefd(s_k->pipefd1) != 0)
 		return (1);
+	// printf("Halloooo\n\n\n\n");
 
 	pid1 = fork();
 	if (pid1 == 0)
 	{
+		printf("Halloooo\n\n\n\n");
+
 		// Commande gauche
 		close(s_k->pipefd1[0]);
 		dup2(s_k->pipefd1[1], STDOUT_FILENO);
@@ -137,23 +142,35 @@ int	ft_exec_singlepipe(t_data *s_k, t_cmd *cmd)
 		// for (int i = 0; cmd->args[i]; i++)
 			// printf("arg[%d] = '%s'\n", i, cmd->args[i]);
 		if (ft_is_builtin(cmd->args[0]))
+		{
 			exit(ft_exec_builtin(s_k, cmd));
+		}
 		else
 		{
+
 			char *pathway = get_way(s_k->tab_env, cmd->args);
 			if (!pathway)
 			{
+
 				str_error("bash :", cmd->args[0], "command not found");
+				// free_cmd(cmd);
+				// free_data(&s_k);
+				// free(s_k);
 				exit(127);
 			}
 			if (execve(pathway, cmd->args, s_k->tab_env) == -1)
+			{
 				str_error("bash :", cmd->args[0], "command not found");
+				free_cmd(cmd);
+				free_data(&s_k);
+				free(s_k);
+			}
 			exit(1);
 		}
 	}
-	if (!cmd->next)
+	if (!tmp->next)
 		return (1);
-	cmd = cmd->next;
+	tmp = tmp->next;
 	pid2 = fork();
 	if (pid2 == 0)
 	{
@@ -169,15 +186,23 @@ int	ft_exec_singlepipe(t_data *s_k, t_cmd *cmd)
 			exit(ft_exec_builtin(s_k, cmd));
 		else
 		{
+					// printf("Halloooo\n\n\n\n");
+
 			char *pathway = get_way(s_k->tab_env, cmd->args);
 			if (!pathway)
 			{
 				str_error("bash :", cmd->args[0], "command not found");
 				exit(127);
 			}
-
 			if (execve(pathway, cmd->args, s_k->tab_env) == -1)
+			{
+				// printf("Halloooo\n\n\n\n");
 				str_error("bash :", cmd->args[0], "command not found");
+				free_cmd(cmd);
+				// free(pathway);
+				free_data(&s_k);
+				free(s_k);
+			}
 			exit(1);
 		}
 	}
@@ -276,7 +301,7 @@ int	ft_exec_nopipe(t_data *s_k, t_cmd *cmd)
 				}
 				else
 				{
-					printf("Halloooo\n\n\n\n");
+					// printf("Halloooo\n\n\n\n");
 					str_error("bash :", cmd->args[0], "command not found");
 					int	i = 0;
 					while (cmd->args[i])
