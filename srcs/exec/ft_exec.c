@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 13:41:45 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/10 14:40:56 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/10 16:39:29 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,14 @@ int ft_exec_multipipe(t_data *s_k, t_cmd *cmd)
 					str_error("bash :", current_cmd->args[0], "command not found");
 					exit(127);
 				}
-				execve(pathway, current_cmd->args, s_k->tab_env);
-				str_error("bash :", current_cmd->args[0], "command not found");
-				exit(1);
+				if (execve(pathway, current_cmd->args, s_k->tab_env) == -1)
+				{
+					str_error("bash :", current_cmd->args[0], "command not found");
+					free_cmd(cmd);
+					free_data(&s_k);
+					free(s_k);
+					exit(1);
+				}
 			}
 		}
 		// PARENT
@@ -130,8 +135,6 @@ int	ft_exec_singlepipe(t_data *s_k, t_cmd *cmd)
 	pid1 = fork();
 	if (pid1 == 0)
 	{
-		printf("Halloooo\n\n\n\n");
-
 		// Commande gauche
 		close(s_k->pipefd1[0]);
 		dup2(s_k->pipefd1[1], STDOUT_FILENO);
@@ -139,19 +142,19 @@ int	ft_exec_singlepipe(t_data *s_k, t_cmd *cmd)
 
 		if (cmd->output_file || cmd->input_file)
 			handle_redirection(cmd);  // À écrire → open + dup2
-		// for (int i = 0; cmd->args[i]; i++)
-			// printf("arg[%d] = '%s'\n", i, cmd->args[i]);
 		if (ft_is_builtin(cmd->args[0]))
 		{
-			exit(ft_exec_builtin(s_k, cmd));
+			ft_exec_builtin(s_k, cmd);
+			free_cmd(cmd);
+			free_data(&s_k);
+			free(s_k);
+			exit(0);
 		}
 		else
 		{
-
 			char *pathway = get_way(s_k->tab_env, cmd->args);
 			if (!pathway)
 			{
-
 				str_error("bash :", cmd->args[0], "command not found");
 				// free_cmd(cmd);
 				// free_data(&s_k);
@@ -171,6 +174,8 @@ int	ft_exec_singlepipe(t_data *s_k, t_cmd *cmd)
 	if (!tmp->next)
 		return (1);
 	tmp = tmp->next;
+	print_command_list(tmp);
+
 	pid2 = fork();
 	if (pid2 == 0)
 	{
@@ -179,37 +184,39 @@ int	ft_exec_singlepipe(t_data *s_k, t_cmd *cmd)
 		dup2(s_k->pipefd1[0], STDIN_FILENO);
 		close(s_k->pipefd1[0]);
 
-		if (cmd->output_file || cmd->input_file)
-			handle_redirection(cmd);  // idem
+		if (tmp->output_file || tmp->input_file)
+			handle_redirection(tmp);  // idem
 
-		if (ft_is_builtin(cmd->args[0]))
-			exit(ft_exec_builtin(s_k, cmd));
+		if (ft_is_builtin(tmp->args[0]))
+		{
+			ft_exec_builtin(s_k, tmp);
+			printf("bonjour cest moi le printf\n\n");
+			free_cmd(cmd);
+			exit(0);
+		}
 		else
 		{
 					// printf("Halloooo\n\n\n\n");
-
-			char *pathway = get_way(s_k->tab_env, cmd->args);
+			char *pathway = get_way(s_k->tab_env, tmp->args);
 			if (!pathway)
 			{
-				str_error("bash :", cmd->args[0], "command not found");
+				str_error("bash :", tmp->args[0], "command not found");
 				exit(127);
 			}
-			if (execve(pathway, cmd->args, s_k->tab_env) == -1)
+			if (execve(pathway, tmp->args, s_k->tab_env) == -1)
 			{
 				// printf("Halloooo\n\n\n\n");
-				str_error("bash :", cmd->args[0], "command not found");
+				str_error("bash :", tmp->args[0], "command not found");
 				free_cmd(cmd);
-				// free(pathway);
 				free_data(&s_k);
 				free(s_k);
 			}
 			exit(1);
 		}
 	}
-
+	// free_cmd(cmd);
 	close(s_k->pipefd1[0]);
 	close(s_k->pipefd1[1]);
-
 	waitpid(pid1, &status, 0);
 	waitpid(pid2, &status, 0);
 	return (0);
@@ -228,6 +235,7 @@ int	ft_exec_nopipe(t_data *s_k, t_cmd *cmd)
 	if (ft_is_builtin(cmd->args[0]) && !cmd->input_file && !cmd->output_file)
 	{
 		ft_exec_builtin(s_k, cmd);
+		free_cmd(cmd);
 		return (0);
 	}
 	// printf("cmd_outputfile: %s\n", cmd->output_file);
@@ -270,10 +278,14 @@ int	ft_exec_nopipe(t_data *s_k, t_cmd *cmd)
 			close (fd_out);
 		}
 		if (ft_is_builtin(cmd->args[0]))
+		{
 			ft_exec_builtin(s_k, cmd);
+			free_cmd(cmd);
+		}
 		else
 		{
 			pathway = get_way(s_k->tab_env, cmd->args);
+			printf("bonjour cest moi le printf\n\n");
 			if (!pathway)
 			{
 				str_error("bash :", cmd->args[0], "command not found");

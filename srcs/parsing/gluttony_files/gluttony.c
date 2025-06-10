@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:33:27 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/06/10 09:59:53 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/10 15:56:26 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ void handle_standard_token(t_data **s_k, char **str, int *i)
 void fill_gluttony_tab(t_data **s_k, char *str)
 {
 	int i = 0;
-	(*s_k)->glutto_tab = malloc(sizeof(char *) * (glt_count_words(str) + 2));
-
+	(*s_k)->glutto_tab = malloc(sizeof(char *) * (glt_count_words(str) + (*s_k)->pipe_quo + 1));
+	printf("glt_count_words = %d\n\n", glt_count_words(str));
 	while (*str) {
 		if (*str == '$' && *(str + 1) == '"') { // Détection du motif $"
 			int len = find_closing_quote(str + 2, '"') + 3; // +3 pour $" et le "
