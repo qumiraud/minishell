@@ -18,11 +18,11 @@ void	print_tab(t_data *s_k)
 	int	i;
 
 	i = 0;
-	while (s_k->rl_tab[i])
-	{
-		printf("rl_tab[%d]: %s\n\n",i, s_k->rl_tab[i]);
-		i++;
-	}
+	// while (s_k->rl_tab[i])
+	// {
+	// 	printf("rl_tab[%d]: %s\n\n",i, s_k->rl_tab[i]);
+	// 	i++;
+	// }
 	i = 0;
 	while (s_k->glutto_tab[i])
 	{
@@ -119,8 +119,3 @@ void print_command_list(t_cmd *cmd_list)
 		cmd_num++;
 	}
 }
-
-
-
-
-

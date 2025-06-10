@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 13:41:45 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/03 17:17:54 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/10 13:03:57 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -275,10 +275,19 @@ int	ft_exec_nopipe(t_data *s_k, t_cmd *cmd)
 					str_error("bash :", NULL, "syntax error near unexpected token `newline'");
 				}
 				else
+				{
+					printf("Halloooo\n\n\n\n");
 					str_error("bash :", cmd->args[0], "command not found");
+					int	i = 0;
+					while (cmd->args[i])
+					{
+						free(cmd->args[i]);
+						i++;
+					}
+				}
 				if (cmd->output_file)
 					free(cmd->output_file);
-				free (pathway);
+				// free (pathway);
 				free_data(&s_k);
 				free(s_k);
 				free(cmd);

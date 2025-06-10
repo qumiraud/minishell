@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 14:44:53 by yeten             #+#    #+#             */
-/*   Updated: 2025/05/26 14:40:37 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/10 12:39:48 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	arg_to_cmd(t_cmd *cmd, char *arg)
 		return;
 	}
 	cmd->args[cmd->argc] = ft_strdup(arg);
+	printf("cmd in arg_to_cmd: %s\n", cmd->args[cmd->argc]);
 	if (!cmd->args[cmd->argc])
 	{
 		perror("strdup");
@@ -50,7 +51,6 @@ void	arg_to_cmd(t_cmd *cmd, char *arg)
 	}
 	cmd->argc++;
 	cmd->args[cmd->argc] = NULL;
-	// printf ("\n\ncmd->argc : %d\n\n", cmd->argc);
 }
 
 static void	handle_pipe(char **token, int *i, t_cmd **current)
@@ -240,44 +240,3 @@ t_cmd	*parse_cmd(char **token)
 // 	}
 // 	return (head);
 // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

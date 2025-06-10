@@ -6,53 +6,80 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:06 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/03 17:18:27 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/10 12:41:43 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-
-
 void free_cmd(t_cmd *cmd)
 {
-	// tres problemes ca need correctifs asap
-	t_cmd *tmp;
-	int i;
+    t_cmd *tmp;
+    int i;
 
-	i = 0;
-	while (cmd)
-	{
-		// probleme sur des awd > awd > awd et aussi des awd | awd toi fatigue toi trouver quand energie plus
-		tmp = cmd->next;
-		// printf ("cmd->argc : %d\n", cmd->argc);
-		// printf ("cmd->nb_ope : %d\n", cmd->nb_ope);
-			while (i < (cmd->argc))//+ cmd->nb_ope))
-			{
-				// printf ("\n\n\nHALLO???\n\n\n");
-				if (cmd->args[i])
-					free(cmd->args[i]);
-				cmd->args[i] = NULL;
-				i++;
-			//} <- while
-				if (cmd->input_file)
-				{
-					free(cmd->input_file);
-					cmd->input_file = NULL;
-				}
-				if (cmd->output_file)
-				{
-					free(cmd->output_file);
-					cmd->output_file = NULL;
-				}
-			}
-			i = 0;
-		free(cmd);
-		cmd = tmp;
+    while (cmd)
+    {
+        tmp = cmd->next;
 
+        // Libération des arguments
+        for (i = 0; i < cmd->argc; i++)
+        {
+            free(cmd->args[i]);
+            cmd->args[i] = NULL;
+        }
 
-	}
+        // Libération des fichiers (une seule fois par commande)
+        free(cmd->input_file);
+        free(cmd->output_file);
+
+        free(cmd);
+        cmd = tmp;
+    }
 }
+
+// void free_cmd(t_cmd *cmd)
+// {
+// 	// tres problemes ca need correctifs asap
+// 	t_cmd *tmp;
+// 	int i;
+// 	int j;
+
+// 	i = 0;
+// 	j = 0;
+// 	while (cmd)
+// 	{
+// 		// probleme sur des awd > awd > awd et aussi des awd | awd toi fatigue toi trouver quand energie plus
+// 		tmp = cmd->next;
+// 		// printf ("cmd->argc : %d\n", cmd->argc);
+// 		// printf ("cmd->nb_ope : %d\n", cmd->nb_ope);
+// 		i = 0;
+// 			// printf ("\n\n\n%s\n\n\n", cmd->args[i]);
+// 		// free_tab(cmd->args);
+// 		// while (cmd->args[i])
+// 		// {
+// 		// 	free(cmd->args[i]);
+// 		// 	cmd->args[i] = NULL;
+// 		// 	i++;
+// 		// }
+// 		// free(cmd->args);
+// 		if (cmd->input_file)
+// 		{
+// 			free(cmd->input_file);
+// 			cmd->input_file = NULL;
+// 		}
+// 		if (cmd->output_file)
+// 		{
+// 			free(cmd->output_file);
+// 			cmd->output_file = NULL;
+// 		}
+// 		free_tab(cmd->args);
+
+// 			// printf("boucle\n\n");
+// 		free(cmd);
+// 		cmd = tmp;
+// 		// printf("%s\n", tmp->args[i]);
+// 	}
+// }
 
 
 
@@ -68,10 +95,12 @@ void	handle_str(char *str, t_data **s_k, t_cmd *cmd)
 	// (*s_k)->cmd_arg = (*token);
 	// re_token_wd(s_k);
 	cmd = parse_cmd((*s_k)->glutto_tab);
-	 print_command_list(cmd);
+	//  print_command_list(cmd);
 	// print_tab(*s_k);
 	// printf ("TEST LEAK >>>>>>>>>>\n\n\n");
 	handle_exec(*s_k, cmd);
+	// free_cmd(cmd);
+
 	// print_command_list(cmd);
 
 }
@@ -99,20 +128,11 @@ int	handle_readline(char *str, t_data **s_k, t_cmd *cmd)
 	len = (*s_k)->tab_len;
 	if (*s_k)
 	{
-		if ((*s_k)->rl_tab)
-		{
-			while (i <= len)
-			{
-				free((*s_k)->rl_tab[i]);
-				(*s_k)->rl_tab[i] = NULL;
-				i++;
-			}
-			i = 0;
-		}
 		if ((*s_k)->glutto_tab)
 		{
 			while (i <= len)
 			{
+				// printf("HALLO \n\n %d\n\n", len);
 				free((*s_k)->glutto_tab[i]);
 				(*s_k)->glutto_tab[i] = NULL;
 				i++;
@@ -227,6 +247,16 @@ int	main(int argc, char **argv, char **envp)
 		free (str);
 		str = NULL;
 		// printf ("\"%s\"\n\n\n", str);
+
+	// 	printf ("\n\n\n\n\n\n\n");
+
+	// print_command_list(cmd);
+
+	// 	printf ("\n\n\n\n\n\n\n");
+
+	// print_tab(suprem_knowledge);
+
+	// 	printf ("\n\n\n\n\n\n\n");
 
 	}
 	handle_ending(&suprem_knowledge);

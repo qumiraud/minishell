@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:33:27 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/06/04 12:10:23 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/10 09:59:53 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ void fill_gluttony_tab(t_data **s_k, char *str)
 		}
 	}
 	(*s_k)->glutto_tab[i] = NULL;
+	(*s_k)->tab_len = i;
+
 }
 
 
