@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gluttony.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:33:27 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/06/11 12:25:23 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/11 13:57:20 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void fill_gluttony_tab(t_data **s_k, char *str)
 	{
 		if (*str == '$' && *(str + 1) == '"')
 		{ // Détection du motif $"
-			printf ("IIIIFFFFF\n\n\n\n\n\n");
+			// printf ("IIIIFFFFF\n\n\n\n\n\n");
 
 			int len = find_closing_quote(str + 2, '"') + 3; // +3 pour $" et le "
 			(*s_k)->glutto_tab[i] = ft_substr(str, 0, len);
@@ -123,35 +123,35 @@ void fill_gluttony_tab(t_data **s_k, char *str)
 		{
 			(*s_k)->glutto_tab[i++] = ft_strdup("<<");
 			str += 2;
-			printf ("ELSE IFFFFF\n\n\n\n\n\n");
+			// printf ("ELSE IFFFFF\n\n\n\n\n\n");
 		}
 		else if (*str == '>' && *(str + 1) == '>')
 		{
 			(*s_k)->glutto_tab[i++] = ft_strdup(">>");
 			str += 2;
-			printf ("ELSE IFFFFF\n\n\n\n\n\n");
+			// printf ("ELSE IFFFFF\n\n\n\n\n\n");
 		}
 		else if (*str == '<')
 		{
 			(*s_k)->glutto_tab[i++] = ft_strdup("<");
 			str++;
-			printf ("ELSE IFFFFF\n\n\n\n\n\n");
+			// printf ("ELSE IFFFFF\n\n\n\n\n\n");
 		}
 		else if (*str == '>')
 		{
 			(*s_k)->glutto_tab[i++] = ft_strdup(">");
 			str++;
-			printf ("ELSE IFFFFF\n\n\n\n\n\n");
+			// printf ("ELSE IFFFFF\n\n\n\n\n\n");
 		}
 		else if (*str == '|')
 		{
 			(*s_k)->glutto_tab[i++] = ft_strdup("|");
 			str++;
-			printf ("ELSE IFFFFF\n\n\n\n\n\n");
+			// printf ("ELSE IFFFFF\n\n\n\n\n\n");
 		}
 		else
 		{
-			printf ("ELSEEEEEE\n\n\n\n\n\n");
+			// printf ("ELSEEEEEE\n\n\n\n\n\n");
 
 			handle_standard_token(s_k, &str, &i);
 		}

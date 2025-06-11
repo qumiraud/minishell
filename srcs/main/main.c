@@ -6,35 +6,37 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:06 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/10 16:03:24 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/11 15:52:53 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+int	g_sig;
+
 void free_cmd(t_cmd *cmd)
 {
-    t_cmd *tmp;
-    int i;
+	t_cmd *tmp;
+	int i;
 
-    while (cmd)
-    {
-        tmp = cmd->next;
+	while (cmd)
+	{
+		tmp = cmd->next;
 
-        // Libération des arguments
-        for (i = 0; i < cmd->argc; i++)
-        {
-            free(cmd->args[i]);
-            cmd->args[i] = NULL;
-        }
+		// Libération des arguments
+		for (i = 0; i < cmd->argc; i++)
+		{
+			free(cmd->args[i]);
+			cmd->args[i] = NULL;
+		}
 
-        // Libération des fichiers (une seule fois par commande)
-        free(cmd->input_file);
-        free(cmd->output_file);
+		// Libération des fichiers (une seule fois par commande)
+		free(cmd->input_file);
+		free(cmd->output_file);
 
-        free(cmd);
-        cmd = tmp;
-    }
+		free(cmd);
+		cmd = tmp;
+	}
 }
 
 // void free_cmd(t_cmd *cmd)
@@ -97,8 +99,12 @@ void	handle_str(char *str, t_data **s_k, t_cmd *cmd)
 	// (void)cmd;
 	cmd = parse_cmd((*s_k)->glutto_tab);
 	 print_command_list(cmd);
+	// g_sig = 0;
+
 	// print_tab(*s_k);
 	// printf ("TEST LEAK >>>>>>>>>>\n\n\n");
+	// g_sig = 1;
+
 	handle_exec(*s_k, cmd);
 	// free_cmd(cmd);
 
@@ -191,6 +197,7 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	while (1)
 	{
+		// g_sig = 0;
 		setup_signal();
 		str = readline("💾 minishell :");
 		// printf ("%s\n\n", str);
@@ -258,6 +265,7 @@ int	main(int argc, char **argv, char **envp)
 	// print_tab(suprem_knowledge);
 
 	// 	printf ("\n\n\n\n\n\n\n");
+		g_sig = 0;
 
 	}
 	handle_ending(&suprem_knowledge);

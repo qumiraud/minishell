@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 13:41:45 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/10 16:39:29 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/11 15:56:15 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,13 @@ int ft_exec_multipipe(t_data *s_k, t_cmd *cmd)
 				handle_redirection(current_cmd);
 			// Exécution de la commande
 			if (ft_is_builtin(current_cmd->args[0]))
-				exit(ft_exec_builtin(s_k, current_cmd));
+			{
+				ft_exec_builtin(s_k, current_cmd);
+				free_cmd(cmd);
+				free_data(&s_k);
+				free(s_k);
+				exit(0);
+			}
 			else
 			{
 				pathway = get_way(s_k->tab_env, current_cmd->args);
@@ -148,7 +154,7 @@ int	ft_exec_singlepipe(t_data *s_k, t_cmd *cmd)
 			free_cmd(cmd);
 			free_data(&s_k);
 			free(s_k);
-			exit(0);
+			exit(1);
 		}
 		else
 		{
@@ -171,10 +177,12 @@ int	ft_exec_singlepipe(t_data *s_k, t_cmd *cmd)
 			exit(1);
 		}
 	}
+	// if (tmp->here_doc)
+	// 	waitpid(pid1, &status, 0);
 	if (!tmp->next)
 		return (1);
 	tmp = tmp->next;
-	print_command_list(tmp);
+	// print_command_list(tmp);
 
 	pid2 = fork();
 	if (pid2 == 0)
@@ -186,6 +194,15 @@ int	ft_exec_singlepipe(t_data *s_k, t_cmd *cmd)
 
 		if (tmp->output_file || tmp->input_file)
 			handle_redirection(tmp);  // idem
+		//****** */
+		write(2, "test coucou\n\n", 13);
+
+		if (g_sig == 1)
+		{
+			write(2, "test coucou\n\n", 13);
+			free_data(&s_k);
+			free(s_k);
+		}
 
 		if (ft_is_builtin(tmp->args[0]))
 		{
@@ -201,11 +218,12 @@ int	ft_exec_singlepipe(t_data *s_k, t_cmd *cmd)
 			if (!pathway)
 			{
 				str_error("bash :", tmp->args[0], "command not found");
+				free_data(&s_k);
 				exit(127);
 			}
 			if (execve(pathway, tmp->args, s_k->tab_env) == -1)
 			{
-				// printf("Halloooo\n\n\n\n");
+				printf("Halloooo\n\n\n\n");
 				str_error("bash :", tmp->args[0], "command not found");
 				free_cmd(cmd);
 				free_data(&s_k);
@@ -217,8 +235,10 @@ int	ft_exec_singlepipe(t_data *s_k, t_cmd *cmd)
 	// free_cmd(cmd);
 	close(s_k->pipefd1[0]);
 	close(s_k->pipefd1[1]);
-	waitpid(pid1, &status, 0);
-	waitpid(pid2, &status, 0);
+	int childreturn = waitpid(pid1, &status, 0);
+	printf("pid1 : %d\n\n\n",childreturn);
+	int childreturn2 = waitpid(pid2, &status, 0);
+	printf("pid2 : %d\n\n\n", childreturn2);
 	return (0);
 }
 
@@ -235,7 +255,7 @@ int	ft_exec_nopipe(t_data *s_k, t_cmd *cmd)
 	if (ft_is_builtin(cmd->args[0]) && !cmd->input_file && !cmd->output_file)
 	{
 		ft_exec_builtin(s_k, cmd);
-		free_cmd(cmd);
+		// free_cmd(cmd);
 		return (0);
 	}
 	// printf("cmd_outputfile: %s\n", cmd->output_file);
@@ -285,7 +305,7 @@ int	ft_exec_nopipe(t_data *s_k, t_cmd *cmd)
 		else
 		{
 			pathway = get_way(s_k->tab_env, cmd->args);
-			printf("bonjour cest moi le printf\n\n");
+			// printf("bonjour cest moi le printf\n\n");
 			if (!pathway)
 			{
 				str_error("bash :", cmd->args[0], "command not found");
@@ -324,7 +344,6 @@ int	ft_exec_nopipe(t_data *s_k, t_cmd *cmd)
 				}
 				if (cmd->output_file)
 					free(cmd->output_file);
-				// free (pathway);
 				free_data(&s_k);
 				free(s_k);
 				free(cmd);
@@ -333,8 +352,6 @@ int	ft_exec_nopipe(t_data *s_k, t_cmd *cmd)
 		}
 		free_data(&s_k);
 		free(s_k);
-		// free_cmd(cmd);
-		// free(cmd);
 		exit(0);
 	}
 	else
@@ -346,13 +363,15 @@ int	ft_exec_nopipe(t_data *s_k, t_cmd *cmd)
 
 int	handle_exec(t_data *s_k, t_cmd *cmd)
 {
+	// g_sig = 0;
 	// printf("passage par handle_exec\n");
 	if (s_k->pipe_quo > 1)
-		ft_exec_multipipe(s_k, cmd);
+	ft_exec_multipipe(s_k, cmd);
 	else if (s_k->pipe_quo == 1)
-		ft_exec_singlepipe(s_k, cmd);
+	ft_exec_singlepipe(s_k, cmd);
 	else if (s_k->pipe_quo == 0)
-		ft_exec_nopipe(s_k, cmd);
+	ft_exec_nopipe(s_k, cmd);
 	free_cmd(cmd);
+	// printf ("g_sig : %d", g_sig);
 	return (0);
 }

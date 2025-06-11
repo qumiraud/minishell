@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:35 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/10 16:33:11 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/11 15:45:37 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include "../libft/libft.h"
+
+// int	g_sig;
+extern int g_sig;
 
 
 //**********ENUM**************/
