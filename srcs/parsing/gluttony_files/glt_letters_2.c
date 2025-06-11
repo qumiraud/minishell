@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   glt_letters_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:29:14 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/06/10 09:58:42 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/11 10:00:25 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,9 @@ int	handle_double_redir(char *str, int i, int *inc)
 
 
 int handle_single_redir(char *str, int i, int *inc) {
-    if (str[i] == '>' || str[i] == '<' || str[i] == '|') {
-        *inc = 1;
-        return (1);
-    }
-    return (0);
+	if (str[i] == '>' || str[i] == '<' || str[i] == '|') {
+		*inc = 1;
+		return (1);
+	}
+	return (0);
 }
