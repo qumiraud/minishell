@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yeten <yeten@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 13:41:45 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/11 15:56:15 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/11 18:19:31 by yeten            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ int	ft_exec_singlepipe(t_data *s_k, t_cmd *cmd)
 	pid1 = fork();
 	if (pid1 == 0)
 	{
+		signal(SIGPIPE, SIG_DFL);
 		// Commande gauche
 		close(s_k->pipefd1[0]);
 		dup2(s_k->pipefd1[1], STDOUT_FILENO);
@@ -174,6 +175,8 @@ int	ft_exec_singlepipe(t_data *s_k, t_cmd *cmd)
 				free_data(&s_k);
 				free(s_k);
 			}
+			// free_data(&s_k);
+			// free(s_k);
 			exit(1);
 		}
 	}
@@ -183,7 +186,8 @@ int	ft_exec_singlepipe(t_data *s_k, t_cmd *cmd)
 		return (1);
 	tmp = tmp->next;
 	// print_command_list(tmp);
-
+	// free_data(&s_k);
+	// free(s_k);
 	pid2 = fork();
 	if (pid2 == 0)
 	{
@@ -195,11 +199,14 @@ int	ft_exec_singlepipe(t_data *s_k, t_cmd *cmd)
 		if (tmp->output_file || tmp->input_file)
 			handle_redirection(tmp);  // idem
 		//****** */
-		write(2, "test coucou\n\n", 13);
-
+		
+		// write(2, "test coucou\n\n", 13);
+		
+		printf ("g_sig : %d\n\n\n", g_sig);
+		
 		if (g_sig == 1)
 		{
-			write(2, "test coucou\n\n", 13);
+			// write(2, "test coucou\n\n", 13);
 			free_data(&s_k);
 			free(s_k);
 		}
@@ -209,6 +216,8 @@ int	ft_exec_singlepipe(t_data *s_k, t_cmd *cmd)
 			ft_exec_builtin(s_k, tmp);
 			printf("bonjour cest moi le printf\n\n");
 			free_cmd(cmd);
+			free_data(&s_k);// HALLO ???????????? comment ca mdrrrr
+			free(s_k);
 			exit(0);
 		}
 		else
@@ -231,6 +240,7 @@ int	ft_exec_singlepipe(t_data *s_k, t_cmd *cmd)
 			}
 			exit(1);
 		}
+
 	}
 	// free_cmd(cmd);
 	close(s_k->pipefd1[0]);
@@ -239,6 +249,8 @@ int	ft_exec_singlepipe(t_data *s_k, t_cmd *cmd)
 	printf("pid1 : %d\n\n\n",childreturn);
 	int childreturn2 = waitpid(pid2, &status, 0);
 	printf("pid2 : %d\n\n\n", childreturn2);
+	// free_data(&s_k);
+	// free(s_k);
 	return (0);
 }
 
@@ -372,6 +384,6 @@ int	handle_exec(t_data *s_k, t_cmd *cmd)
 	else if (s_k->pipe_quo == 0)
 	ft_exec_nopipe(s_k, cmd);
 	free_cmd(cmd);
-	// printf ("g_sig : %d", g_sig);
+	printf ("g_sig : %d", g_sig);
 	return (0);
 }

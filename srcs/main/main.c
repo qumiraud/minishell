@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yeten <yeten@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:06 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/11 15:52:53 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/11 18:58:15 by yeten            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 int	g_sig;
+// volatile sig_atomic_t g_sig = 0;
 
 void free_cmd(t_cmd *cmd)
 {
@@ -98,10 +99,11 @@ void	handle_str(char *str, t_data **s_k, t_cmd *cmd)
 	// re_token_wd(s_k);
 	// (void)cmd;
 	cmd = parse_cmd((*s_k)->glutto_tab);
-	 print_command_list(cmd);
 	// g_sig = 0;
-
+	
 	// print_tab(*s_k);
+	
+	print_command_list(cmd);
 	// printf ("TEST LEAK >>>>>>>>>>\n\n\n");
 	// g_sig = 1;
 
@@ -139,7 +141,8 @@ int	handle_readline(char *str, t_data **s_k, t_cmd *cmd)
 		{
 			while (i <= len)
 			{
-				// printf("HALLO \n\n %d\n\n", len);
+				// printf("HALLO len \n\n %d\n\n", len);
+				// printf("HALLO I \n\n %d\n\n", i);
 				free((*s_k)->glutto_tab[i]);
 				(*s_k)->glutto_tab[i] = NULL;
 				i++;
@@ -265,6 +268,8 @@ int	main(int argc, char **argv, char **envp)
 	// print_tab(suprem_knowledge);
 
 	// 	printf ("\n\n\n\n\n\n\n");
+		printf ("g_sig : %d", g_sig);
+
 		g_sig = 0;
 
 	}

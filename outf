@@ -1,0 +1,13 @@
+g_sig : 0
+
+
+includes
+infile
+libft
+Makefile
+minishell
+outf
+readline.supp
+srcs
+test de gogole.c
+test_minishell.sh

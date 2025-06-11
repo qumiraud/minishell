@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   glt_letters.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yeten <yeten@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:27:20 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/06/11 11:38:45 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/11 18:31:19 by yeten            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int	glt_process_word(char *str, int *i, int *word)
 
 void	skip_spaces(char *str, int *i)
 {
+	printf ("HALLO????\n\n\n\n");
 	while (str[*i] == 32 || (str[*i] >= 8 && str[*i] <= 13))
 		(*i)++;
 }

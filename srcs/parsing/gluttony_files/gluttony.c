@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gluttony.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yeten <yeten@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:33:27 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/06/11 13:57:20 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/11 19:11:53 by yeten            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,8 @@ void handle_standard_token(t_data **s_k, char **str, int *i)
 void fill_gluttony_tab(t_data **s_k, char *str)
 {
 	int i = 0;
-	(*s_k)->glutto_tab = malloc(sizeof(char *) * (glt_count_words(str) + (*s_k)->pipe_quo + 1));
-	printf("glt_count_words = %d\n\n", glt_count_words(str));
+	(*s_k)->glutto_tab = malloc(sizeof(char *) * (glt_count_words(str) + (*s_k)->pipe_quo + 2));
+	// printf("glt_count_words = %d\n\n", glt_count_words(str));
 	while (*str)
 	{
 		if (*str == '$' && *(str + 1) == '"')
@@ -146,7 +146,7 @@ void fill_gluttony_tab(t_data **s_k, char *str)
 		else if (*str == '|')
 		{
 			(*s_k)->glutto_tab[i++] = ft_strdup("|");
-			str++;
+			str++; 	
 			// printf ("ELSE IFFFFF\n\n\n\n\n\n");
 		}
 		else
