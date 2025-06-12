@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens_to_list.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 14:44:53 by yeten             #+#    #+#             */
-/*   Updated: 2025/06/10 12:39:48 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/12 10:24:56 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ static void	handle_input(char **token, int *i, t_cmd *current)
 			free(current->input_file);
 			current->input_file = NULL;
 		}
-		current->input_file = ft_strdup(token[*i + 1]);
+		current->input_file = ft_strdup(token[*i + 2]);
 		*i += 2;
 		current->nb_ope++;
 }

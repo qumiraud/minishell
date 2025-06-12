@@ -6,7 +6,7 @@
 /*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:29:14 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/06/11 10:00:25 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/12 10:02:02 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	fill_tabs(t_data **s_k, char *str)
 {
-	// fill_s_k_tab(s_k, str);
 	fill_gluttony_tab(s_k, str);
 }
 
@@ -72,9 +71,10 @@ int	handle_double_redir(char *str, int i, int *inc)
 	return (0);
 }
 
-
-int handle_single_redir(char *str, int i, int *inc) {
-	if (str[i] == '>' || str[i] == '<' || str[i] == '|') {
+int	handle_single_redir(char *str, int i, int *inc)
+{
+	if (str[i] == '>' || str[i] == '<' || str[i] == '|')
+	{
 		*inc = 1;
 		return (1);
 	}

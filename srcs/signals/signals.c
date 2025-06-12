@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yeten <yeten@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:25:28 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/06/11 18:09:08 by yeten            ###   ########.fr       */
+/*   Updated: 2025/06/12 10:24:24 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,15 @@ void	signal_handler(int signal)
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
-	g_sig = 1;
-	printf ("HALLLLLOOOO>?????\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-
 }
 
-void sig_pipe_handler(int signal)
-{
-	(void)signal;
-	write(2, "test bonjou\n\n", 13);
-	printf ("HALLLLLOOOO>?????\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-		g_sig = 1;
-}
+// void sig_pipe_handler(int signal)
+// {
+// 	(void)signal;
+// 	write(2, "test bonjou\n\n", 13);
+// 	printf ("HALLLLLOOOO>?????\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+// 		g_sig = 1;
+// }
 
 void	setup_signal(void)
 {

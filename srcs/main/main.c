@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yeten <yeten@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:06 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/11 18:58:15 by yeten            ###   ########.fr       */
+/*   Updated: 2025/06/12 10:17:07 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,54 +40,6 @@ void free_cmd(t_cmd *cmd)
 	}
 }
 
-// void free_cmd(t_cmd *cmd)
-// {
-// 	// tres problemes ca need correctifs asap
-// 	t_cmd *tmp;
-// 	int i;
-// 	int j;
-
-// 	i = 0;
-// 	j = 0;
-// 	while (cmd)
-// 	{
-// 		// probleme sur des awd > awd > awd et aussi des awd | awd toi fatigue toi trouver quand energie plus
-// 		tmp = cmd->next;
-// 		// printf ("cmd->argc : %d\n", cmd->argc);
-// 		// printf ("cmd->nb_ope : %d\n", cmd->nb_ope);
-// 		i = 0;
-// 			// printf ("\n\n\n%s\n\n\n", cmd->args[i]);
-// 		// free_tab(cmd->args);
-// 		// while (cmd->args[i])
-// 		// {
-// 		// 	free(cmd->args[i]);
-// 		// 	cmd->args[i] = NULL;
-// 		// 	i++;
-// 		// }
-// 		// free(cmd->args);
-// 		if (cmd->input_file)
-// 		{
-// 			free(cmd->input_file);
-// 			cmd->input_file = NULL;
-// 		}
-// 		if (cmd->output_file)
-// 		{
-// 			free(cmd->output_file);
-// 			cmd->output_file = NULL;
-// 		}
-// 		free_tab(cmd->args);
-
-// 			// printf("boucle\n\n");
-// 		free(cmd);
-// 		cmd = tmp;
-// 		// printf("%s\n", tmp->args[i]);
-// 	}
-// }
-
-
-
-
-
 
 void	handle_str(char *str, t_data **s_k, t_cmd *cmd)
 {
@@ -101,7 +53,7 @@ void	handle_str(char *str, t_data **s_k, t_cmd *cmd)
 	cmd = parse_cmd((*s_k)->glutto_tab);
 	// g_sig = 0;
 	
-	// print_tab(*s_k);
+	print_tab(*s_k);
 	
 	print_command_list(cmd);
 	// printf ("TEST LEAK >>>>>>>>>>\n\n\n");

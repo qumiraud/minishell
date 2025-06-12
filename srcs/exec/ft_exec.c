@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yeten <yeten@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 13:41:45 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/11 18:19:31 by yeten            ###   ########.fr       */
+/*   Updated: 2025/06/12 10:22:10 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,21 +202,21 @@ int	ft_exec_singlepipe(t_data *s_k, t_cmd *cmd)
 		
 		// write(2, "test coucou\n\n", 13);
 		
-		printf ("g_sig : %d\n\n\n", g_sig);
+		// printf ("g_sig : %d\n\n\n", g_sig);
 		
-		if (g_sig == 1)
-		{
-			// write(2, "test coucou\n\n", 13);
-			free_data(&s_k);
-			free(s_k);
-		}
+		// if (g_sig == 1)
+		// {
+		// 	// write(2, "test coucou\n\n", 13);
+		// 	free_data(&s_k);
+		// 	free(s_k);
+		// }
 
 		if (ft_is_builtin(tmp->args[0]))
 		{
 			ft_exec_builtin(s_k, tmp);
 			printf("bonjour cest moi le printf\n\n");
 			free_cmd(cmd);
-			free_data(&s_k);// HALLO ???????????? comment ca mdrrrr
+			free_data(&s_k);
 			free(s_k);
 			exit(0);
 		}
@@ -232,7 +232,7 @@ int	ft_exec_singlepipe(t_data *s_k, t_cmd *cmd)
 			}
 			if (execve(pathway, tmp->args, s_k->tab_env) == -1)
 			{
-				printf("Halloooo\n\n\n\n");
+				// printf("Halloooo\n\n\n\n");
 				str_error("bash :", tmp->args[0], "command not found");
 				free_cmd(cmd);
 				free_data(&s_k);
