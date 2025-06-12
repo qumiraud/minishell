@@ -6,7 +6,7 @@
 /*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:35 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/12 13:32:02 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/12 13:42:13 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ int	handle_exit_command(char *str, t_data **suprem_knowledge);
 int	handle_null_input(char *str, t_cmd *cmd, t_data **suprem_knowledge);
 void	process_input_string(char **str, t_data **suprem_knowledge);
 
+void	process_input_string_2(char *str, t_data **s_k, t_cmd *cmd);
 
 
 //**********MAIN_BIS_2.C*************************************************/

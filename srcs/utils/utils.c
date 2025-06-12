@@ -6,7 +6,7 @@
 /*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 13:53:00 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/12 12:04:28 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/12 14:03:46 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	free_s_k(t_data **s_k)
 	}
 	if ((*s_k)->tab_env)
 	{
+		printf ("(*s_k)->tab_len : %d\n\n\n", (*s_k)->tab_len);
 		free_tab((*s_k)->tab_env);
 		(*s_k)->tab_env = NULL;
 	}
