@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yeten <yeten@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:35 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/11 18:01:25 by yeten            ###   ########.fr       */
+/*   Updated: 2025/06/12 13:32:02 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@
 # include "../libft/libft.h"
 
 // int	g_sig;
-extern int g_sig;
-// extern volatile sig_atomic_t g_sig;
+// extern int g_sig;
 
 
 //**********ENUM**************/
@@ -121,6 +120,23 @@ void		print_tab(t_data *s_k);
 void		print_env(t_data *s_k);
 void		print_all(t_data *s_k);
 void		free_cmd(t_cmd *cmd);
+int	handle_readline(char *str, t_data **s_k, t_cmd *cmd);
+
+//**********MAIN_BIS.C*************************************************/
+
+int	check_arguments(int argc, char **argv);
+int	handle_exit_command(char *str, t_data **suprem_knowledge);
+int	handle_null_input(char *str, t_cmd *cmd, t_data **suprem_knowledge);
+void	process_input_string(char **str, t_data **suprem_knowledge);
+
+
+
+//**********MAIN_BIS_2.C*************************************************/
+
+void	handle_ending(t_data **s_k);
+void	handle_str(char *str, t_data **s_k, t_cmd *cmd);
+
+
 
 
 
