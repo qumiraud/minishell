@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:36:49 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/06/12 15:24:21 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/12 15:27:29 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 int	pipe_quota(char *str, t_data **s_k)
 {
-	int	i = 0;
-	int	pipe = 0;
+	static int	i = 0;
+	static int	pipe = 0;
 
 	if(!str)
 		return (1);
