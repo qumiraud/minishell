@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   verif.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:36:49 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/05/21 10:37:43 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/12 15:24:21 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,16 @@ int	pipe_quota(char *str, t_data **s_k)
 		return (1);
 	while (str[i])
 	{
-		if (str[i] == '\'')
+		if (str[i] == '\'' && str[i + 1] != '\0')
 		{
 			i++;
-			while (str[i] != '\'')
+			while (str[i] && str[i] != '\'')
 				i++;
 		}
-		if (str[i] == '"')
+		if (str[i] == '"' && str[i + 1] != '\0')
 		{
 			i++;
-			while (str[i] != '"')
+			while (str[i] && str[i] != '"')
 				i++;
 		}
 		if (str[i] == '|')
@@ -47,7 +47,7 @@ int	quote_verif(char *str, t_data **s_k)
 	int	i;
 	int	quote;
 	int	d_quote;
-	
+
 	i = 0;
 	quote = 0;
 	d_quote = 0;
