@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 13:07:31 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/19 11:19:40 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/12 13:18:47 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,7 @@ int		ft_tolower(int c);
 char	*ft_strcpy(const char *src, char *dest);
 int		ft_tablen(char **tab);
 char	*ft_strncpy(char *dest, char *src, int size);
-int	ft_strcmp(char *str1, char *str2);
-
-
-
+int		ft_strcmp(char *str1, char *str2);
 typedef struct s_list
 {
 	void			*content;

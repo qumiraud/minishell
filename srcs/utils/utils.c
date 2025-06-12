@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 13:53:00 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/04 12:10:55 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/12 12:04:28 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	free_glt(t_data **s_k)
 			(*s_k)->glutto_tab[i] = NULL;
 			i++;
 		}
-		// (*s_k)->tab_len = 0;
 		len = 0;
 	}
 	if ((*s_k)->glutto_tab)
@@ -36,11 +35,7 @@ void	free_glt(t_data **s_k)
 		free((*s_k)->glutto_tab);
 		(*s_k)->glutto_tab = NULL;
 	}
-		// if ((*s_k)->tab_env)
-	// 	free_tab((*s_k)->tab_env);
 }
-
-
 
 void	free_s_k(t_data **s_k)
 {
@@ -80,17 +75,13 @@ void	free_data(t_data **s_k)
 	free_glt(s_k);
 }
 
-// utils.c
 int find_closing_quote(char *str, char c)
 {
 	int i = 0;
 	while (str[i] && str[i] != c)
 		i++;
-	return i; // Retourne la position avant le guillemet fermant
+	return i;
 }
-
-
-
 
 void	free_tab(char **tab)
 {

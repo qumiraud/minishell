@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 14:49:23 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/22 10:12:04 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/12 13:18:21 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 char	*ft_strncpy(char *dest, char *src, int size)
 {
-	// printf("%d\n", size);
 	int	i;
 
 	i = 0;
