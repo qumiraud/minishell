@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 13:41:45 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/12 13:40:34 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/12 13:59:42 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,15 @@ int ft_exec_multipipe(t_data *s_k, t_cmd *cmd)
 				if (!pathway)
 				{
 					str_error("bash :", current_cmd->args[0], "command not found");
+					free_cmd(cmd);
+					free_data(&s_k);
+					free(s_k);
 					exit(127);
 				}
 				if (execve(pathway, current_cmd->args, s_k->tab_env) == -1)
 				{
+					if (ft_strcmp(cmd->args[0], pathway) == 0)
+						free(pathway);
 					str_error("bash :", current_cmd->args[0], "command not found");
 					free_cmd(cmd);
 					free_data(&s_k);
@@ -358,7 +363,7 @@ int	ft_exec_nopipe(t_data *s_k, t_cmd *cmd)
 					str_error("bash :", cmd->args[0], "command not found");
 					int	i = 0;
 					printf("args[0] : %s \npathway : %s\n", cmd->args[0], pathway);
-					if (!ft_strcmp(cmd->args[0], pathway))
+					if (ft_strcmp(cmd->args[0], pathway) == 0)
 						free(pathway);
 					while (cmd->args[i])
 					{
