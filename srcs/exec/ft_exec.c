@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 13:41:45 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/12 10:22:10 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/12 13:40:34 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,13 +197,21 @@ int	ft_exec_singlepipe(t_data *s_k, t_cmd *cmd)
 		close(s_k->pipefd1[0]);
 
 		if (tmp->output_file || tmp->input_file)
-			handle_redirection(tmp);  // idem
+		{
+			if (handle_redirection(tmp) == 1)
+			{
+				free_cmd(cmd);
+				free_data(&s_k);
+				free(s_k);
+				exit(1);
+			}
+		}// idem
 		//****** */
-		
+
 		// write(2, "test coucou\n\n", 13);
-		
+
 		// printf ("g_sig : %d\n\n\n", g_sig);
-		
+
 		// if (g_sig == 1)
 		// {
 		// 	// write(2, "test coucou\n\n", 13);
@@ -214,7 +222,7 @@ int	ft_exec_singlepipe(t_data *s_k, t_cmd *cmd)
 		if (ft_is_builtin(tmp->args[0]))
 		{
 			ft_exec_builtin(s_k, tmp);
-			printf("bonjour cest moi le printf\n\n");
+			// printf("bonjour cest moi le printf\n\n");
 			free_cmd(cmd);
 			free_data(&s_k);
 			free(s_k);
@@ -227,7 +235,9 @@ int	ft_exec_singlepipe(t_data *s_k, t_cmd *cmd)
 			if (!pathway)
 			{
 				str_error("bash :", tmp->args[0], "command not found");
+				free_cmd(cmd);
 				free_data(&s_k);
+				free(s_k);
 				exit(127);
 			}
 			if (execve(pathway, tmp->args, s_k->tab_env) == -1)
@@ -259,7 +269,7 @@ int	ft_exec_nopipe(t_data *s_k, t_cmd *cmd)
 	pid_t	pid;
 	int		fd_in;
 	int		fd_out;
-	char	*pathway;
+	char	*pathway ;
 
 
 	fd_out = 0;
@@ -317,7 +327,6 @@ int	ft_exec_nopipe(t_data *s_k, t_cmd *cmd)
 		else
 		{
 			pathway = get_way(s_k->tab_env, cmd->args);
-			// printf("bonjour cest moi le printf\n\n");
 			if (!pathway)
 			{
 				str_error("bash :", cmd->args[0], "command not found");
@@ -348,11 +357,15 @@ int	ft_exec_nopipe(t_data *s_k, t_cmd *cmd)
 					// printf("Halloooo\n\n\n\n");
 					str_error("bash :", cmd->args[0], "command not found");
 					int	i = 0;
+					printf("args[0] : %s \npathway : %s\n", cmd->args[0], pathway);
+					if (!ft_strcmp(cmd->args[0], pathway))
+						free(pathway);
 					while (cmd->args[i])
 					{
 						free(cmd->args[i]);
 						i++;
 					}
+					free(cmd->input_file);
 				}
 				if (cmd->output_file)
 					free(cmd->output_file);
@@ -384,6 +397,6 @@ int	handle_exec(t_data *s_k, t_cmd *cmd)
 	else if (s_k->pipe_quo == 0)
 	ft_exec_nopipe(s_k, cmd);
 	free_cmd(cmd);
-	printf ("g_sig : %d", g_sig);
+	// printf ("g_sig : %d", g_sig);
 	return (0);
 }
