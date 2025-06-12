@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   verif.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:36:49 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/06/12 15:27:29 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/12 15:31:17 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../../includes/minishell.h"
 
@@ -18,7 +17,7 @@ int	pipe_quota(char *str, t_data **s_k)
 	static int	i = 0;
 	static int	pipe = 0;
 
-	if(!str)
+	if (!str)
 		return (1);
 	while (str[i])
 	{
@@ -51,7 +50,7 @@ int	quote_verif(char *str, t_data **s_k)
 	i = 0;
 	quote = 0;
 	d_quote = 0;
-	if(!str)
+	if (!str)
 		return (1);
 	while (str[i])
 	{
