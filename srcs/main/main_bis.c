@@ -6,7 +6,7 @@
 /*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:24:25 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/06/12 13:58:18 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/12 14:51:03 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,16 @@ int	check_arguments(int argc, char **argv)
 	return (0);
 }
 
-// int	handle_exit_command(char *str, t_data **suprem_knowledge)
-// {
-// 	if (ft_strcmp(str, "exit") == 1)
-// 	{
-// 		free(str);
-// 		handle_ending(suprem_knowledge);
-// 		return (1);
-// 	}
-// 	return (0);
-// }
+int	handle_exit_command(char *str, t_data **suprem_knowledge)
+{
+	if (ft_strcmp(str, "exit") == 1)
+	{
+		free(str);
+		handle_ending(suprem_knowledge);
+		return (1);
+	}
+	return (0);
+}
 
 int	handle_null_input(char *str, t_cmd *cmd, t_data **suprem_knowledge)
 {

@@ -6,7 +6,7 @@
 #    By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/24 08:15:59 by qumiraud          #+#    #+#              #
-#    Updated: 2025/06/12 13:26:25 by pjurdana         ###   ########.fr        #
+#    Updated: 2025/06/12 15:15:27 by pjurdana         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,9 +18,11 @@ CFLAGS = -Wall -Werror -Wextra -g #-fsanitize=address
 SRC =	srcs/main/main.c\
 		srcs/main/main_bis.c\
 		srcs/main/main_bis_2.c\
+		srcs/main/handle_readline.c\
 		srcs/main/print_test.c\
 		srcs/utils/lst_utils.c\
 		srcs/utils/utils.c\
+		srcs/utils/utils_free.c\
 		srcs/utils/verif.c\
 		srcs/utils/str_errors.c\
 		srcs/parsing/tokenize.c\

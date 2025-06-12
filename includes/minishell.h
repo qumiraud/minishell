@@ -6,7 +6,7 @@
 /*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:35 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/12 13:42:13 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/12 15:14:22 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,8 +137,10 @@ void	process_input_string_2(char *str, t_data **s_k, t_cmd *cmd);
 void	handle_ending(t_data **s_k);
 void	handle_str(char *str, t_data **s_k, t_cmd *cmd);
 
+//**********handle_readline.C*************************************************/
 
 
+void	cleanup_data_tabs(t_data **s_k);
 
 
 
@@ -247,6 +249,11 @@ void		free_tab(char **tab);
 void	str_error(char *str, char *cmd_args, char *msg);
 int		find_closing_quote(char *str, char c);
 
+//**********UTILS_FREE.C************************************************/
+
+void	free_glutto_tab_elements(t_data **s_k);
+void	free_glutto_tab_array(t_data **s_k);
+void	cleanup_data_tabs(t_data **s_k);
 
 
 int	quote_verif(char *str, t_data **s_k);

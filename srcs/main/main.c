@@ -6,7 +6,7 @@
 /*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:06 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/12 14:08:10 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/12 15:14:56 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,102 +16,11 @@
 
 
 
-// void	free_glutto_tab_elements(t_data **s_k)
-// {
-// 	int	i;
-// 	int	len;
-
-// 	i = 0;
-// 	len = (*s_k)->tab_len;
-// 	if ((*s_k)->glutto_tab)
-// 	{
-// 		while (i <= len)
-// 		{
-// 			free((*s_k)->glutto_tab[i]);
-// 			(*s_k)->glutto_tab[i] = NULL;
-// 			i++;
-// 		}
-// 	}
-// }
-
-// void	free_glutto_tab_array(t_data **s_k)
-// {
-// 	if ((*s_k)->glutto_tab)
-// 	{
-// 		free((*s_k)->glutto_tab);
-// 		(*s_k)->glutto_tab = NULL;
-// 	}
-// }
-
-// void	free_rl_tab(t_data **s_k)
-// {
-// 	if ((*s_k)->rl_tab)
-// 	{
-// 		free((*s_k)->rl_tab);
-// 		(*s_k)->rl_tab = NULL;
-// 	}
-// }
-
-// void	cleanup_data_tabs(t_data **s_k)
-// {
-// 	if (*s_k)
-// 	{
-// 		free_glutto_tab_elements(s_k);
-// 		free_glutto_tab_array(s_k);
-// 		free_rl_tab(s_k);
-// 	}
-// }
-
-// void	process_input_string_2(char *str, t_data **s_k, t_cmd *cmd)
-// {
-// 	if (*str)
-// 		handle_str(str, s_k, cmd);
-// }
-
-// int	handle_readline(char *str, t_data **s_k, t_cmd *cmd)
-// {
-// 	process_input_string_2(str, s_k, cmd);
-// 	cleanup_data_tabs(s_k);
-// 	return (0);
-// }
 
 
 
 
-int	handle_readline(char *str, t_data **s_k, t_cmd *cmd)
-{
-	int	i;
-	int	len;
 
-	i = 0;
-	len = 0;
-	if (*str)
-		handle_str(str, s_k, cmd);
-	len = (*s_k)->tab_len;
-	if (*s_k)
-	{
-		if ((*s_k)->glutto_tab)
-		{
-			while (i <= len)
-			{
-				free((*s_k)->glutto_tab[i]);
-				(*s_k)->glutto_tab[i] = NULL;
-				i++;
-			}
-		}
-		if ((*s_k)->glutto_tab)
-		{
-			free((*s_k)->glutto_tab);
-			(*s_k)->glutto_tab = NULL;
-		}
-		if ((*s_k)->rl_tab)
-		{
-			free((*s_k)->rl_tab);
-			(*s_k)->rl_tab = NULL;
-		}
-	}
-	return (0);
-}
 
 int	validate_quotes_and_syntax(char *str, t_data **suprem_knowledge)
 {
@@ -137,8 +46,8 @@ int	process_command_line(t_data **suprem_knowledge, t_cmd *cmd)
 	char	*str;
 
 	str = readline("💾 minishell :");
-	// if (handle_exit_command(str, suprem_knowledge))
-	// 	return (1);
+	if (handle_exit_command(str, suprem_knowledge))
+		return (1);
 	if (handle_null_input(str, cmd, suprem_knowledge))
 		return (1);
 	process_input_string(&str, suprem_knowledge);
