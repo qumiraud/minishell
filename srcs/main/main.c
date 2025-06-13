@@ -3,24 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:06 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/12 15:14:56 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/13 14:01:15 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-// int	g_sig;
-
-
-
-
-
-
-
-
+int	g_status;
 
 int	validate_quotes_and_syntax(char *str, t_data **suprem_knowledge)
 {
