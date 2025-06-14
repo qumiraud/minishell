@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   verif.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:36:49 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/06/12 15:31:17 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/14 12:10:41 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int	pipe_quota(char *str, t_data **s_k)
 		}
 		if (str[i] == '|')
 			pipe++;
+		if (str[i] == '\0')
+			break;
 		i++;
 	}
 	(*s_k)->pipe_quo = pipe;

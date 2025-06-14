@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+         #
+#    By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/24 08:15:59 by qumiraud          #+#    #+#              #
-#    Updated: 2025/06/12 15:15:27 by pjurdana         ###   ########.fr        #
+#    Updated: 2025/06/14 10:14:31 by qumiraud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ SRC =	srcs/main/main.c\
 		srcs/parsing/fill_s_k_files/s_k_words_2.c\
 		srcs/parsing/fill_tab_env.c\
 		srcs/exec/ft_exec.c\
+		srcs/exec/multipipe.c\
 		srcs/exec/pathway.c\
 		srcs/exec/utils_exec.c\
 		srcs/parsing/gluttony_files/glt_letters.c\

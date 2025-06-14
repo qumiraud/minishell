@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:35 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/13 14:02:19 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/14 10:59:10 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -275,6 +275,8 @@ int			ft_heredoc(char *safeword);
 int			handle_redirection(t_cmd *cmd);
 void		setup_pipe(int i, int pipe_nbr, int pipefd1[2], int pipefd2[2]);
 void		safe_close(int fd);
+void		free_and_exit_in_child_p(t_data *s_k, t_cmd *cmd, int ex_code);
+
 
 
 
