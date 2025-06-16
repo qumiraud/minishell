@@ -6,7 +6,7 @@
 #    By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/24 08:15:59 by qumiraud          #+#    #+#              #
-#    Updated: 2025/06/14 10:14:31 by qumiraud         ###   ########.fr        #
+#    Updated: 2025/06/16 17:40:07 by qumiraud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,8 @@ SRC =	srcs/main/main.c\
 		srcs/parsing/fill_tab_env.c\
 		srcs/exec/ft_exec.c\
 		srcs/exec/multipipe.c\
+		srcs/exec/singlepipe.c\
+		srcs/exec/nopipe.c\
 		srcs/exec/pathway.c\
 		srcs/exec/utils_exec.c\
 		srcs/parsing/gluttony_files/glt_letters.c\
