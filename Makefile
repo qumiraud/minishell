@@ -6,7 +6,7 @@
 #    By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/24 08:15:59 by qumiraud          #+#    #+#              #
-#    Updated: 2025/06/17 14:56:36 by pjurdana         ###   ########.fr        #
+#    Updated: 2025/06/17 15:35:17 by pjurdana         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,6 +48,7 @@ SRC =	srcs/main/main.c\
 		srcs/parsing/gluttony_files/gluttony_2.c\
 		srcs/parsing/cmd_nt_fd.c\
 		srcs/parsing/tokens_to_list.c\
+		srcs/parsing/tokens_to_list_2.c\
 		srcs/signals/signals.c\
 		srcs/builtin/echo.c\
 		srcs/builtin/cd.c\

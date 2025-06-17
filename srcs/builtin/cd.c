@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 14:22:04 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/09 11:48:38 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/17 15:25:46 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-// #include "libft/libft.h"
-
 
 char	*ft_getenv(const char *name, char **envp)
 {

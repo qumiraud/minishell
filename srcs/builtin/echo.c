@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:34:30 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/17 14:05:10 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/17 15:41:49 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int should_process_variable(char *str)
             str[1] != '\'' && str[1] != '"' && str[1] != '?');
 }
 
-void process_token(char *str)
+void process_token_echo(char *str)
 {
     if (str[0] == '\\' && str[1] == '$')
         handle_escaped_dollar(str);
@@ -81,7 +81,7 @@ void print_echo(char **str, int n_def, int i)
 {
     while (str[i])
     {
-        process_token(str[i]);
+        process_token_echo(str[i]);
         if (str[i + 1] != NULL)
             printf(" ");
         i++;

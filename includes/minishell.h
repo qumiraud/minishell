@@ -6,7 +6,7 @@
 /*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:35 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/17 15:03:14 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/17 15:41:32 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,14 @@ void		rl_lst_addfront(t_lst_arg **lst, t_lst_arg *new);
 // void		tokenize(char *str, t_lst_arg **token);
 // void		tokenize(t_data **s_k, t_lst_arg **token);
 int			is_whitespace(char c);
+void	handle_pipe(char **token, int *i, t_cmd **current);
+void	handle_append_output(char **token, int *i, t_cmd *current);
+void	arg_to_cmd(t_cmd *cmd, char *arg);
+void	handle_output(char **token, int *i, t_cmd *current);
+t_cmd	*new_cmd(void);
+int	process_token(char **token, int i, t_cmd **current);
+
+
 
 //**********FILL_SUPREM_KNOWLEDGE.C********************************/
 void		init_suprem_knowledge(t_data **s_k, char **envp);
@@ -253,6 +261,7 @@ void	str_error(char *str, char *cmd_args, char *msg);
 int		find_closing_quote(char *str, char c);
 int	is_operator(char c);
 void	skip_whitespace(char **src);
+t_cmd	*parse_cmd(char **token);
 
 
 
@@ -313,7 +322,6 @@ int	re_token_wd(t_data **s_k);
 void print_command_list(t_cmd *cmd_list);
 
 
-t_cmd *parse_cmd(char **token);
 
 
 
