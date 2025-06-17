@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:34:30 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/17 16:08:50 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/17 16:10:01 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	handle_special_chars(char *str)
 
 void	handle_exit_code(void)
 {
-	printf("exit code a venir\n");
+	printf("%d\n", g_status);
 }
 
 void	handle_quoted_variable(char *str)
