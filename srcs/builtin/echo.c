@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:34:30 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/17 16:10:01 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/17 16:23:21 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,7 @@ int	ft_echo(char **str)
 			data.n_def = data.n;
 	}
 	print_echo(str, data.n_def, data.i);
+	g_status = 0;
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 10:07:52 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/16 17:01:00 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/17 16:17:24 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,11 @@ void	free_and_exit_in_child_p(t_data *s_k, t_cmd *cmd, int ex_code)
 }
 int	end_of_multipipe(int *prev_pipe_read)
 {
-	int	status;
-
 	if (*prev_pipe_read != -1)
 		close(*prev_pipe_read);
-	while (wait(&status) > 0)
+	while (wait(&g_status) > 0)
 		;
-	return (status);
+	return (g_status);
 }
 
 void to_execve(t_data *s_k, t_cmd *current_cmd, t_cmd *cmd)

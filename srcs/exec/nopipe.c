@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 17:33:12 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/17 16:14:22 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/17 16:22:01 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,43 +65,6 @@ int	ft_setup_redirections(t_cmd *cmd)
 	}
 	return 0;
 }
-
-// static int  ft_setup_redirections(t_cmd *cmd)
-// {
-// 	int fd_in = 0;
-// 	int fd_out = 0;
-
-// 	if (cmd->input_file)
-// 	{
-// 		if (cmd->here_doc)
-// 			fd_in = ft_heredoc(cmd->input_file);
-// 		else
-// 		{
-// 			fd_in = open(cmd->input_file, O_RDONLY);
-// 			if (fd_in == -1)
-// 			{
-// 				perror("Error");
-// 				return (-1);
-// 			}
-// 		}
-// 		dup2(fd_in, STDIN_FILENO);
-// 		close(fd_in);
-// 	}
-// 	if (cmd->output_file)
-// 	{
-// 		if (cmd->append)
-// 			fd_out = open(cmd->output_file,
-// 						O_RDWR | O_CREAT | O_APPEND, 0644);
-// 		else
-// 			fd_out = open(cmd->output_file,
-// 						O_WRONLY | O_CREAT | O_TRUNC, 0644);
-// 		if (fd_out == -1)
-// 			return (-1);
-// 		dup2(fd_out, STDOUT_FILENO);
-// 		close(fd_out);
-// 	}
-// 	return (0);
-// }
 
 void	ft_exec_builtin_child(t_data *s_k, t_cmd *cmd)
 {
@@ -165,7 +128,7 @@ int	ft_exec_nopipe(t_data *s_k, t_cmd *cmd)
 		ft_child_cleanup_and_exit(s_k);
 	}
 	else
-		wait(NULL);
+		wait(&g_status);
 	return (0);
 }
 
