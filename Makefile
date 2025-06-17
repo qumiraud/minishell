@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+         #
+#    By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/24 08:15:59 by qumiraud          #+#    #+#              #
-#    Updated: 2025/06/17 15:35:17 by pjurdana         ###   ########.fr        #
+#    Updated: 2025/06/17 16:15:24 by qumiraud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,6 +56,7 @@ SRC =	srcs/main/main.c\
 		srcs/builtin/export.c\
 		srcs/builtin/unset.c\
 		srcs/builtin/env.c\
+		srcs/builtin/exit.c\
 
 
 

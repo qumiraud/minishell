@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:35 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/17 15:41:32 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/17 16:15:01 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -311,6 +311,8 @@ int	ft_env(char **envp);
 int	ft_export(char **args, char ***envp);
 int	ft_pwd(void);
 int	ft_unset(char **args, char ***envp);
+void	ft_exit(int err_value);
+
 
 
 

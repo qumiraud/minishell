@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 13:41:45 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/16 17:40:22 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/17 16:12:33 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,11 +144,12 @@ int	handle_exec(t_data *s_k, t_cmd *cmd)
 	// g_sig = 0;
 	// printf("passage par handle_exec\n");
 	if (s_k->pipe_quo > 1)
-	ft_exec_multipipe(s_k, cmd);
+		ft_exec_multipipe(s_k, cmd);
 	else if (s_k->pipe_quo == 1)
-	ft_exec_singlepipe(s_k, cmd);
+		ft_exec_singlepipe(s_k, cmd);
 	else if (s_k->pipe_quo == 0)
-	ft_exec_nopipe(s_k, cmd);
+		ft_exec_nopipe(s_k, cmd);
+	printf("g_status : %d", g_status);
 	free_cmd(cmd);
 	// printf ("g_sig : %d", g_sig);
 	return (0);

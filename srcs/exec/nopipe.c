@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   nopipe.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 17:33:12 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/17 15:24:42 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/17 16:14:22 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void	ft_exec_builtin_child(t_data *s_k, t_cmd *cmd)
 	free_cmd(cmd);
 	free_data(&s_k);
 	free(s_k);
-	exit(0);
+	ft_exit(0);
 }
 void	ft_exec_external(t_data *s_k, t_cmd *cmd)
 {
@@ -122,7 +122,7 @@ void	ft_exec_external(t_data *s_k, t_cmd *cmd)
 		free_cmd(cmd);
 		free_data(&s_k);
 		free(s_k);
-		exit(127);
+		ft_exit(127);
 	}
 	if (execve(pathway, cmd->args, s_k->tab_env) == -1)
 	{
@@ -132,14 +132,14 @@ void	ft_exec_external(t_data *s_k, t_cmd *cmd)
 		free_cmd(cmd);
 		free_data(&s_k);
 		free(s_k);
-		exit(127);
+		ft_exit(127);
 	}
 }
 void	ft_child_cleanup_and_exit(t_data *s_k)
 {
 	free_data(&s_k);
 	free(s_k);
-	exit(0);
+	ft_exit(0);
 }
 int	ft_exec_nopipe(t_data *s_k, t_cmd *cmd)
 {
@@ -283,4 +283,3 @@ int	ft_exec_nopipe(t_data *s_k, t_cmd *cmd)
 // 		wait (NULL);
 // 	return (0);
 // }
-
