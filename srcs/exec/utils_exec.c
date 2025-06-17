@@ -6,23 +6,19 @@
 /*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 10:56:52 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/12 13:45:30 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/17 15:21:26 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-
-
-
-
-void safe_close(int fd)
+void	safe_close(int fd)
 {
 	if (fd > -1)
 		close(fd);
 }
 
-void setup_pipe(int i, int pipe_quo, int pipefd1[2], int pipefd2[2])
+void	setup_pipe(int i, int pipe_quo, int pipefd1[2], int pipefd2[2])
 {
 	if (i == 0)
 	{
@@ -69,10 +65,6 @@ void setup_pipe(int i, int pipe_quo, int pipefd1[2], int pipefd2[2])
 	safe_close(pipefd2[0]);
 	safe_close(pipefd2[1]);
 }
-
-
-
-
 
 // void	setup_pipe(int i, int pipe_quo, int pipefd1[2], int pipefd2[2])
 // {

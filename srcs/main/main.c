@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:06 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/17 14:13:33 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/17 15:20:22 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	g_status;
 
-int    validate_quotes_and_syntax(char *str, t_data **suprem_knowledge)
+int	validate_quotes_and_syntax(char *str, t_data **suprem_knowledge)
 {
 	if (quote_verif(str, suprem_knowledge) != 0)
 	{
@@ -76,8 +76,5 @@ int	main(int argc, char **argv, char **envp)
 		if (result == 1)
 			break ;
 	}
-	// printf("Halloooo\n\n\n\n");
-
-	// handle_ending(&suprem_knowledge);
 	return (0);
 }

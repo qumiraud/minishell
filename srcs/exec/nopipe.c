@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   nopipe.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 17:33:12 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/16 17:44:48 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/17 15:24:42 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int open_input(t_cmd *cmd)
+int	open_input(t_cmd *cmd)
 {
 	int fd;
 	if (cmd->here_doc) {
@@ -33,7 +33,7 @@ static int open_input(t_cmd *cmd)
 	return 0;
 }
 
-static int open_output(t_cmd *cmd)
+int	open_output(t_cmd *cmd)
 {
 	int fd;
 	if (cmd->append) {
@@ -53,7 +53,7 @@ static int open_output(t_cmd *cmd)
 	close(fd);
 	return 0;
 }
-static int ft_setup_redirections(t_cmd *cmd)
+int	ft_setup_redirections(t_cmd *cmd)
 {
 	if (cmd->input_file) {
 		if (open_input(cmd) < 0)
@@ -65,7 +65,6 @@ static int ft_setup_redirections(t_cmd *cmd)
 	}
 	return 0;
 }
-
 
 // static int  ft_setup_redirections(t_cmd *cmd)
 // {
@@ -104,7 +103,7 @@ static int ft_setup_redirections(t_cmd *cmd)
 // 	return (0);
 // }
 
-static void ft_exec_builtin_child(t_data *s_k, t_cmd *cmd)
+void	ft_exec_builtin_child(t_data *s_k, t_cmd *cmd)
 {
 	ft_exec_builtin(s_k, cmd);
 	free_cmd(cmd);
@@ -112,7 +111,7 @@ static void ft_exec_builtin_child(t_data *s_k, t_cmd *cmd)
 	free(s_k);
 	exit(0);
 }
-static void ft_exec_external(t_data *s_k, t_cmd *cmd)
+void	ft_exec_external(t_data *s_k, t_cmd *cmd)
 {
 	char *pathway;
 
@@ -136,13 +135,13 @@ static void ft_exec_external(t_data *s_k, t_cmd *cmd)
 		exit(127);
 	}
 }
-static void ft_child_cleanup_and_exit(t_data *s_k)
+void	ft_child_cleanup_and_exit(t_data *s_k)
 {
 	free_data(&s_k);
 	free(s_k);
 	exit(0);
 }
-int ft_exec_nopipe(t_data *s_k, t_cmd *cmd)
+int	ft_exec_nopipe(t_data *s_k, t_cmd *cmd)
 {
 	pid_t pid;
 

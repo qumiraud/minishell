@@ -6,7 +6,7 @@
 /*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:27:21 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/06/12 13:35:22 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/17 15:19:42 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ void print_command_list(t_cmd *cmd_list)
 		if (cmd_list->output_file)
 		{
 			printf("Fichier de sortie : '%s'\n", cmd_list->output_file);
-			printf("Mode d'écriture   : %s\n", cmd_list->here_doc ? "append (>>)" : "overwrite (>)");
+			printf("Mode d'écriture   : %s\n",
+					cmd_list->here_doc ? "append (>>)" : "overwrite (>)");
 		}
 		else
 		{

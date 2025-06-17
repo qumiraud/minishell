@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   singlepipe.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 17:04:47 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/16 17:29:02 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/17 15:22:40 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	execute_command_in_child(t_data *s_k, t_cmd *cmd, t_cmd *original_cmd)
 	char	*pathway;
 
 	if ((cmd->output_file || cmd->input_file) && handle_redirection(cmd) == 1)
-			free_and_exit_in_child_p(s_k, original_cmd, 1);
+		free_and_exit_in_child_p(s_k, original_cmd, 1);
 	if (ft_is_builtin(cmd->args[0]))
 	{
 		ft_exec_builtin(s_k, cmd);
@@ -83,28 +83,24 @@ void	wait_for_children(pid_t pid1, pid_t pid2)
 
 int	ft_exec_singlepipe(t_data *s_k, t_cmd *cmd)
 {
-	pid_t	pid1, pid2;
+	pid_t	pid1;
+	pid_t	pid2;
 
 	if (init_pipefd(s_k->pipefd1) != 0)
 		return (1);
 	if (!cmd->next)
 		return (1);
-
 	pid1 = handle_first_child(s_k, cmd);
 	if (pid1 == -1)
 		return (1);
-
 	pid2 = handle_second_child(s_k, cmd);
 	if (pid2 == -1)
 		return (1);
-
 	close(s_k->pipefd1[0]);
 	close(s_k->pipefd1[1]);
 	wait_for_children(pid1, pid2);
 	return (0);
 }
-
-
 
 // int	ft_exec_singlepipe(t_data *s_k, t_cmd *cmd)
 // {

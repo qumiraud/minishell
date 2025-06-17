@@ -6,19 +6,15 @@
 /*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 14:44:53 by yeten             #+#    #+#             */
-/*   Updated: 2025/06/12 10:24:56 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/17 15:16:34 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../../includes/minishell.h"
 
-
-
-
-t_cmd *new_cmd(void)
+t_cmd	*new_cmd(void)
 {
-	t_cmd *cmd;
+	t_cmd	*cmd;
 
 	cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
@@ -36,11 +32,10 @@ t_cmd *new_cmd(void)
 
 void	arg_to_cmd(t_cmd *cmd, char *arg)
 {
-
 	if (cmd->argc >= MAX_ARGS - 1)
 	{
 		printf("too much args.\n");
-		return;
+		return ;
 	}
 	cmd->args[cmd->argc] = ft_strdup(arg);
 	printf("cmd in arg_to_cmd: %s\n", cmd->args[cmd->argc]);
@@ -53,190 +48,37 @@ void	arg_to_cmd(t_cmd *cmd, char *arg)
 	cmd->args[cmd->argc] = NULL;
 }
 
-static void	handle_pipe(char **token, int *i, t_cmd **current)
+void	handle_pipe(char **token, int *i, t_cmd **current)
 {
 	(void)token;
-		(*current)->next = new_cmd();
-		*current = (*current)->next;
-		(*i)++;
-		(*current)->nb_ope++;
-}
-
-static void	handle_append_output(char **token, int *i, t_cmd *current)
-{
-		if (current->output_file)
-		{
-			free(current->output_file);
-			current->output_file = NULL;
-		}
-		current->output_file = ft_strdup(token[*i + 1]);
-		current->append = 1;
-		*i += 2;
-		current->nb_ope++;
-}
-
-static void	handle_output(char **token, int *i, t_cmd *current)
-{
-		if (current->output_file)
-		{
-			free(current->output_file);
-			current->output_file = NULL;
-		}
-		current->output_file = ft_strdup(token[*i + 1]);
-		current->append = 0;
-		*i += 2;
-		current->nb_ope++;
-}
-
-static void	handle_here_doc(char **token, int *i, t_cmd *current)
-{
-		if (current->input_file)
-		{
-			free(current->input_file);
-			current->input_file = NULL;
-		}
-		current->input_file = ft_strdup(token[*i + 1]);
-		current->here_doc = 1;
-		*i += 2;
-		current->nb_ope++;
-}
-
-static void	handle_input(char **token, int *i, t_cmd *current)
-{
-		if (current->input_file)
-		{
-			free(current->input_file);
-			current->input_file = NULL;
-		}
-		current->input_file = ft_strdup(token[*i + 2]);
-		*i += 2;
-		current->nb_ope++;
-}
-
-static int	process_token(char **token, int i, t_cmd **current)
-{
-	if (ft_strncmp(token[i], "|", 1) == 0)
-		handle_pipe(token, &i, current);
-	else if (ft_strncmp(token[i], ">>", 2) == 0 && token[i + 1])
-		handle_append_output(token, &i, *current);
-	else if (ft_strncmp(token[i], ">", 1) == 0 && token[i + 1])
-		handle_output(token, &i, *current);
-	else if (ft_strncmp(token[i], "<<", 2) == 0 && token[i + 1])
-		handle_here_doc(token, &i, *current);
-	else if (ft_strncmp(token[i], "<", 1) == 0 && token[i + 1])
-		handle_input(token, &i, *current);
-	return (i);
-}
-
-static void	handle_regular_arg(char **token, int *i, t_cmd *current)
-{
-	arg_to_cmd(current, token[*i]);
+	(*current)->next = new_cmd();
+	*current = (*current)->next;
 	(*i)++;
+	(*current)->nb_ope++;
 }
 
-t_cmd	*parse_cmd(char **token)
+void	handle_append_output(char **token, int *i, t_cmd *current)
 {
-	t_cmd	*head;
-	t_cmd	*current;
-	int		i;
-	int		old_i;
-
-	head = new_cmd();
-	current = head;
-	i = 0;
-	while (token[i])
+	if (current->output_file)
 	{
-		old_i = i;
-		i = process_token(token, i, &current);
-		if (i == old_i)
-			handle_regular_arg(token, &i, current);
+		free(current->output_file);
+		current->output_file = NULL;
 	}
-	return (head);
+	current->output_file = ft_strdup(token[*i + 1]);
+	current->append = 1;
+	*i += 2;
+	current->nb_ope++;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-// t_cmd *parse_cmd(char **token)
-// {
-// 	t_cmd	*head;
-// 	t_cmd	*current;
-// 	int		i;
-
-// 	head = new_cmd();
-// 	current = head;
-// 	i = 0;
-
-// 	while (token[i])
-// 	{
-// 		if (ft_strncmp(token[i], "|", 1) == 0)
-// 		{
-// 			current->next = new_cmd();
-// 			current = current->next;
-// 			i++;
-// 			current->nb_ope++;
-// 		}
-// 		else if (ft_strncmp(token[i], ">>", 2) == 0 && token[i + 1])
-// 		{
-// 			if (current->output_file)
-// 			{
-// 				free (current->output_file);
-// 				current->output_file = NULL;
-// 			}
-// 			current->output_file = ft_strdup(token[i + 1]);
-// 			current->append = 1;
-// 			i += 2;
-// 			current->nb_ope++;
-// 		}
-// 		else if (ft_strncmp(token[i], ">", 1) == 0 && token[i + 1])
-// 		{
-// 			if (current->output_file)
-// 			{
-// 				free (current->output_file);
-// 				current->output_file = NULL;
-// 			}
-// 			current->output_file = ft_strdup(token[i + 1]);
-// 			current->append = 0;
-// 			i += 2;
-// 			current->nb_ope++;
-// 		}
-// 		else if (ft_strncmp(token[i], "<<", 2) == 0 && token[i + 1])
-// 		{
-// 			if (current->input_file)
-// 			{
-// 				free (current->input_file);
-// 				current->input_file = NULL;
-// 			}
-// 			current->input_file = ft_strdup(token[i + 1]);
-// 			current->here_doc = 1;
-// 			i += 2;
-// 			current->nb_ope++;
-// 		}
-// 		else if (ft_strncmp(token[i], "<", 1) == 0 && token[i + 1])
-// 		{
-// 			if (current->input_file)
-// 			{
-// 				free (current->input_file);
-// 				current->input_file = NULL;
-// 			}
-// 			current->input_file = ft_strdup(token[i + 1]);
-// 			i += 2;
-// 			current->nb_ope++;
-// 		}
-// 		else
-// 		{
-// 			arg_to_cmd(current, token[i]);
-// 			i++;
-// 		}
-// 	}
-// 	return (head);
-// }
+void	handle_output(char **token, int *i, t_cmd *current)
+{
+	if (current->output_file)
+	{
+		free(current->output_file);
+		current->output_file = NULL;
+	}
+	current->output_file = ft_strdup(token[*i + 1]);
+	current->append = 0;
+	*i += 2;
+	current->nb_ope++;
+}

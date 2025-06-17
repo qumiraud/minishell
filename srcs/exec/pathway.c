@@ -3,23 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   pathway.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 09:41:48 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/22 12:41:21 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/17 15:23:25 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-
 char	*get_way(char **env, char **rl_tab)
 {
-	int	i;
-	int	j;
-	char **pathtab;
-	char *absolut_path;
-	char *tmp;
+	char	**pathtab;
+	char	*absolut_path;
+	char	*tmp;
+	int		i;
+	int		j;
 
 	i = 0;
 	j = 0;
@@ -91,26 +90,6 @@ char	*get_way(char **env, char **rl_tab)
 // 	free(s_k.rl_tab);
 // 	return (0);
 // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // char	*get_way(char **env, char **rl_tab)
 // {
