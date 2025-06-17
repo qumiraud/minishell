@@ -6,46 +6,11 @@
 /*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:33:27 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/06/17 13:52:58 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/17 14:55:05 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
-
-void	skip_whitespace(char **src)
-{
-	while (**src == ' ' || (**src >= 9 && **src <= 13))
-		(*src)++;
-}
-
-int	is_operator(char c)
-{
-	return (c == '|' || c == '>' || c == '<');
-}
-
-// void	copy_quoted_content(char *dest, char **src, char quote)
-// {
-// 	// int len;
-
-// 	// len = 0;
-// 	(*src)++;
-// 	while (**src)
-// 	{
-// 		*dest++ = **src;
-// 		(*src)++;
-// 		// len++;
-// 		if (**src == quote)
-// 		{
-// 			(*src)++;
-// 			break ;
-// 		}
-// 	}
-// 	if (**src == quote)
-// 	{
-// 		(*src)++;
-// 	}
-// 	// return (len);
-// }
 
 int	handle_quote_case(char *dest, char **src, char *quote)
 {
@@ -100,43 +65,6 @@ void	glt_copy_word(char *dest, char **src)
 	skip_whitespace(src);
 }
 
-// void	glt_copy_word(char *dest, char **src)
-// {
-// 	char	quote;
-
-// 	quote = 0;
-// 	while (**src == ' ' || (**src >= 9 && **src <= 13))
-// 		(*src)++;
-// 	while (**src && (**src != ' ' && !(**src >= 9 && **src <= 13)))
-// 	{
-// 		if (**src == '|' || **src == '>' || **src == '<')
-// 			break ;
-// 		if ((**src == '\'' || **src == '"') && quote == 0)
-// 		{
-// 			quote = **src;
-// 			(*src)++;
-// 			while (**src && **src != quote)
-// 			{
-// 				*dest++ = **src;
-// 				(*src)++;
-// 			}
-// 			if (**src == quote)
-// 			{
-// 				(*src)++;
-// 				quote = 0;
-// 			}
-// 		}
-// 		else
-// 		{
-// 			*dest++ = **src;
-// 			(*src)++;
-// 		}
-// 	}
-// 	*dest = '\0';
-// 	while (**src == ' ' || (**src >= 9 && **src <= 13))
-// 		(*src)++;
-// }
-
 void	handle_standard_token(t_data **s_k, char **str, int *i)
 {
 	int	len;
@@ -159,118 +87,3 @@ int	allocate_glutto_tab(t_data **s_k, char *str)
 		return (0);
 	return (1);
 }
-
-void	handle_dollar_quote(t_data **s_k, char **str, int *i)
-{
-	int	len;
-
-	len = find_closing_quote(*str + 2, '"') + 3;
-	(*s_k)->glutto_tab[*i] = ft_substr(*str, 0, len);
-	*str += len;
-	(*i)++;
-}
-
-void	handle_double_redirect(t_data **s_k, char **str, int *i, char op)
-{
-	if (op == '<')
-		(*s_k)->glutto_tab[(*i)++] = ft_strdup("<<");
-	else
-		(*s_k)->glutto_tab[(*i)++] = ft_strdup(">>");
-	*str += 2;
-}
-
-void	handle_single_redirect(t_data **s_k, char **str, int *i, char op)
-{
-	if (op == '<')
-		(*s_k)->glutto_tab[(*i)++] = ft_strdup("<");
-	else if (op == '>')
-		(*s_k)->glutto_tab[(*i)++] = ft_strdup(">");
-	else if (op == '|')
-		(*s_k)->glutto_tab[(*i)++] = ft_strdup("|");
-	(*str)++;
-}
-
-void	process_character(t_data **s_k, char **str, int *i)
-{
-	if (**str == '$' && *(*str + 1) == '"')
-		handle_dollar_quote(s_k, str, i);
-	if (**str == '$' && *(*str + 1) == '\'')
-		handle_dollar_quote(s_k, str, i);
-	else if (**str == '<' && *(*str + 1) == '<')
-		handle_double_redirect(s_k, str, i, '<');
-	else if (**str == '>' && *(*str + 1) == '>')
-		handle_double_redirect(s_k, str, i, '>');
-	else if (**str == '<')
-		handle_single_redirect(s_k, str, i, '<');
-	else if (**str == '>')
-		handle_single_redirect(s_k, str, i, '>');
-	else if (**str == '|')
-		handle_single_redirect(s_k, str, i, '|');
-	else
-		handle_standard_token(s_k, str, i);
-}
-
-void	fill_gluttony_tab(t_data **s_k, char *str)
-{
-	int	i;
-
-	i = 0;
-	if (!allocate_glutto_tab(s_k, str))
-		return ;
-	while (*str)
-	{
-		process_character(s_k, &str, &i);
-	}
-	(*s_k)->glutto_tab[i] = NULL;
-	(*s_k)->tab_len = i;
-	printf ("valor I : %d\n\n\n\n\n\n", i);
-}
-
-// void	fill_gluttony_tab(t_data **s_k, char *str)
-// {
-// 	int	i;
-// 	int	len;
-
-// 	i = 0;
-// 	len = 0;
-// 	(*s_k)->glutto_tab = malloc(sizeof(char *) * (glt_count_words(str) + (*s_k)->pipe_quo + 2));
-// 	while (*str)
-// 	{
-// 		if (*str == '$' && *(str + 1) == '"')
-// 		{
-// 			len = find_closing_quote(str + 2, '"') + 3;
-// 			(*s_k)->glutto_tab[i] = ft_substr(str, 0, len);
-// 			str += len;
-// 			i++;
-// 		}
-// 		else if (*str == '<' && *(str + 1) == '<')
-// 		{
-// 			(*s_k)->glutto_tab[i++] = ft_strdup("<<");
-// 			str += 2;
-// 		}
-// 		else if (*str == '>' && *(str + 1) == '>')
-// 		{
-// 			(*s_k)->glutto_tab[i++] = ft_strdup(">>");
-// 			str += 2;
-// 		}
-// 		else if (*str == '<')
-// 		{
-// 			(*s_k)->glutto_tab[i++] = ft_strdup("<");
-// 			str++;
-// 		}
-// 		else if (*str == '>')
-// 		{
-// 			(*s_k)->glutto_tab[i++] = ft_strdup(">");
-// 			str++;
-// 		}
-// 		else if (*str == '|')
-// 		{
-// 			(*s_k)->glutto_tab[i++] = ft_strdup("|");
-// 			str++;
-// 		}
-// 		else
-// 			handle_standard_token(s_k, &str, &i);
-// 	}
-// 	(*s_k)->glutto_tab[i] = NULL;
-// 	(*s_k)->tab_len = i;
-// }

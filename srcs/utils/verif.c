@@ -6,7 +6,7 @@
 /*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:36:49 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/06/17 14:51:30 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/17 14:55:36 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,36 +41,6 @@ void	pipe_quota(char *str, t_data **s_k)
 	}
 	(*s_k)->pipe_quo = pipe;
 }
-
-// void	pipe_quota(char *str, t_data **s_k)
-// {
-// 	static int	i = 0;
-// 	static int	pipe = 0;
-// 	static int	str_len = 0;
-
-// 	if (!str)
-// 		return (1);
-// 	str_len = ft_strlen((const char *)str);
-// 	while (i <= str_len)
-// 	{
-// 		if (str[i] == '\'' && str[i + 1] != '\0')
-// 		{
-// 			i++;
-// 			while (str[i] && str[i] != '\'' && str[i + 1] != '\0')
-// 				i++;
-// 		}
-// 		if (str[i] == '"' && str[i + 1] != '\0')
-// 		{
-// 			i++;
-// 			while (str[i] && str[i] != '"' && str[i + 1] != '\0')
-// 				i++;
-// 		}
-// 		if (str[i] == '|')
-// 			pipe++;
-// 		i++;
-// 	}
-// 	(*s_k)->pipe_quo = pipe;
-// }
 
 int	quote_verif(char *str, t_data **s_k)
 {

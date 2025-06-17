@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+         #
+#    By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/24 08:15:59 by qumiraud          #+#    #+#              #
-#    Updated: 2025/06/16 17:40:07 by qumiraud         ###   ########.fr        #
+#    Updated: 2025/06/17 14:56:36 by pjurdana         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SRC =	srcs/main/main.c\
 		srcs/main/print_test.c\
 		srcs/utils/lst_utils.c\
 		srcs/utils/utils.c\
+		srcs/utils/utils_2.c\
 		srcs/utils/utils_free.c\
 		srcs/utils/verif.c\
 		srcs/utils/str_errors.c\
@@ -44,6 +45,7 @@ SRC =	srcs/main/main.c\
 		srcs/parsing/gluttony_files/glt_words.c\
 		srcs/parsing/gluttony_files/glt_words_2.c\
 		srcs/parsing/gluttony_files/gluttony.c\
+		srcs/parsing/gluttony_files/gluttony_2.c\
 		srcs/parsing/cmd_nt_fd.c\
 		srcs/parsing/tokens_to_list.c\
 		srcs/signals/signals.c\

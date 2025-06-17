@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:35 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/14 10:59:10 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/17 15:03:14 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,6 +230,9 @@ void	handle_quotes_part2_w(const char *str, int *i, int *quote, char c);
 void	handle_quotes_w(const char *str, int *i, int *word, int *quote);
 void	handle_redirections_w(const char *str, int *i, int *word);
 int		glt_count_words(const char *str);
+void	handle_standard_token(t_data **s_k, char **str, int *i);
+int	allocate_glutto_tab(t_data **s_k, char *str);
+
 
 
 
@@ -248,6 +251,10 @@ int		glt_count_words(const char *str);
 void		free_tab(char **tab);
 void	str_error(char *str, char *cmd_args, char *msg);
 int		find_closing_quote(char *str, char c);
+int	is_operator(char c);
+void	skip_whitespace(char **src);
+
+
 
 //**********UTILS_FREE.C************************************************/
 
@@ -257,7 +264,7 @@ void	cleanup_data_tabs(t_data **s_k);
 
 
 int	quote_verif(char *str, t_data **s_k);
-int	pipe_quota(char *str, t_data **s_k);
+void	pipe_quota(char *str, t_data **s_k);
 
 //**********FILL_TAB_ENV.C*****************************************/
 void		fill_tab_env(t_data **s_k, char **envp);
