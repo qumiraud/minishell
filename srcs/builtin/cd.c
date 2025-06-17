@@ -6,7 +6,7 @@
 /*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 14:22:04 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/17 15:25:46 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/17 16:06:11 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*ft_getenv(const char *name, char **envp)
 		if (ft_strncmp(envp[i], name, name_len) == 0 && envp[i][name_len] == '=')
 		{
 			env_value = ft_strdup(envp[i] + name_len + 1);
-			break;
+			break ;
 		}
 		i++;
 	}
@@ -80,7 +80,6 @@ int	ft_setenv(char *var_name, char *pwd, char ***envp)
 	*envp = new_env;
 	return (0);
 }
-
 
 int	ft_cd(char **args, char ***envp)
 {
