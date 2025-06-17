@@ -6,50 +6,70 @@
 /*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:33:27 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/06/12 10:28:04 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/17 13:52:58 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-static void	skip_whitespace(char **src)
+void	skip_whitespace(char **src)
 {
 	while (**src == ' ' || (**src >= 9 && **src <= 13))
 		(*src)++;
 }
 
-static int	is_operator(char c)
+int	is_operator(char c)
 {
 	return (c == '|' || c == '>' || c == '<');
 }
 
-static void	copy_quoted_content(char *dest, char **src, char quote)
-{
-	(*src)++;
-	while (**src && **src != quote)
-	{
-		*dest++ = **src;
-		(*src)++;
-	}
-	if (**src == quote)
-	{
-		(*src)++;
-	}
-}
+// void	copy_quoted_content(char *dest, char **src, char quote)
+// {
+// 	// int len;
 
-static int	handle_quote_case(char *dest, char **src, char *quote)
+// 	// len = 0;
+// 	(*src)++;
+// 	while (**src)
+// 	{
+// 		*dest++ = **src;
+// 		(*src)++;
+// 		// len++;
+// 		if (**src == quote)
+// 		{
+// 			(*src)++;
+// 			break ;
+// 		}
+// 	}
+// 	if (**src == quote)
+// 	{
+// 		(*src)++;
+// 	}
+// 	// return (len);
+// }
+
+int	handle_quote_case(char *dest, char **src, char *quote)
 {
 	if ((**src == '\'' || **src == '"') && *quote == 0)
 	{
+		printf ("ALED\n\n\n");
 		*quote = **src;
-		copy_quoted_content(dest, src, *quote);
+		while (**src)
+		{
+			if (**src == *quote)
+			{
+				(*src)++;
+				break ;
+			}
+			*dest++ = **src;
+			(*src)++;
+		}
 		*quote = 0;
 		return (1);
 	}
 	return (0);
 }
 
-static int	should_continue_copying(char **src)
+int	should_continue_copying(char **src)
 {
 	if (!**src)
 		return (0);
@@ -131,7 +151,7 @@ void	handle_standard_token(t_data **s_k, char **str, int *i)
 	}
 }
 
-static int	allocate_glutto_tab(t_data **s_k, char *str)
+int	allocate_glutto_tab(t_data **s_k, char *str)
 {
 	(*s_k)->glutto_tab = malloc(sizeof(char *)
 			* (glt_count_words(str) + (*s_k)->pipe_quo + 2));
@@ -140,7 +160,7 @@ static int	allocate_glutto_tab(t_data **s_k, char *str)
 	return (1);
 }
 
-static void	handle_dollar_quote(t_data **s_k, char **str, int *i)
+void	handle_dollar_quote(t_data **s_k, char **str, int *i)
 {
 	int	len;
 
@@ -150,7 +170,7 @@ static void	handle_dollar_quote(t_data **s_k, char **str, int *i)
 	(*i)++;
 }
 
-static void	handle_double_redirect(t_data **s_k, char **str, int *i, char op)
+void	handle_double_redirect(t_data **s_k, char **str, int *i, char op)
 {
 	if (op == '<')
 		(*s_k)->glutto_tab[(*i)++] = ft_strdup("<<");
@@ -159,7 +179,7 @@ static void	handle_double_redirect(t_data **s_k, char **str, int *i, char op)
 	*str += 2;
 }
 
-static void	handle_single_redirect(t_data **s_k, char **str, int *i, char op)
+void	handle_single_redirect(t_data **s_k, char **str, int *i, char op)
 {
 	if (op == '<')
 		(*s_k)->glutto_tab[(*i)++] = ft_strdup("<");
@@ -170,9 +190,11 @@ static void	handle_single_redirect(t_data **s_k, char **str, int *i, char op)
 	(*str)++;
 }
 
-static void	process_character(t_data **s_k, char **str, int *i)
+void	process_character(t_data **s_k, char **str, int *i)
 {
 	if (**str == '$' && *(*str + 1) == '"')
+		handle_dollar_quote(s_k, str, i);
+	if (**str == '$' && *(*str + 1) == '\'')
 		handle_dollar_quote(s_k, str, i);
 	else if (**str == '<' && *(*str + 1) == '<')
 		handle_double_redirect(s_k, str, i, '<');
