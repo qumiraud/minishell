@@ -6,7 +6,7 @@
 /*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:27:20 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/06/12 10:18:03 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/17 15:11:05 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ int	glt_process_word(char *str, int *i, int *word)
 
 void	skip_spaces(char *str, int *i)
 {
-	// printf ("HALLO????\n\n\n\n");
 	while (str[*i] == 32 || (str[*i] >= 8 && str[*i] <= 13))
 		(*i)++;
 }

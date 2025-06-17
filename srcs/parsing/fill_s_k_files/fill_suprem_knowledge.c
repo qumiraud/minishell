@@ -6,7 +6,7 @@
 /*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 11:44:14 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/05/21 13:37:57 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/17 15:11:35 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	init_suprem_knowledge(t_data **s_k, char **envp)
 	(*s_k) = malloc(sizeof(t_data));
 	if (!s_k)
 	{
-		printf("mince alors\n");// mauvais retour d'erreur en francais hallo ???
+		printf("damned\n");
 		return ;
 	}
 	(*s_k)->rl_tab = NULL;
@@ -85,6 +85,5 @@ void	init_suprem_knowledge(t_data **s_k, char **envp)
 	(*s_k)->stat_quo = 0;
 	(*s_k)->pipe_quo = 0;
 	fill_tab_env(s_k, envp);
-
 	(*s_k)->tab_len = 0;
 }
