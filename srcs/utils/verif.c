@@ -3,44 +3,74 @@
 /*                                                        :::      ::::::::   */
 /*   verif.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:36:49 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/06/14 14:09:43 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/17 14:51:30 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	pipe_quota(char *str, t_data **s_k)
+static void	skip_quotes(char *str, int *i, char quote_type)
+{
+	if (str[*i] == quote_type && str[*i + 1] != '\0')
+	{
+		(*i)++;
+		while (str[*i] && str[*i] != quote_type && str[*i + 1] != '\0')
+			(*i)++;
+	}
+}
+
+void	pipe_quota(char *str, t_data **s_k)
 {
 	static int	i = 0;
 	static int	pipe = 0;
 	static int	str_len = 0;
+
 	if (!str)
-		return (1);
+		return ;
 	str_len = ft_strlen((const char *)str);
 	while (i <= str_len)
 	{
-		if (str[i] == '\'' && str[i + 1] != '\0')
-		{
-			i++;
-			while (str[i] && str[i] != '\'' && str[i + 1] != '\0')
-				i++;
-		}
-		if (str[i] == '"' && str[i + 1] != '\0')
-		{
-			i++;
-			while (str[i] && str[i] != '"' && str[i + 1] != '\0')
-				i++;
-		}
+		skip_quotes(str, &i, '\'');
+		skip_quotes(str, &i, '"');
 		if (str[i] == '|')
 			pipe++;
 		i++;
 	}
 	(*s_k)->pipe_quo = pipe;
-	return (0);
 }
+
+// void	pipe_quota(char *str, t_data **s_k)
+// {
+// 	static int	i = 0;
+// 	static int	pipe = 0;
+// 	static int	str_len = 0;
+
+// 	if (!str)
+// 		return (1);
+// 	str_len = ft_strlen((const char *)str);
+// 	while (i <= str_len)
+// 	{
+// 		if (str[i] == '\'' && str[i + 1] != '\0')
+// 		{
+// 			i++;
+// 			while (str[i] && str[i] != '\'' && str[i + 1] != '\0')
+// 				i++;
+// 		}
+// 		if (str[i] == '"' && str[i + 1] != '\0')
+// 		{
+// 			i++;
+// 			while (str[i] && str[i] != '"' && str[i + 1] != '\0')
+// 				i++;
+// 		}
+// 		if (str[i] == '|')
+// 			pipe++;
+// 		i++;
+// 	}
+// 	(*s_k)->pipe_quo = pipe;
+// }
 
 int	quote_verif(char *str, t_data **s_k)
 {

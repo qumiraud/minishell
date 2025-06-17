@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_errors.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 12:09:06 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/14 14:13:48 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/17 14:48:50 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	str_error(char *str, char *cmd_args, char *msg)
 {
-	int len;
+	int	len;
 
 	len = ft_strlen(cmd_args);
 	write(2, str, ft_strlen(str));
