@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:34:30 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/10 16:33:15 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/17 13:56:40 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	print_echo(char **str, int n_def, int i)
 		{
 			printf("exit code a venir\n");
 		}
-		else if (str[i][0] == '$' && str[i][1] == '"')
+		else if (str[i][0] == '$' && (str[i][1] == '"' || str[i][1] == '\''))
 		{
 			int len = strlen(str[i]);
 			if (len > 3) // $"..." avec au moins un caractère entre les guillemets
