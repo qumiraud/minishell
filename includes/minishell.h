@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:35 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/18 17:25:35 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/18 18:34:43 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ int			count_words(const char *str);
 void		fill_suprem_knowledge(t_data **s_k, char *str);
 void		copy_word(char *dest, char **src, int count_l);
 void		fill_s_k_tab(t_data **s_k, char *str);
-void		glt_copy_word(char *dest, char **src/*, int count_l*/);
+void		glt_copy_word(char *dest, char **src, int count_l);
 void		fill_gluttony_tab(t_data **s_k, char *str);
 void		fill_tabs(t_data **s_k, char *str);
 int			handle_quotes_part2(char *str, int *i, int *quote, char c);

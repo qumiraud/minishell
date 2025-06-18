@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   glt_words.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:29:55 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/06/18 14:00:32 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/18 15:28:34 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,6 @@ int	glt_count_words(const char *str)
 			process_word_w(str, &i, &word, &quote);
 		}
 	}
-	// printf ("WORD : %d\n\n\n", word);
+	printf ("WORDS : %d\n\n\n", word);
 	return (word);
 }

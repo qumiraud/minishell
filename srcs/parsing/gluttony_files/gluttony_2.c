@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gluttony_2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 14:54:32 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/06/18 14:00:05 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/18 15:39:02 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,5 @@ void	fill_gluttony_tab(t_data **s_k, char *str)
 	}
 	(*s_k)->glutto_tab[i] = NULL;
 	(*s_k)->tab_len = i;
-	// printf ("valor I : %d\n\n\n\n\n\n", i);
+	printf ("valor I : %d\n\n\n\n\n\n", i);
 }

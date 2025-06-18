@@ -6,7 +6,7 @@
 /*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:27:21 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/06/17 15:19:42 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/18 15:29:40 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	print_tab(t_data *s_k)
 	i = 0;
 	while (s_k->glutto_tab[i])
 	{
-		printf("glutto_tab[%d]: %s\n\n", i, s_k->glutto_tab[i]);
+		printf("glutto_tab[%d]: |%s|\n\n", i, s_k->glutto_tab[i]);
 		i++;
 	}
 	return ;
