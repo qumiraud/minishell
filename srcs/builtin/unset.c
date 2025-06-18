@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 12:39:39 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/17 15:28:51 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/18 17:52:48 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	ft_unset(char **args, char ***envp)
 	i = 1;
 	if (!args[1])
 	{
-		str_error("bash: ", args[1], ": not enough arguments");
+		str_error("bash: ", NULL, ": not enough arguments");
 		return (0);
 	}
 	if (!args[1][0])

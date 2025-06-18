@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:35 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/18 13:52:09 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/18 17:25:35 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int			handle_exit_command(char *str, t_data **suprem_knowledge);
 int			handle_null_input(char *str, t_cmd *cmd, t_data **suprem_knowledge);
 void		process_input_string(char **str, t_data **suprem_knowledge);
 void		process_input_string_2(char *str, t_data **s_k, t_cmd *cmd);
-void		handle_ending(t_data **s_k);
+void		handle_ending(t_data **s_k, int exit_code);
 void		handle_str(char *str, t_data **s_k, t_cmd *cmd);
 void		cleanup_data_tabs(t_data **s_k);
 

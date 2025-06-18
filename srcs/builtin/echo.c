@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:34:30 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/18 14:01:25 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/18 17:43:43 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,47 +91,6 @@ void	print_echo(char **str, int n_def, int i)
 	if (n_def != 0)
 		printf("\n");
 }
-
-// void	print_echo(char **str, int n_def, int i)
-// {
-
-// 	while (str[i])
-// 	{
-// 		if (str[i][0] == '\\' && str[i][1] == '$')
-// 			printf("$%s", str[i] + 2);
-
-// 		else if (str[i][0] == '$' && str[i][1] != '\0' && str[i][1] != '\'' && str[i][1] != '"' && str[i][1] != '?')
-// 		{
-// 			if (str[i][1] == '=' || str[i][1] == '-' || str[i][1] == '+'
-// 				|| str[i][1] == '/' || str[i][1] == '%' || str[i][1] == '.'
-// 					|| str[i][1] == ',' || str[i][1] == ':' ||str[i][1] == '}'
-// 						||str[i][1] == ']')
-// 				printf("%s", str[i]);
-// 			else if (getenv(str[i] + 1) != NULL)
-// 				printf("%s", getenv(str[i] + 1));
-// 		}
-// 		else if (str[i][0] == '$' && str[i][1] == '?')
-// 		{
-// 			printf("exit code a venir\n");
-// 		}
-// 		else if (str[i][0] == '$' && str[i][1] == '"')
-// 		{
-// 			int len = strlen(str[i]);
-// 			if (len > 3) // $"..." avec au moins un caractère entre les guillemets
-// 				printf("%.*s", len - 3, str[i] + 2);
-// 			else
-// 				printf("\n"); // Cas $""
-// 		}
-
-// 		else
-// 			printf("%s", str[i]);
-// 		if (str[i + 1] != NULL)
-// 			printf(" ");
-// 		i++;
-// 	}
-// 	if (n_def != 0)
-// 		printf("\n");
-// }
 
 int	ft_echo(char **str)
 {

@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:25:55 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/06/18 14:20:43 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/18 17:15:18 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,12 @@ void	handle_str(char *str, t_data **s_k, t_cmd *cmd)
 	handle_exec(*s_k, cmd);
 }
 
-void	handle_ending(t_data **s_k)
+void	handle_ending(t_data **s_k, int exit_value)
 {
 	free_s_k(s_k);
 	free_glt(s_k);
 	free(*s_k);
 	(*s_k) = NULL;
 	printf("exit\n");
+	exit (exit_value);
 }
