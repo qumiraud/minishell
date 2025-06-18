@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 17:33:12 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/18 11:15:46 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/18 14:39:21 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,10 @@ int	ft_exec_nopipe(t_data *s_k, t_cmd *cmd)
 		ft_child_cleanup_and_exit(s_k);
 	}
 	else
+	{
 		wait(&g_status);
+		g_status %= 255;
+	}
+	printf("g_status after nopipe : %d\n", g_status);
 	return (0);
 }
