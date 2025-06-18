@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:34:30 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/17 16:23:21 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/18 14:01:25 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	handle_special_chars(char *str)
 
 void	handle_exit_code(void)
 {
-	printf("%d\n", g_status);
+	printf("%d", g_status);
 }
 
 void	handle_quoted_variable(char *str)

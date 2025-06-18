@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 10:07:52 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/17 16:17:24 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/18 13:17:11 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 
 void	free_and_exit_in_child_p(t_data *s_k, t_cmd *cmd, int ex_code)
 {
-		free_cmd(cmd);
-		free_data(&s_k);
-		free(s_k);
-		exit(ex_code);
+	free_cmd(cmd);
+	free_data(&s_k);
+	free(s_k);
+	exit(ex_code);
 }
+
 int	end_of_multipipe(int *prev_pipe_read)
 {
 	if (*prev_pipe_read != -1)
@@ -28,7 +29,7 @@ int	end_of_multipipe(int *prev_pipe_read)
 	return (g_status);
 }
 
-void to_execve(t_data *s_k, t_cmd *current_cmd, t_cmd *cmd)
+void	to_execve(t_data *s_k, t_cmd *current_cmd, t_cmd *cmd)
 {
 	char	*pathway;
 
@@ -56,7 +57,7 @@ pid_t	set_pipe_and_fork(t_cmd *current_cmd, int *current_pipe)
 		if (pipe(current_pipe) == -1)
 		{
 			perror("pipe");
-			return 1;
+			return (1);
 		}
 	}
 	pid = fork();
@@ -64,60 +65,61 @@ pid_t	set_pipe_and_fork(t_cmd *current_cmd, int *current_pipe)
 		perror("fork");
 	return (pid);
 }
-void	in_or_out_redirection(t_cmd *current_cmd, int *current_pipe, int prev_pipe_read, int in_out)
-{
 
+void	in_or_out_redir(t_cmd *curr_cmd, int *curr_pipe, int p_p_r, int in_out)
+{
 	if (in_out == 1)
 	{
-		if (prev_pipe_read != -1)
+		if (p_p_r != -1)
 		{
-			if (dup2(prev_pipe_read, STDIN_FILENO) == -1)
+			if (dup2(p_p_r, STDIN_FILENO) == -1)
 			{
 				perror("dup2 input");
 				exit(1);
 			}
-			close(prev_pipe_read);
+			close(p_p_r);
 		}
 	}
 	else if (in_out == 2)
 	{
-		if (current_cmd->next)
+		if (curr_cmd->next)
 		{
-			if (dup2(current_pipe[1], STDOUT_FILENO) == -1)
+			if (dup2(curr_pipe[1], STDOUT_FILENO) == -1)
 			{
 				perror("dup2 output");
 				exit(1);
 			}
-			close(current_pipe[1]);
-			close(current_pipe[0]);
+			close(curr_pipe[1]);
+			close(curr_pipe[0]);
 		}
 	}
 }
+
 void	parent_proc(t_cmd *current_cmd, int *prev_pipe_read, int *current_pipe)
 {
 	if (*prev_pipe_read != -1)
-		close(*prev_pipe_read);
+		close (*prev_pipe_read);
 	if (current_cmd->next)
 	{
-		close(current_pipe[1]);  // Fermer l'écriture
-		*prev_pipe_read = current_pipe[0];  // Garder la lecture pour la prochaine itération
+		close (current_pipe[1]);
+		*prev_pipe_read = current_pipe[0];
 	}
 }
 
 void	handle_child_process(t_data *s_k, t_cmd *cmd, t_cmd *current_cmd,
 	int *current_pipe, int prev_pipe_read)
 {
-in_or_out_redirection(current_cmd, current_pipe, prev_pipe_read, 1);
-in_or_out_redirection(current_cmd, current_pipe, prev_pipe_read, 2);
-if (current_cmd->input_file || current_cmd->output_file)
-handle_redirection(current_cmd);
-if (ft_is_builtin(current_cmd->args[0]))
-{
-ft_exec_builtin(s_k, current_cmd);
-free_and_exit_in_child_p(s_k, cmd, 1);
-}
-else
-to_execve(s_k, current_cmd, cmd);
+	in_or_out_redir(current_cmd, current_pipe, prev_pipe_read, 1);
+	in_or_out_redir(current_cmd, current_pipe, prev_pipe_read, 2);
+	if (current_cmd->input_file || current_cmd->output_file)
+		handle_redirection(current_cmd);
+	if (ft_is_builtin(current_cmd->args[0]))
+	{
+		ft_exec_builtin(s_k, current_cmd);
+		free_and_exit_in_child_p(s_k, cmd, 1);
+	}
+	else
+		to_execve(s_k, current_cmd, cmd);
 }
 
 int	ft_exec_multipipe(t_data *s_k, t_cmd *cmd)

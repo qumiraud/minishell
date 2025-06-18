@@ -1,35 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exec.c                                          :+:      :+:    :+:   */
+/*   no_pipe_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/16 13:41:45 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/18 11:16:52 by qumiraud         ###   ########.fr       */
+/*   Created: 2025/06/18 11:11:29 by qumiraud          #+#    #+#             */
+/*   Updated: 2025/06/18 11:16:04 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	init_pipefd(int *pipefd)
+void	ft_child_cleanup_and_exit(t_data *s_k)
 {
-	if (pipe(pipefd) == -1)
-	{
-		perror("pipe");
-		return (1);
-	}
-	return (0);
+	free_data(&s_k);
+	free(s_k);
+	ft_exit(0);
 }
 
-int	handle_exec(t_data *s_k, t_cmd *cmd)
+void	ft_exec_builtin_child(t_data *s_k, t_cmd *cmd)
 {
-	if (s_k->pipe_quo > 1)
-		ft_exec_multipipe(s_k, cmd);
-	else if (s_k->pipe_quo == 1)
-		ft_exec_singlepipe(s_k, cmd);
-	else if (s_k->pipe_quo == 0)
-		ft_exec_nopipe(s_k, cmd);
+	ft_exec_builtin(s_k, cmd);
 	free_cmd(cmd);
-	return (0);
+	free_data(&s_k);
+	free(s_k);
+	ft_exit(0);
 }

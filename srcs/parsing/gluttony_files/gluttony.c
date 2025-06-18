@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gluttony.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:33:27 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/06/17 14:55:05 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/18 13:59:26 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	handle_standard_token(t_data **s_k, char **str, int *i)
 	int	len;
 
 	len = glt_count_letters(*str);
-	printf ("LEN : %d\n\n\n", len);
+	// printf ("LEN : %d\n\n\n", len);
 	if (len > 0)
 	{
 		(*s_k)->glutto_tab[*i] = malloc(len + 1);

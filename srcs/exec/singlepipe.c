@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   singlepipe.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 17:04:47 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/17 15:22:40 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/18 13:55:16 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,9 @@ void	wait_for_children(pid_t pid1, pid_t pid2)
 	int		childreturn;
 
 	childreturn = waitpid(pid1, &status, 0);
-	printf("pid1 : %d\n\n\n", childreturn);
+	// printf("pid1 : %d\n\n\n", childreturn);
 	childreturn = waitpid(pid2, &status, 0);
-	printf("pid2 : %d\n\n\n", childreturn);
+	// printf("pid2 : %d\n\n\n", childreturn);
 }
 
 int	ft_exec_singlepipe(t_data *s_k, t_cmd *cmd)
