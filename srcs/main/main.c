@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:06 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/18 15:48:18 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/19 11:17:33 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	validate_quotes_and_syntax(char *str, t_data **suprem_knowledge)
 	}
 	if (cmd_nt_fd(str) != 0)
 	{
+		g_status = 2;
 		str++;
 		add_history(str);
 		return (1);

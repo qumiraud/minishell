@@ -6,7 +6,7 @@
 /*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:33:27 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/06/18 17:58:11 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/19 14:10:02 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	handle_quote_case(char *dest, char **src, char *quote)
 {
 	if ((**src == '\'' || **src == '"') && *quote == 0)
 	{
-		printf ("ALED\n\n\n");
+		// printf ("ALED\n\n\n");
 		*quote = **src;
 		while (**src)
 		{
@@ -36,10 +36,22 @@ int	handle_quote_case(char *dest, char **src, char *quote)
 
 int	should_continue_copying(char **src)
 {
+	static int quote;
+
+	// quote = 0;
+	// printf ("ICI :%s\n\n", *src);
 	if (!**src)
 		return (0);
-	// if (**src == ' ' || (**src >= 9 && **src <= 13))
-		// return (0);
+	if ((**src == '\'' || **src == '"') && quote == 1)
+	{
+		// printf ("HALLO???\n\n");
+		quote = 0;
+	}
+	else if (**src == '\'' || **src == '"')
+		quote = 1;
+	// printf ("quoted : %d\n\n\n", quote);
+	if ((**src == ' ' || (**src >= 9 && **src <= 13)) && quote == 0)
+		return (0);
 	if (is_operator(**src))
 		return (0);
 	return (1);
@@ -60,11 +72,12 @@ void	glt_copy_word(char *dest, char **src, int count_l)
 		i++;
 		if (!handle_quote_case(dest_start, src, &quote))
 		{
+			// printf ("HALLO??\n\n");
 			*dest_start++ = **src;
 			(*src)++;
 		}
 	}
-	printf ("ICIIIIIIIII : %d\n", i);
+	// printf ("ICIIIIIIIII : %d\n", i);
 	*dest_start = '\0';
 	skip_whitespace(src);
 }
@@ -99,8 +112,8 @@ void	handle_standard_token(t_data **s_k, char **str, int *i)
 	// int x = 0;
 
 	len = glt_count_letters(*str);
-	printf ("LETTERS : %d\n\n\n", len);
-	printf ("str - > %s\n\n", *str);
+	// printf ("LETTERS : %d\n\n\n", len);
+	// printf ("str - > %s\n\n", *str);
 	if (len > 0)
 	{
 		(*s_k)->glutto_tab[*i] = malloc(len + 1);

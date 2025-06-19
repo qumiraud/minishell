@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   nopipe.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 17:33:12 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/18 17:40:44 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/19 10:54:23 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,6 @@ int	ft_exec_nopipe(t_data *s_k, t_cmd *cmd)
 		wait(&g_status);
 		g_status %= 255;
 	}
-	printf("g_status after nopipe : %d\n", g_status);
+	// printf("g_status after nopipe : %d\n", g_status);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:27:20 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/06/18 17:47:45 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/19 10:52:55 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,14 +96,14 @@ int	glt_count_letters(char *str)
 			result = glt_process_word(str, &i, &word);
 			if (result > 0)
 			{
-				printf ("HEEEEEEERRRREEEEEE\n\n\n");
-				printf ("IIIIIIII %d\n\n\n", i);
+				// printf ("HEEEEEEERRRREEEEEE\n\n\n");
+				// printf ("IIIIIIII %d\n\n\n", i);
 				return (result);
 			}
 			word++;
 		}
 	}
-	printf ("IIIIIIII %d\n\n\n", i);
+	// printf ("IIIIIIII %d\n\n\n", i);
 
 	return (i);
 }
