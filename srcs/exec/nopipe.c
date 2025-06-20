@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   nopipe.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 17:33:12 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/19 10:54:23 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/20 13:35:47 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	open_input(t_cmd *cmd)
 {
 	int	fd;
-
+	// printf("cmd->heredoc : %d\n", cmd->here_doc);
 	if (cmd->here_doc)
 	{
 		fd = ft_heredoc(cmd->input_file);
