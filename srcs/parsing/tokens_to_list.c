@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens_to_list.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 14:44:53 by yeten             #+#    #+#             */
-/*   Updated: 2025/06/18 13:56:07 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/20 09:43:39 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	arg_to_cmd(t_cmd *cmd, char *arg)
 		return ;
 	}
 	cmd->args[cmd->argc] = ft_strdup(arg);
-	// printf("cmd in arg_to_cmd: %s\n", cmd->args[cmd->argc]);
 	if (!cmd->args[cmd->argc])
 	{
 		perror("strdup");

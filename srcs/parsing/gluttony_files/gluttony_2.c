@@ -6,7 +6,7 @@
 /*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 14:54:32 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/06/19 10:53:52 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/20 09:45:28 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,4 @@ void	fill_gluttony_tab(t_data **s_k, char *str)
 	}
 	(*s_k)->glutto_tab[i] = NULL;
 	(*s_k)->tab_len = i;
-	// printf ("valor I : %d\n\n\n\n\n\n", i);
 }

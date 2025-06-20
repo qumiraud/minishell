@@ -6,7 +6,7 @@
 /*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:33:27 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/06/19 14:10:02 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/20 09:46:00 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	handle_quote_case(char *dest, char **src, char *quote)
 {
 	if ((**src == '\'' || **src == '"') && *quote == 0)
 	{
-		// printf ("ALED\n\n\n");
 		*quote = **src;
 		while (**src)
 		{
@@ -36,20 +35,16 @@ int	handle_quote_case(char *dest, char **src, char *quote)
 
 int	should_continue_copying(char **src)
 {
-	static int quote;
+	static int	quote;
 
-	// quote = 0;
-	// printf ("ICI :%s\n\n", *src);
 	if (!**src)
 		return (0);
 	if ((**src == '\'' || **src == '"') && quote == 1)
 	{
-		// printf ("HALLO???\n\n");
 		quote = 0;
 	}
 	else if (**src == '\'' || **src == '"')
 		quote = 1;
-	// printf ("quoted : %d\n\n\n", quote);
 	if ((**src == ' ' || (**src >= 9 && **src <= 13)) && quote == 0)
 		return (0);
 	if (is_operator(**src))
@@ -61,9 +56,9 @@ void	glt_copy_word(char *dest, char **src, int count_l)
 {
 	char	quote;
 	char	*dest_start;
-	int	i = 0;
+	int		i;
 
-
+	i = 0;
 	quote = 0;
 	dest_start = dest;
 	skip_whitespace(src);
@@ -72,62 +67,25 @@ void	glt_copy_word(char *dest, char **src, int count_l)
 		i++;
 		if (!handle_quote_case(dest_start, src, &quote))
 		{
-			// printf ("HALLO??\n\n");
 			*dest_start++ = **src;
 			(*src)++;
 		}
 	}
-	// printf ("ICIIIIIIIII : %d\n", i);
 	*dest_start = '\0';
 	skip_whitespace(src);
 }
 
-// void	glt_copy_word(char *dest, char **src, int count_l)
-// {
-// 	int	i = 0;
-
-// 	// printf ("count_l : %d\n", count_l);
-
-// 	while (**src && i != count_l)// && !((**src >= 8 && **src <= 13) || **src == 32))
-// 	{
-// 		// if (**src == '"' && **src == '\'')
-// 			// count_l++;
-// 		// if (**src != '"' && **src != '\'')
-// 		*dest++ = **src;
-// 		// printf("dest : %c", *dest);
-// 		(*src)++;
-// 		i++;
-// 	}
-// 	*dest = '\0';
-// 	while (**src && ((**src >= 8 && **src <= 13) || **src == 32))
-// 		src++;
-// }
-
-
-
-
 void	handle_standard_token(t_data **s_k, char **str, int *i)
 {
 	int	len;
-	// int x = 0;
 
 	len = glt_count_letters(*str);
-	// printf ("LETTERS : %d\n\n\n", len);
-	// printf ("str - > %s\n\n", *str);
 	if (len > 0)
 	{
 		(*s_k)->glutto_tab[*i] = malloc(len + 1);
 		glt_copy_word((*s_k)->glutto_tab[*i], str, len);
 		(*i)++;
-		// while (len > x)
-		// {
-		// 	str++;
-		// 	x++;
-		// }
 	}
-	// else
-		// exit (0);
-	// printf ("IIIIIIII %d\n\n\n", *i);
 }
 
 int	allocate_glutto_tab(t_data **s_k, char *str)

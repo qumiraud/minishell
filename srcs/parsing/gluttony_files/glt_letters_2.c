@@ -6,7 +6,7 @@
 /*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:29:14 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/06/19 13:29:53 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/20 09:44:17 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int	handle_quotes(char *str, int *i, int *word)
 	c = str[*i];
 	while (str[*i])
 	{
-		// printf ("str[%c]\n\n", str[*i]);
 		(*i)++;
 		if (str[*i] == c)
 		{

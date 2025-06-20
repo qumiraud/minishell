@@ -6,7 +6,7 @@
 /*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:29:55 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/06/19 14:09:47 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/20 09:44:27 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,5 @@ int	glt_count_words(const char *str)
 			process_word_w(str, &i, &word, &quote);
 		}
 	}
-	// printf ("WORDS : %d\n\n\n", word);
 	return (word);
 }
