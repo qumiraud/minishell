@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bis_2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:25:55 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/06/19 14:12:34 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/20 09:43:24 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ void	handle_str(char *str, t_data **s_k, t_cmd *cmd)
 	add_history(str);
 	fill_suprem_knowledge(s_k, str);
 	cmd = parse_cmd((*s_k)->glutto_tab);
-	// print_tab(*s_k);
-	// print_command_list(cmd);
+	print_tab(*s_k);
+	print_command_list(cmd);
 	handle_exec(*s_k, cmd);
 }
 

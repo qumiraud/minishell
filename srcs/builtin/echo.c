@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:34:30 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/18 17:43:43 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/20 11:41:19 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,11 @@ void	handle_special_chars(char *str)
 	else if (getenv(str + 1) != NULL)
 	{
 		printf("%s", getenv(str + 1));
+	}
+	else if (getenv(str + 1) == NULL)
+	{
+		printf("%s", getenv(str + 1));
+
 	}
 }
 
