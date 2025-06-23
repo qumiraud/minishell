@@ -6,7 +6,7 @@
 /*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:11:27 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/06/20 09:43:25 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/23 12:03:44 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ int	cmd_nt_fd(char *str)
 		return (printf ("bash: syntax error near unexpected token `>'\n"));
 	else if (str[i] == '<' && str[i + 1] == '<' && str[i + 2] == '<' )
 		return (printf ("bash: syntax error near unexpected token `<'\n"));
-	else if (str[i] == '<' && str[i] == '<'
-		&& str [i + 2] && !ft_isalpha((str[i + 2])))
+	else if (str[i] == '<' && str[i + 1] == '<'
+		&& str [i + 2] && str[i + 2] == ' ' && !ft_isalpha((str[i + 3])))
 		return (printf ("bash: syntax error near unexpected token `<<'\n"));
 	else if (str[i] == '>' && str[i] == '>'
 		&& str [i + 2] && !ft_isalpha((str[i + 2])))
