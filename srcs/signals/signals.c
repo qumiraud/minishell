@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:25:28 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/06/18 17:44:40 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/23 11:49:28 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,13 @@ void	signal_handler(int signal)
 	rl_on_new_line();
 	rl_redisplay();
 	g_status = 130;
+}
+void	signal_heredoc(int signal)
+{
+	(void)signal;
+	printf("\n");
+	g_status = 130;
+	exit(0);
 }
 
 // void sig_pipe_handler(int signal)

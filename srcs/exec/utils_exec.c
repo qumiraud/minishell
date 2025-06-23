@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 10:56:52 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/19 11:32:40 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/23 11:55:35 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,26 +128,50 @@ int	handle_redirection(t_cmd *cmd)
 	return (0);
 }
 
-int	ft_heredoc(char *safeword)
+int	ft_heredoc(char *safeword, t_cmd *cmd)
 {
 	char	*tmp;
 	int		pipefd[2];
+	pid_t	pid;
 
 	if (pipe(pipefd) == -1)
 		return (1);
-	while (1)
+	pid = fork();
+	if (pid == -1)
 	{
-		tmp = readline(">");
-		if (ft_strcmp(tmp, safeword) != 0)
+		close(pipefd[0]);
+		close(pipefd[1]);
+		return (-1);
+	}
+	if (pid == 0)
+	{
+		close (pipefd[0]);
+		signal(SIGINT, SIG_IGN);
+		while (1)
 		{
-			free(tmp);
-			break ;
+			tmp = readline(">");
+			signal(SIGINT, signal_heredoc);
+			if (tmp == NULL)
+			{
+				write(STDERR_FILENO, "\n", 1);
+				break;
+			}
+			if (ft_strcmp(tmp, safeword) != 0)
+			{
+				free(tmp);
+				close (pipefd[1]);
+				exit (0) ;
+			}
+			if (tmp)
+			{
+				write(pipefd[1], tmp, ft_strlen(tmp));
+				write(pipefd[1], "\n", 1);
+				free(tmp);
+			}
 		}
-		write(pipefd[1], tmp, ft_strlen(tmp));
-		write(pipefd[1], "\n", 1);
-		free(tmp);
 	}
 	close(pipefd[1]);
+	waitpid(pid, &g_status, 0);
 	return (pipefd[0]);
 }
 

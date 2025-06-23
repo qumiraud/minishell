@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:34:30 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/20 11:41:19 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/23 10:40:59 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ void	print_echo(char **str, int n_def, int i)
 {
 	while (str[i])
 	{
+		// printf("str= %s\n", str[i]);
+
 		process_token_echo(str[i]);
 		if (str[i + 1] != NULL)
 			printf(" ");

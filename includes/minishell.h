@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:35 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/18 18:34:43 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/23 11:49:51 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,6 +206,8 @@ void		ft_exec_builtin_child(t_data *s_k, t_cmd *cmd);
 
 //**********SIGNALS_DIR**********************************************/
 void		setup_signal(void);
+void	signal_heredoc(int signal);
+
 
 //**********BUILTIN_DIRECTORY**********************************************/
 int			ft_echo(char **str);

@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 13:41:45 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/20 13:44:42 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/23 10:42:00 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,24 +21,48 @@ int	init_pipefd(int *pipefd)
 	}
 	return (0);
 }
+void	update_variable( char **str, char **env, int x, int i)
+{
+	char	*tmp;
+
+	if (i == 1)
+	{
+		(*str)--;
+		tmp = (*str);
+		(*str) = ft_strdupandfree(ft_itoa(g_status));
+		free(tmp);
+		return;
+	}
+	else if (i == 2)
+	{
+		tmp = ft_strdup((env[x] + ft_strlen(*str) + 1));
+		(*str)--;
+		free(*str);
+		*str = tmp;
+		return;
+	}
+}
 
 void	ft_expand_variable(char **str, char **env)
 {
 	int		strlen;
 	int		i;
-	char	*tmp;
 
 	i = 0;
 	(*str) ++;
 	if (*str[0] == '\0')
 		return;
 	strlen = ft_strlen(*str);
+	if (ft_strcmp(*str, "?"))
+	{
+		update_variable(str, env, 0, 1);
+		return;
+	}
 	while (env[i])
 	{
 		if (!ft_strncmp(*str, env[i], strlen) /*&& env[i][strlen + 1] == '='*/)
 		{
-			tmp = ft_strdup((env[i] + strlen + 1));
-			*str = tmp;
+			update_variable(str, env, i, 2);
 			return;
 		}
 		i++;
