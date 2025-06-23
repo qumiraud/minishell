@@ -6,19 +6,19 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 17:33:12 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/20 13:35:47 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/23 12:03:16 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	open_input(t_cmd *cmd)
+int	open_input(t_cmd *cmd, t_data *s_k)
 {
 	int	fd;
 	// printf("cmd->heredoc : %d\n", cmd->here_doc);
 	if (cmd->here_doc)
 	{
-		fd = ft_heredoc(cmd->input_file);
+		fd = ft_heredoc(cmd->input_file, cmd, s_k);
 	}
 	else
 	{
@@ -62,11 +62,11 @@ int	open_output(t_cmd *cmd)
 	return (0);
 }
 
-int	ft_setup_redirections(t_cmd *cmd)
+int	ft_setup_redirections(t_cmd *cmd, t_data *s_k)
 {
 	if (cmd->input_file)
 	{
-		if (open_input(cmd) < 0)
+		if (open_input(cmd, s_k) < 0)
 			return (-1);
 	}
 	if (cmd->output_file)
@@ -117,7 +117,7 @@ int	ft_exec_nopipe(t_data *s_k, t_cmd *cmd)
 		return (1);
 	else if (pid == 0)
 	{
-		if (ft_setup_redirections(cmd) == -1)
+		if (ft_setup_redirections(cmd, s_k) == -1)
 			exit(1);
 		if (ft_is_builtin(cmd->args[0]))
 			ft_exec_builtin_child(s_k, cmd);

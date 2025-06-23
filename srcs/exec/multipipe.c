@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 10:07:52 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/18 13:17:11 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/23 12:04:25 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void	handle_child_process(t_data *s_k, t_cmd *cmd, t_cmd *current_cmd,
 	in_or_out_redir(current_cmd, current_pipe, prev_pipe_read, 1);
 	in_or_out_redir(current_cmd, current_pipe, prev_pipe_read, 2);
 	if (current_cmd->input_file || current_cmd->output_file)
-		handle_redirection(current_cmd);
+		handle_redirection(current_cmd, s_k);
 	if (ft_is_builtin(current_cmd->args[0]))
 	{
 		ft_exec_builtin(s_k, current_cmd);

@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 17:04:47 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/18 13:55:16 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/23 12:04:42 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	execute_command_in_child(t_data *s_k, t_cmd *cmd, t_cmd *original_cmd)
 {
 	char	*pathway;
 
-	if ((cmd->output_file || cmd->input_file) && handle_redirection(cmd) == 1)
+	if ((cmd->output_file || cmd->input_file) && handle_redirection(cmd, s_k) == 1)
 		free_and_exit_in_child_p(s_k, original_cmd, 1);
 	if (ft_is_builtin(cmd->args[0]))
 	{

@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 10:56:52 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/23 11:55:35 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/23 13:19:35 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	setup_pipe(int i, int pipe_quo, int pipefd1[2], int pipefd2[2])
 	safe_close(pipefd2[1]);
 }
 
-int	handle_redirection(t_cmd *cmd)
+int	handle_redirection(t_cmd *cmd, t_data *s_k)
 {
 	int	fd;
 
@@ -92,7 +92,7 @@ int	handle_redirection(t_cmd *cmd)
 	}
 	else if (cmd->input_file && cmd->here_doc)
 	{
-		fd = ft_heredoc(cmd->input_file);
+		fd = ft_heredoc(cmd->input_file, cmd, s_k);
 		if (fd == -1)
 		{
 			perror("heredoc");
@@ -128,7 +128,7 @@ int	handle_redirection(t_cmd *cmd)
 	return (0);
 }
 
-int	ft_heredoc(char *safeword, t_cmd *cmd)
+int	ft_heredoc(char *safeword, t_cmd *cmd, t_data *s_k)
 {
 	char	*tmp;
 	int		pipefd[2];
@@ -145,21 +145,39 @@ int	ft_heredoc(char *safeword, t_cmd *cmd)
 	}
 	if (pid == 0)
 	{
+		// signal(SIGINT, signal_heredoc);
 		close (pipefd[0]);
-		signal(SIGINT, SIG_IGN);
 		while (1)
-		{
+		{printf ("g_status : %d\n", g_status);
 			tmp = readline(">");
 			signal(SIGINT, signal_heredoc);
 			if (tmp == NULL)
 			{
 				write(STDERR_FILENO, "\n", 1);
-				break;
+				free(tmp);
+				close (pipefd[1]);
+				free_cmd(cmd);
+				free_data(&s_k);
+				free(s_k);
+				exit (g_status);
+			}
+			if (g_status == 130)
+			{
+				write(STDERR_FILENO, "\n", 1);
+				free(tmp);
+				close (pipefd[1]);
+				free_cmd(cmd);
+				free_data(&s_k);
+				free(s_k);
+				exit (g_status);
 			}
 			if (ft_strcmp(tmp, safeword) != 0)
 			{
 				free(tmp);
 				close (pipefd[1]);
+				free_cmd(cmd);
+				free_data(&s_k);
+				free(s_k);
 				exit (0) ;
 			}
 			if (tmp)
