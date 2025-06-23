@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gluttony_2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 14:54:32 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/06/20 09:45:28 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/23 15:01:47 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ void	fill_gluttony_tab(t_data **s_k, char *str)
 	int	i;
 
 	i = 0;
+	if (!str)
+		return ;
 	if (!allocate_glutto_tab(s_k, str))
 		return ;
 	while (*str)

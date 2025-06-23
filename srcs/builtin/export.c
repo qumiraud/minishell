@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 11:13:27 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/17 15:29:23 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/23 16:27:13 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,41 @@ static int	ft_varlen(char *str, char c)
 		i++;
 	}
 	return (i);
+}
+
+int	check_arg_export(char *str)
+{
+	static int i = 0;
+
+	if (str[0] == '=')
+		return (printf("bash: export: ʻ=': not a valid identifier\n"));
+	else if (str[0] == '\0')
+		return (printf("bash: export: ʻ': not a valid identifier\n"));
+	else if (str[0] == '%')
+		return (printf("bash: export: ʻ%%': not a valid identifier\n"));
+	else if (str[0] == '0')
+		return (printf("bash: export: ʻ0': not a valid identifier\n"));
+	else if (str[0] == '?')
+		return (printf("bash: export: ʻ?': not a valid identifier\n"));
+	else if (ft_isdigit(str[0]))
+		return (printf("bash: export: ʻ%c': not a valid identifier\n", str[0]));
+	else
+	{
+		while (str[i] && str[i] != '=')
+		{
+			if (!isalnum(str[i]))
+				return(printf("bash: export: `%s': not a valid identifier\n", str));
+			i++;
+		}
+	}
+	return (0);
+}
+
+int	check_arg_export_2(char *str)
+{
+	if (str[0] == '-')
+		return (printf("bash: export: doesn't take any option in minishell\n"));
+	return (0);
 }
 
 int	ft_export(char **args, char ***envp)
@@ -47,6 +82,12 @@ int	ft_export(char **args, char ***envp)
 		}
 		return (0);
 	}
+	if (check_arg_export(args[1]) == 1 || check_arg_export_2(args[1]) != 1)
+		return (0);
+	// if (args[1][0] == '=')
+	// {	printf("bash: export: ʻ=': not a valid identifier\n");
+	// 	return (0);
+	// }
 	while (args[arg_nbr])
 	{
 		i = 0;
@@ -59,7 +100,7 @@ int	ft_export(char **args, char ***envp)
 		var_len = ft_varlen(args[arg_nbr], '=');
 		while ((*envp)[i])
 		{
-			if (ft_strncmp((*envp)[i], args[arg_nbr], var_len) == 0 && (*envp)[i][var_len] == '=')
+			if (ft_strncmp((*envp)[i], args[arg_nbr], var_len) == 0 /*&& (*envp)[i][var_len] == '='*/)
 			{
 				free((*envp)[i]);
 				(*envp)[i] = ft_strdup(args[arg_nbr]);
