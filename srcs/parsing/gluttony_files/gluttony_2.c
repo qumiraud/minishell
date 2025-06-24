@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gluttony_2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 14:54:32 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/06/23 15:01:47 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/24 15:19:16 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,22 +44,54 @@ void	handle_single_redirect(t_data **s_k, char **str, int *i, char op)
 
 void	process_character(t_data **s_k, char **str, int *i)
 {
+	
 	if (**str == '$' && *(*str + 1) == '"')
+	{
+		// printf ("\n\n\n\n\n\n\n\n\nBONJOUUUUUUUUUUUUUUUUUURRRRRRRRRRRRRRRRRRRRr\n\n\n\n\n\n\n\n\n");
 		handle_dollar_quote(s_k, str, i);
+	}
 	if (**str == '$' && *(*str + 1) == '\'')
+	{
+		// printf ("\n\n\n\n\n\n\n\n\nBONJOUUUUUUUUUUUUUUUUUURRRRRRRRRRRRRRRRRRRRr\n\n\n\n\n\n\n\n\n");
+		
 		handle_dollar_quote(s_k, str, i);
+	}
 	else if (**str == '<' && *(*str + 1) == '<')
+	{
+		// printf ("\n\n\n\n\n\n\n\n\nBONJOUUUUUUUUUUUUUUUUUURRRRRRRRRRRRRRRRRRRRr\n\n\n\n\n\n\n\n\n");
+
 		handle_double_redirect(s_k, str, i, '<');
+	}
 	else if (**str == '>' && *(*str + 1) == '>')
+	{
+		// printf ("\n\n\n\n\n\n\n\n\nBONJOUUUUUUUUUUUUUUUUUURRRRRRRRRRRRRRRRRRRRr\n\n\n\n\n\n\n\n\n");
+
 		handle_double_redirect(s_k, str, i, '>');
+	}
 	else if (**str == '<')
+	{
+		// printf ("\n\n\n\n\n\n\n\n\nBONJOUUUUUUUUUUUUUUUUUURRRRRRRRRRRRRRRRRRRRr\n\n\n\n\n\n\n\n\n");
+
 		handle_single_redirect(s_k, str, i, '<');
-	else if (**str == '>')
+	}
+	else if (**str == '>' && (*s_k)->in_quo == 0)
+	{
+		// printf ("\n\n\n\n\n\n\n\n\nBONJOUUUUUUUUUUUUUUUUUURRRRRRRRRRRRRRRRRRRRr\n\n\n\n\n\n\n\n\n");
+
 		handle_single_redirect(s_k, str, i, '>');
-	else if (**str == '|')
+	}
+	else if (**str == '|' && (*s_k)->in_quo == 0)
+	{
+		// printf ("\n\n\n\n\n\n\n\n\nBONJOUUUUUUUUUUUUUUUUUURRRRRRRRRRRRRRRRRRRRr\n\n\n\n\n\n\n\n\n");
+
 		handle_single_redirect(s_k, str, i, '|');
+	}
 	else
+	{
+		// printf ("IIIIIIICCCCCCCCIIIIIIIII\n\n\n");
 		handle_standard_token(s_k, str, i);
+	}
+
 }
 
 void	fill_gluttony_tab(t_data **s_k, char *str)
@@ -74,6 +106,7 @@ void	fill_gluttony_tab(t_data **s_k, char *str)
 	while (*str)
 	{
 		process_character(s_k, &str, &i);
+		// printf ("HALLO???\n\n\n");
 	}
 	(*s_k)->glutto_tab[i] = NULL;
 	(*s_k)->tab_len = i;

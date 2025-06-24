@@ -6,7 +6,7 @@
 /*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:27:20 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/06/20 09:44:09 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/24 15:19:32 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,15 @@ int	process_word_part2(char *str, int *i, int *word, int redir_pos)
 			handle_redirections(str, *i, &inc);
 			*i += inc;
 			return (*word);
+		// printf ("\n\nICI LE RESULTAT FAUX BIEN SURE : %d\n\n", result);
+		
 		}
 		return (redir_pos);
 	}
 	return (0);
 }
 
-int	glt_process_word(char *str, int *i, int *word)
+int	glt_process_word(char *str, int *i, int *word, t_data **s_k)
 {
 	int	redir_pos;
 	int	result;
@@ -65,7 +67,12 @@ int	glt_process_word(char *str, int *i, int *word)
 		if (result > 0)
 			return (result);
 		if (str[*i] == '\'' || str[*i] == '"')
+		{
+			// il me faut sk ici
+			(*s_k)->in_quo = 1;
+			
 			return (handle_quotes(str, i, word));
+		}
 		if (str[*i] != '\0')
 			(*i)++;
 	}
@@ -78,7 +85,7 @@ void	skip_spaces(char *str, int *i)
 		(*i)++;
 }
 
-int	glt_count_letters(char *str)
+int	glt_count_letters(char *str, t_data **s_k)
 {
 	int	i;
 	int	word;
@@ -92,14 +99,17 @@ int	glt_count_letters(char *str)
 		if (str[i] && (str[i] != 32 || (str[i] <= 8 || str[i] >= 13)))
 		{
 			if (word == 1)
-				return (i);
-			result = glt_process_word(str, &i, &word);
+			return (i);
+			result = glt_process_word(str, &i, &word, s_k);
 			if (result > 0)
 			{
+				// printf ("ALEDDDDDDDD\n\n\n\n\n\n");
+				// printf ("\n\nICI LE RESULTAT FAUX BIEN SURE : %d\n\n", result);
 				return (result);
 			}
 			word++;
 		}
 	}
+	// printf ("STR[I] : %s\n\n\n\n\n\n\n\n", str);
 	return (i);
 }

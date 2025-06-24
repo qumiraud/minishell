@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:35 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/23 12:23:13 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/24 15:18:01 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ typedef struct s_data
 	void		*pid;
 	int			stat_quo;
 	int			pipe_quo;
+	int			in_quo;
 	t_lst_arg	*rl_lst;
 	t_lst_arg	*cmd_arg;
 	t_lst_arg	*ws_lst;
@@ -161,7 +162,7 @@ int			count_words(const char *str);
 void		fill_suprem_knowledge(t_data **s_k, char *str);
 void		copy_word(char *dest, char **src, int count_l);
 void		fill_s_k_tab(t_data **s_k, char *str);
-void		glt_copy_word(char *dest, char **src, int count_l);
+void		glt_copy_word(char *dest, char **src, int count_l, t_data **s_k);
 void		fill_gluttony_tab(t_data **s_k, char *str);
 void		fill_tabs(t_data **s_k, char *str);
 int			handle_quotes_part2(char *str, int *i, int *quote, char c);
@@ -170,9 +171,9 @@ int			handle_double_redir(char *str, int i, int *inc);
 int			handle_single_redir(char *str, int i, int *inc);
 int			handle_redirections(char *str, int i, int *inc);
 int			process_word_part2(char *str, int *i, int *word, int redir_pos);
-int			glt_process_word(char *str, int *i, int *word);
+int			glt_process_word(char *str, int *i, int *word, t_data **s_k);
 void		skip_spaces(char *str, int *i);
-int			glt_count_letters(char *str);
+int			glt_count_letters(char *str, t_data **s_k);
 void		skip_spaces_w(const char *str, int *i);
 void		handle_double_redir_w(const char *str, int *i, int *word);
 void		handle_single_redir_no_space(const char *str, int *i, int *word);

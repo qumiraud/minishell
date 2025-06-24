@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   verif.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:36:49 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/06/24 12:11:40 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/24 13:43:22 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	pipe_quota(char *str, t_data **s_k)
 	if (!str)
 		return ;
 	str_len = ft_strlen((const char *)str);
-	printf("str in pipe_quota : %s\n", str);
 	while (i <= str_len)
 	{
 		skip_quotes(str, &i, '\'');
