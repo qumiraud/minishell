@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 13:41:45 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/23 10:42:00 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/24 12:06:39 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int	init_pipefd(int *pipefd)
 void	update_variable( char **str, char **env, int x, int i)
 {
 	char	*tmp;
-
+	if (!str)
+		return ;
 	if (i == 1)
 	{
 		(*str)--;
@@ -83,10 +84,10 @@ int	handle_exec(t_data *s_k, t_cmd *cmd)
 		i ++;
 	}
 	// printf("test expand\n->"); print_command_list(cmd);
-	if (s_k->pipe_quo > 1)
+	if (s_k->pipe_quo >= 1)
 		ft_exec_multipipe(s_k, cmd);
-	else if (s_k->pipe_quo == 1)
-		ft_exec_singlepipe(s_k, cmd);
+	// else if (s_k->pipe_quo == 1)
+	// 	ft_exec_singlepipe(s_k, cmd);
 	else if (s_k->pipe_quo == 0)
 		ft_exec_nopipe(s_k, cmd);
 	free_cmd(cmd);

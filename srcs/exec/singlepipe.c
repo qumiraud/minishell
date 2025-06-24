@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 17:04:47 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/23 12:04:42 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/24 11:58:04 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ int	ft_exec_singlepipe(t_data *s_k, t_cmd *cmd)
 	close(s_k->pipefd1[0]);
 	close(s_k->pipefd1[1]);
 	wait_for_children(pid1, pid2);
+	s_k->pipe_quo = 0;
 	return (0);
 }
 

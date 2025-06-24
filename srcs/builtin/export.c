@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 11:13:27 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/23 16:27:13 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/24 10:51:46 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,8 @@ static int	ft_varlen(char *str, char c)
 	return (i);
 }
 
-int	check_arg_export(char *str)
+int	check_arg_export(char *str, int i)
 {
-	static int i = 0;
-
 	if (str[0] == '=')
 		return (printf("bash: export: ʻ=': not a valid identifier\n"));
 	else if (str[0] == '\0')
@@ -47,7 +45,7 @@ int	check_arg_export(char *str)
 	{
 		while (str[i] && str[i] != '=')
 		{
-			if (!isalnum(str[i]))
+			if (!isalnum(str[i]) || str[i] == '+' || str[i] == '-')
 				return(printf("bash: export: `%s': not a valid identifier\n", str));
 			i++;
 		}
@@ -55,10 +53,21 @@ int	check_arg_export(char *str)
 	return (0);
 }
 
-int	check_arg_export_2(char *str)
+int	check_arg_export_2(char *str, int i)
 {
-	if (str[0] == '-')
-		return (printf("bash: export: doesn't take any option in minishell\n"));
+	while (str[i] && str[i] != '=')
+		i++;
+	while (str[++i])
+	{
+		if (str[i] == '(')
+			return (printf("bash: syntax error near unexpected token `('\n"));
+		else if (str[i] == ')')
+			return (printf("bash: syntax error near unexpected token `)'\n"));
+		else if (str[i] == '&')
+			return (printf("\'&\' doesn't valid in minishell\n"));
+		else if (str[i] == '!')
+			return (printf("bash: %s: event not found\n", str + i));
+	}
 	return (0);
 }
 
@@ -82,12 +91,8 @@ int	ft_export(char **args, char ***envp)
 		}
 		return (0);
 	}
-	if (check_arg_export(args[1]) == 1 || check_arg_export_2(args[1]) != 1)
+	if (check_arg_export(args[1], 0) != 0 || check_arg_export_2(args[1], 0) != 0)
 		return (0);
-	// if (args[1][0] == '=')
-	// {	printf("bash: export: ʻ=': not a valid identifier\n");
-	// 	return (0);
-	// }
 	while (args[arg_nbr])
 	{
 		i = 0;

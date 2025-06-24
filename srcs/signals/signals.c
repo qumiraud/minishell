@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:25:28 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/06/23 13:20:35 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/24 09:37:31 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void	signal_heredoc(int signal)
 {
 	(void)signal;
 	g_status = 130;
+	printf ("\n");
+	close (0);
 	return ;
 }
 

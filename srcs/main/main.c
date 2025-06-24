@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:06 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/19 11:17:33 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/24 12:09:57 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,11 @@ int	process_command_line(t_data **suprem_knowledge, t_cmd *cmd)
 	process_input_string(&str, suprem_knowledge);
 	if (validate_quotes_and_syntax(str, suprem_knowledge))
 	{
-		free(str);
 		return (0);
 	}
 	pipe_quota(str, suprem_knowledge);
+	printf("s_k pipe_quo : %d\n", (*suprem_knowledge)->pipe_quo);
+
 	if (handle_readline(str, suprem_knowledge, cmd) == 1)
 	{
 		free(str);
@@ -74,6 +75,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		setup_signal();
 		result = process_command_line(&suprem_knowledge, cmd);
+
 		if (result == 1)
 			break ;
 	}
