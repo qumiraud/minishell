@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 14:22:04 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/17 16:06:11 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/25 15:00:28 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,13 +87,35 @@ int	ft_cd(char **args, char ***envp)
 	char	*newpwd;
 	char	*newcurrentpwd;
 	int		needfree;
+	int		i;
 
+	i = 0;
 	needfree = 1;
 	oldpwd = getcwd(NULL, 0);
 	newpwd = NULL;
 	newcurrentpwd = NULL;
+	while (args[i] && i <= 2)
+	{
+		if (i == 2)
+		{
+			printf("bash: cd: too many arguments\n");
+			free(oldpwd);
+			g_status = 1;
+			return (1);
+		}
+		i++;
+	}
 	if (!args[1])
+	{
 		newpwd = ft_getenv("HOME", *envp);
+		if (!newpwd || newpwd[0] == 0)
+		{
+			free(oldpwd);
+			free(newpwd);
+			g_status = 1;
+			return (1);
+		}
+	}
 	else if (ft_strncmp(args[1], "-", 1) == 0)
 		newpwd = ft_getenv("OLDPWD", *envp);
 	else
@@ -103,14 +125,17 @@ int	ft_cd(char **args, char ***envp)
 	}
 	if (!newpwd || chdir(newpwd) != 0)
 	{
-		perror("cd");
+		printf("bash: cd: %s: No such file or directory\n", newpwd);
 		free(oldpwd);
+		// free(newpwd);
+		g_status = 1;
 		return (1);
 	}
 	if (needfree == 1)
 		free(newpwd);
 	ft_setenv("OLDPWD", oldpwd, envp);
 	free(oldpwd);
+	// free(newpwd);
 	newcurrentpwd = getcwd(NULL, 0);
 	if (newcurrentpwd)
 	{

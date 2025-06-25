@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 13:41:45 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/24 15:59:27 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/25 14:06:15 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,17 +80,20 @@ int	handle_exec(t_data *s_k, t_cmd *cmd)
 
 	i = 0;
 	tmp = cmd;
-	while (tmp->args[i])
-	{
-		j = 0;
-		while(tmp->args[i][j])
+		while (tmp->args[i])
 		{
-			if (tmp->args[i][j] == '$' && tmp->args[i][j + 1] != '\0')
-				ft_expand_variable(&(tmp)->args[i], s_k->tab_env);
-			j++;
+			j = 0;
+			while(tmp->args[i][j])
+			{
+				if (tmp->args[i][j] == '$' && tmp->args[i][j + 1] != '\0')
+				{
+					ft_expand_variable(&(tmp)->args[i], s_k->tab_env);
+					break ;
+				}
+				j++;
+			}
+			i++;
 		}
-		i++;
-	}
 	if (s_k->pipe_quo >= 1)
 		ft_exec_multipipe(s_k, cmd);
 	// else if (s_k->pipe_quo == 1)

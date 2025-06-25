@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 11:13:27 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/24 14:45:25 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/25 15:06:50 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,10 @@ int	check_arg_export_2(char *str, int i)
 {
 	while (str[i] && str[i] != '=')
 		i++;
-	while (str[++i])
+	printf("i : %d\n\n", i);
+	while (str[i])
 	{
+		i++;
 		if (str[i] == '(')
 			return (printf("bash: syntax error near unexpected token `('\n"));
 		else if (str[i] == ')')

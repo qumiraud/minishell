@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:24:25 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/06/25 11:15:48 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/25 12:50:31 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	check_exit_args(char *str)
 	int		i;
 	int		arg_nbr;
 	char	*tmp;
-	
+
 	i = 0;
 	arg_nbr = 0;
 	if (ft_strlen(str) <= 5)
