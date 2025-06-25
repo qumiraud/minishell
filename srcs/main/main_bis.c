@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:24:25 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/06/18 17:47:38 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/25 11:15:48 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,39 +37,95 @@ int	check_arguments(int argc, char **argv)
 	return (0);
 }
 
+
+
+	// if (!str)
+	// 	return (1);
+	// while (str[i])
+	// {
+	// 	if (str[i] == '"')
+	// 		d_quote++;
+	// 	if (str[i] == '\'')
+	// 		quote++;
+	// 	i++;
+	// }
+
+char	*trim_quottage(char *str, int i, int j)
+{
+	char	*dest;
+	char	*tmp;
+
+	if (!str)
+		return NULL;
+	tmp = ft_strdup(str);
+	while (tmp[i++])
+	{
+		if (tmp[i] == '"' || tmp[i] == '\'')
+			j++;
+	}
+	dest = malloc(sizeof(char) * ft_strlen(tmp) - j + 1);
+	i = 0;
+	j = 0;
+	while (tmp[i])
+	{
+		if (tmp[i] != '\'' && tmp[i] != '"')
+					dest[j++] = tmp[i];
+		i++;
+	}
+	dest[j] = '\0';
+	free(tmp);
+	return (dest);
+}
+
 int	check_exit_args(char *str)
 {
 	int		i;
 	int		arg_nbr;
-
+	char	*tmp;
+	
 	i = 0;
 	arg_nbr = 0;
+	if (ft_strlen(str) <= 5)
+		return (0);
 	str += 5;
-
-	while (str[i])
+	tmp = trim_quottage(str, 0, 0);
+	while (tmp[i])
 	{
-		while (str[i] == ' ' || (str[i] >= 8 && str[i] <= 13))
+		if (tmp[i] == '\'' || tmp[i] == '"')
+			i++;
+		if (tmp[0] == '-' || tmp[0] == '+')
+			i++;
+		if (tmp[i] == '\0')
+			break;
+		while (tmp[i] == ' ' || (tmp[i] >= 8 && tmp[i] <= 13))
 		{
-			if (str[i - 1] > ' ')
+			if (tmp[i - 1] > ' ')
 				arg_nbr ++;
 			i++;
 		}
-		if (str[i] < '0' || str[i] > '9')
-		{
-			printf("%s: numeric argument required\n", str);
-			g_status = 1;
-			return (2);
-		}
+		if (tmp[i] == '\'' || tmp[i] == '"')
+			i++;
 		if (arg_nbr > 0)
 		{
 			printf("bash: exit: too many arguments\n");
 			g_status = 1;
+			free (tmp);
 			return (1);
+		}
+		if (tmp[i] < '0' || tmp[i] > '9')
+		{
+			printf("%c : tmp[i]\n", tmp[i]);
+			printf("bash: exit: %s: numeric argument required\n", tmp);
+			g_status = 1;
+			free(tmp);
+			return (2);
 		}
 		i++;
 	}
-	g_status = ft_atoi(str);
-	return (0);
+	if (tmp)
+		g_status = ft_atoi(tmp);
+	free(tmp);
+	return (g_status);
 }
 int	handle_exit_command(char *str, t_data **suprem_knowledge)
 {

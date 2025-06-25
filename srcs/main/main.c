@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:06 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/24 12:09:57 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/25 08:58:13 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	process_command_line(t_data **suprem_knowledge, t_cmd *cmd)
 		return (0);
 	}
 	pipe_quota(str, suprem_knowledge);
-	printf("s_k pipe_quo : %d\n", (*suprem_knowledge)->pipe_quo);
+	// printf("s_k pipe_quo : %d\n", (*suprem_knowledge)->pipe_quo);
 
 	if (handle_readline(str, suprem_knowledge, cmd) == 1)
 	{

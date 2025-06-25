@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 11:13:27 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/24 10:51:46 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/24 14:45:25 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,27 @@ int	check_arg_export_2(char *str, int i)
 	return (0);
 }
 
+void	trim_space(char **str)
+{
+	char	*tmp;
+	char	*dest = NULL;
+	int		i;
+
+	i = 0;
+	tmp = ft_strdup(*str);
+	while ((*str)[i] != '=')
+		i++;
+	tmp[i + 1] = '\0';
+	dest = ft_strdup(tmp);
+	tmp[i + 1] = 'a';
+	free(tmp);
+	tmp = ft_strtrim((*str) + i + 1, " 	");
+	free(*str);
+	*str = ft_strjoin (dest, tmp);
+	free(dest);
+	free(tmp);
+}
+
 int	ft_export(char **args, char ***envp)
 {
 	int		i;
@@ -103,6 +124,11 @@ int	ft_export(char **args, char ***envp)
 			continue;
 		}
 		var_len = ft_varlen(args[arg_nbr], '=');
+		trim_space(&args[arg_nbr]);
+		// printf("args[%d] : \'%s\'\n", arg_nbr, args[1]);
+		// tmp = ft_strtrim(args[arg_nbr] + var_len + 1, " ");
+		// printf("tmp : \'%s\'\n", tmp);
+
 		while ((*envp)[i])
 		{
 			if (ft_strncmp((*envp)[i], args[arg_nbr], var_len) == 0 /*&& (*envp)[i][var_len] == '='*/)

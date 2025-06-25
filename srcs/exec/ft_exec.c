@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 13:41:45 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/24 12:06:39 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/24 15:59:27 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,16 +74,23 @@ void	ft_expand_variable(char **str, char **env)
 
 int	handle_exec(t_data *s_k, t_cmd *cmd)
 {
-	int	i;
+	int		i;
+	int		j;
+	t_cmd	*tmp;
 
 	i = 0;
-	while (cmd->args[i])
+	tmp = cmd;
+	while (tmp->args[i])
 	{
-		if (cmd->args[i][0] == '$' && cmd->args[i][1] != '\0')
-			ft_expand_variable(&cmd->args[i], s_k->tab_env);
-		i ++;
+		j = 0;
+		while(tmp->args[i][j])
+		{
+			if (tmp->args[i][j] == '$' && tmp->args[i][j + 1] != '\0')
+				ft_expand_variable(&(tmp)->args[i], s_k->tab_env);
+			j++;
+		}
+		i++;
 	}
-	// printf("test expand\n->"); print_command_list(cmd);
 	if (s_k->pipe_quo >= 1)
 		ft_exec_multipipe(s_k, cmd);
 	// else if (s_k->pipe_quo == 1)
