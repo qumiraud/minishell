@@ -6,63 +6,11 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:34:30 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/24 11:18:36 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/25 18:34:22 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-
-void	init_echo_data(t_echo_data *data)
-{
-	data->i = 0;
-	data->j = 0;
-	data->n = 0;
-	data->n_def = 1;
-}
-
-void	handle_escaped_dollar(char *str)
-{
-	printf("$%s", str + 2);
-}
-
-void	handle_special_chars(char *str)
-{
-	if (str[1] == '=' || str[1] == '-' || str[1] == '+'
-		|| str[1] == '/' || str[1] == '%' || str[1] == '.'
-		|| str[1] == ',' || str[1] == ':' || str[1] == '}'
-		|| str[1] == ']')
-	{
-		printf("%s", str);
-	}
-	else if (getenv(str + 1) != NULL)
-	{
-		printf("%s", getenv(str + 1));
-	}
-	else if (getenv(str + 1) == NULL)
-	{
-		printf("%s", getenv(str + 1));
-
-	}
-}
-
-void	handle_exit_code(void)
-{
-	printf("%d", g_status);
-}
-
-void	handle_quoted_variable(char *str)
-{
-	int	len;
-
-	len = strlen(str);
-	if (len > 3)
-		printf("%.*s", len - 3, str + 2);
-	else
-		printf("\n");
-}
 
 int	should_process_variable(char *str)
 {
@@ -88,8 +36,6 @@ void	print_echo(char **str, int n_def, int i)
 {
 	while (str[i])
 	{
-		// printf("str= %s\n", str[i]);
-
 		process_token_echo(str[i]);
 		if (str[i + 1] != NULL)
 			printf(" ");

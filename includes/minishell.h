@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:35 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/25 10:41:57 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/25 19:35:42 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,7 @@
 # include <sys/wait.h>
 # include "../libft/libft.h"
 
-extern int g_status;
-
-//**********ENUM**************/
-typedef enum
-{
-	COMMANDES = 1,
-	OPTIONS = 2,
-	ARGUMENTS = 3,
-	OPERATORS = 4,
-	FILES = 5,
-	QUOTES = 6,
-	APPEND = 7
-} My_first_enum;
+extern int	g_status;
 
 //*********STRUCTURES*********/
 typedef struct s_lst_arg
@@ -49,7 +37,7 @@ typedef struct s_lst_arg
 	struct s_lst_arg	*prev;
 }	t_lst_arg;
 
-#define MAX_ARGS 1024
+# define MAX_ARGS 1024
 
 typedef struct s_cmd
 {
@@ -57,10 +45,10 @@ typedef struct s_cmd
 	char			*args[MAX_ARGS];
 	char			*input_file;
 	char			*output_file;
-	int				append; // '>>' = 1 ||| '>' = 0
-	int				here_doc; // '<<' = 1 ||| '>' = 0
+	int				append;
+	int				here_doc;
 	int				nb_ope;
-	struct	s_cmd	*next;
+	struct s_cmd	*next;
 
 }				t_cmd;
 
@@ -69,7 +57,7 @@ typedef struct s_data
 	char		**rl_tab;
 	char		**glutto_tab;
 	char		**re_token;
-	char		**tab_env;//copie de envp//
+	char		**tab_env;
 	char		*str;
 	int			tab_len;
 	int			pipefd1[2];
@@ -111,10 +99,6 @@ void		handle_str(char *str, t_data **s_k, t_cmd *cmd);
 void		cleanup_data_tabs(t_data **s_k);
 
 //**********UTILS_DIR********************************************/
-// void		rl_lst_addback(t_lst_arg **lst, t_lst_arg *new);
-// t_lst_arg	*rl_lst_new(char *start, char *str, int i);
-// void		rl_lst_clear(t_lst_arg **lst);
-// void		rl_lst_addfront(t_lst_arg **lst, t_lst_arg *new);
 void		free_tab(char **tab);
 void		str_error(char *str, char *cmd_args, char *msg);
 int			find_closing_quote(char *str, char c);
@@ -126,7 +110,6 @@ void		free_glutto_tab_array(t_data **s_k);
 void		cleanup_data_tabs(t_data **s_k);
 int			quote_verif(char *str, t_data **s_k);
 void		pipe_quota(char *str, t_data **s_k);
-
 
 //**********PARSING_DIR*********************************************/
 int			is_whitespace(char c);
@@ -177,8 +160,10 @@ int			glt_count_letters(char *str, t_data **s_k);
 void		skip_spaces_w(const char *str, int *i);
 void		handle_double_redir_w(const char *str, int *i, int *word);
 void		handle_single_redir_no_space(const char *str, int *i, int *word);
-void		handle_single_redir_partial_space_1(const char *str, int *i, int *word);
-void		handle_single_redir_partial_space_2(const char *str, int *i, int *word);
+void		handle_single_redir_partial_space_1(const char *str,
+				int *i, int *word);
+void		handle_single_redir_partial_space_2(const char *str,
+				int *i, int *word);
 void		handle_quotes_part2_w(const char *str, int *i, int *quote, char c);
 void		handle_quotes_w(const char *str, int *i, int *word, int *quote);
 void		handle_redirections_w(const char *str, int *i, int *word);
@@ -207,24 +192,28 @@ void		ft_exec_builtin_child(t_data *s_k, t_cmd *cmd);
 
 //**********SIGNALS_DIR**********************************************/
 void		setup_signal(void);
-void	signal_heredoc(int signal);
-
+void		signal_heredoc(int signal);
 
 //**********BUILTIN_DIRECTORY**********************************************/
 int			ft_echo(char **str);
+void		init_echo_data(t_echo_data *data);
+void		handle_escaped_dollar(char *str);
+void		handle_special_chars(char *str);
+void		handle_exit_code(void);
+void		handle_quoted_variable(char *str);
 int			ft_cd(char **args, char ***envp);
+char		*ft_getenv(const char *name, char **envp);
+char		*create_env_var(char *name, char *value);
+int			update_existing_var(char ***envp, char *name,
+				size_t name_len, char *new_var);
+int			add_new_var(char ***envp, char *new_var);
 int			ft_env(char **envp);
 int			ft_export(char **args, char ***envp);
 int			ft_pwd(void);
-int			ft_unset(char **args, char ***envp);
+int			ft_unset(char **args, char ***envp, int i, int j);
 void		ft_exit(int err_value);
-// int			re_token_wd(t_data **s_k);
-void 		print_command_list(t_cmd *cmd_list);
+void		print_command_list(t_cmd *cmd_list);
 void		free_s_k(t_data **s_k);
 void		free_glt(t_data **s_k);
-
-
-
-
 
 #endif

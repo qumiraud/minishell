@@ -6,13 +6,11 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:01:56 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/18 14:40:37 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/25 19:03:47 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-
 
 void	ft_exit(int err_value)
 {
