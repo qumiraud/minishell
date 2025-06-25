@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 11:13:27 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/25 19:49:02 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/25 19:59:33 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,14 @@ int	process_arguments(char **args, char ***envp)
 		{
 			trim_space(&args[arg_nbr]);
 			if (!update_existing_var2(envp, args[arg_nbr]))
-				add_new_var(envp, args[arg_nbr]);
+				add_new_var2(envp, args[arg_nbr]);
 		}
 		arg_nbr++;
 	}
 	return (result);
 }
 
-void	add_new_var(char ***envp, char *arg)
+void	add_new_var2(char ***envp, char *arg)
 {
 	int		env_len;
 	int		i;

@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 10:56:52 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/23 15:18:42 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/25 19:58:27 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,7 +209,6 @@ int	ft_exec_builtin(t_data *s_k, t_cmd *cmd)
 {
 	if (ft_strcmp(cmd->args[0], "echo"))
 	{
-		// printf("test\n");
 		ft_echo(cmd->args);
 		return (0);
 	}
@@ -225,7 +224,7 @@ int	ft_exec_builtin(t_data *s_k, t_cmd *cmd)
 	}
 	if (ft_strcmp(cmd->args[0], "unset"))
 	{
-		ft_unset(cmd->args, &s_k->tab_env);
+		ft_unset(cmd->args, &s_k->tab_env, 0, 0);
 		return (0);
 	}
 	if (ft_strcmp(cmd->args[0], "export"))

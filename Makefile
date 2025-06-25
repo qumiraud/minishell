@@ -6,7 +6,7 @@
 #    By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/24 08:15:59 by qumiraud          #+#    #+#              #
-#    Updated: 2025/06/18 11:13:27 by qumiraud         ###   ########.fr        #
+#    Updated: 2025/06/25 20:01:00 by qumiraud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,9 +52,12 @@ SRC =	srcs/main/main.c\
 		srcs/parsing/tokens_to_list_2.c\
 		srcs/signals/signals.c\
 		srcs/builtin/echo.c\
+		srcs/builtin/echo_handler.c\
 		srcs/builtin/cd.c\
+		srcs/builtin/cd_handler.c\
 		srcs/builtin/pwd.c\
 		srcs/builtin/export.c\
+		srcs/builtin/export_handler.c\
 		srcs/builtin/unset.c\
 		srcs/builtin/env.c\
 		srcs/builtin/exit.c\

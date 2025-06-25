@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:35 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/25 19:35:42 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/25 20:00:17 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,6 +209,10 @@ int			update_existing_var(char ***envp, char *name,
 int			add_new_var(char ***envp, char *new_var);
 int			ft_env(char **envp);
 int			ft_export(char **args, char ***envp);
+int			update_existing_var2(char ***envp, char *arg);
+int			check_arg_export(char *str, int i);
+int			check_arg_export_2(char *str, int i);
+void		add_new_var2(char ***envp, char *arg);
 int			ft_pwd(void);
 int			ft_unset(char **args, char ***envp, int i, int j);
 void		ft_exit(int err_value);
