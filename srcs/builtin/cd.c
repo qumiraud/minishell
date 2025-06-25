@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 14:22:04 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/25 15:00:28 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/25 16:28:42 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,17 @@ char	*ft_getenv(const char *name, char **envp)
 {
 	char	*env_value;
 	int		i;
-	size_t	name_len;
+	size_t	n_len;
 
 	env_value = NULL;
-	name_len = ft_strlen(name);
+	n_len = ft_strlen(name);
 	i = 0;
 	while (envp[i])
 	{
-		if (ft_strncmp(envp[i], name, name_len) == 0 && envp[i][name_len] == '=')
+		if (ft_strncmp(envp[i], name, n_len) == 0
+			&& envp[i][n_len] == '=')
 		{
-			env_value = ft_strdup(envp[i] + name_len + 1);
+			env_value = ft_strdup(envp[i] + n_len + 1);
 			break ;
 		}
 		i++;
@@ -33,117 +34,243 @@ char	*ft_getenv(const char *name, char **envp)
 	return (env_value);
 }
 
-int	ft_setenv(char *var_name, char *pwd, char ***envp)
+static char	*create_env_var(char *name, char *value)
 {
-	int		i;
-	char	*new_var;
 	char	*tmp;
-	size_t	name_len;
-	int		env_len;
-	char	**new_env;
+	char	*new_var;
 
-	name_len = ft_strlen(var_name);
-	i = 0;
-	tmp = ft_strjoin(var_name, "=");
+	tmp = ft_strjoin(name, "=");
 	if (!tmp)
-		return (1);
-	new_var = ft_strjoin(tmp, pwd);
+		return NULL;
+	new_var = ft_strjoin(tmp, value);
 	free(tmp);
-	while ((*envp)[i])
+	return new_var;
+}
+
+static int	update_existing_var(char ***envp, char *name,
+							size_t name_len, char *new_var)
+{
+	for (int i = 0; (*envp)[i]; i++)
 	{
-		if (ft_strncmp((*envp)[i], var_name, name_len) == 0 && (*envp)[i][name_len] == '=')
+		if (ft_strncmp((*envp)[i], name, name_len) == 0
+			&& (*envp)[i][name_len] == '=')
 		{
 			free((*envp)[i]);
 			(*envp)[i] = new_var;
-			return (0);
+			return 1;
 		}
-		i++;
 	}
-	env_len = 0;
-	while ((*envp)[env_len])
-		env_len++;
-	new_env = malloc(sizeof(char *) * (env_len + 2));
+	return 0;
+}
+
+static int add_new_var(char ***envp, char *new_var)
+{
+	int count = 0;
+	while ((*envp)[count]) count++;
+
+	char **new_env = malloc(sizeof(char *) * (count + 2));
 	if (!new_env)
 	{
 		free(new_var);
-		return (1);
+		return 1;
 	}
-	i = 0;
-	while (i < env_len)
-	{
+
+	for (int i = 0; i < count; i++)
 		new_env[i] = (*envp)[i];
-		i++;
-	}
-	new_env[env_len] = new_var;
-	new_env[env_len + 1] = NULL;
+
+	new_env[count] = new_var;
+	new_env[count + 1] = NULL;
 	free(*envp);
 	*envp = new_env;
-	return (0);
+	return 0;
 }
 
-int	ft_cd(char **args, char ***envp)
+int ft_setenv(char *name, char *value, char ***envp)
 {
-	char	*oldpwd;
-	char	*newpwd;
-	char	*newcurrentpwd;
-	int		needfree;
-	int		i;
+	if (!name || !envp || !*envp) return 1;
 
-	i = 0;
-	needfree = 1;
-	oldpwd = getcwd(NULL, 0);
-	newpwd = NULL;
-	newcurrentpwd = NULL;
-	while (args[i] && i <= 2)
-	{
-		if (i == 2)
-		{
-			printf("bash: cd: too many arguments\n");
-			free(oldpwd);
-			g_status = 1;
-			return (1);
-		}
-		i++;
-	}
-	if (!args[1])
-	{
-		newpwd = ft_getenv("HOME", *envp);
-		if (!newpwd || newpwd[0] == 0)
-		{
-			free(oldpwd);
-			free(newpwd);
-			g_status = 1;
-			return (1);
-		}
-	}
-	else if (ft_strncmp(args[1], "-", 1) == 0)
-		newpwd = ft_getenv("OLDPWD", *envp);
-	else
-	{
-		newpwd = args[1];
-		needfree = 0;
-	}
-	if (!newpwd || chdir(newpwd) != 0)
-	{
-		printf("bash: cd: %s: No such file or directory\n", newpwd);
-		free(oldpwd);
-		// free(newpwd);
-		g_status = 1;
-		return (1);
-	}
-	if (needfree == 1)
-		free(newpwd);
-	ft_setenv("OLDPWD", oldpwd, envp);
-	free(oldpwd);
-	// free(newpwd);
-	newcurrentpwd = getcwd(NULL, 0);
-	if (newcurrentpwd)
-	{
-		ft_setenv("PWD", newcurrentpwd, envp);
-		free(newcurrentpwd);
-	}
-	return (0);
+	char *new_var = create_env_var(name, value);
+	if (!new_var) return 1;
+
+	size_t name_len = ft_strlen(name);
+	if (update_existing_var(envp, name, name_len, new_var))
+		return 0;
+
+	return add_new_var(envp, new_var);
 }
+// int	ft_setenv(char *var_name, char *pwd, char ***envp)
+// {
+// 	int		i;
+// 	char	*new_var;
+// 	char	*tmp;
+// 	size_t	name_len;
+// 	int		env_len;
+// 	char	**new_env;
+
+// 	name_len = ft_strlen(var_name);
+// 	i = 0;
+// 	tmp = ft_strjoin(var_name, "=");
+// 	if (!tmp)
+// 		return (1);
+// 	new_var = ft_strjoin(tmp, pwd);
+// 	free(tmp);
+// 	while ((*envp)[i])
+// 	{
+// 		if (ft_strncmp((*envp)[i], var_name, name_len) == 0 && (*envp)[i][name_len] == '=')
+// 		{
+// 			free((*envp)[i]);
+// 			(*envp)[i] = new_var;
+// 			return (0);
+// 		}
+// 		i++;
+// 	}
+// 	env_len = 0;
+// 	while ((*envp)[env_len])
+// 		env_len++;
+// 	new_env = malloc(sizeof(char *) * (env_len + 2));
+// 	if (!new_env)
+// 	{
+// 		free(new_var);
+// 		return (1);
+// 	}
+// 	i = 0;
+// 	while (i < env_len)
+// 	{
+// 		new_env[i] = (*envp)[i];
+// 		i++;
+// 	}
+// 	new_env[env_len] = new_var;
+// 	new_env[env_len + 1] = NULL;
+// 	free(*envp);
+// 	*envp = new_env;
+// 	return (0);
+// }
+
+static int validate_args(char **args)
+{
+	int count = 0;
+	while (args[count] && count <= 2) count++;
+	if (count > 2) {
+		printf("bash: cd: too many arguments\n");
+		g_status = 1;
+		return 1;
+	}
+	return 0;
+}
+
+static char *get_target_path(char **args, char **envp, int *need_free)
+{
+	if (!args[1]) {
+		char *home = ft_getenv("HOME", envp);
+		*need_free = (home && home[0] != '\0');
+		return home;
+	}
+	else if (ft_strncmp(args[1], "-", 2) == 0) {
+		*need_free = 1;
+		return ft_getenv("OLDPWD", envp);
+	}
+	*need_free = 0;
+	return args[1];
+}
+
+static int update_pwd_vars(char ***envp, char *oldpwd)
+{
+	char *newpwd = getcwd(NULL, 0);
+	if (!newpwd) return 1;
+
+	ft_setenv("PWD", newpwd, envp);
+	ft_setenv("OLDPWD", oldpwd, envp);
+	free(newpwd);
+	return 0;
+}
+
+int ft_cd(char **args, char ***envp)
+{
+	if (validate_args(args)) return 1;
+
+	char *oldpwd = getcwd(NULL, 0);
+	if (!oldpwd) return 1;
+
+	int need_free = 0;
+	char *target = get_target_path(args, *envp, &need_free);
+
+	if (!target || chdir(target) != 0) {
+		printf("bash: cd: %s: No such file or directory\n", target);
+		free(oldpwd);
+		if (need_free) free(target);
+		g_status = 1;
+		return 1;
+	}
+
+	if (need_free) free(target);
+	update_pwd_vars(envp, oldpwd);
+	free(oldpwd);
+	return 0;
+}
+
+// int	ft_cd(char **args, char ***envp)
+// {
+// 	char	*oldpwd;
+// 	char	*newpwd;
+// 	char	*newcurrentpwd;
+// 	int		needfree;
+// 	int		i;
+
+// 	i = 0;
+// 	needfree = 1;
+// 	oldpwd = getcwd(NULL, 0);
+// 	newpwd = NULL;
+// 	newcurrentpwd = NULL;
+// 	while (args[i] && i <= 2)
+// 	{
+// 		if (i == 2)
+// 		{
+// 			printf("bash: cd: too many arguments\n");
+// 			free(oldpwd);
+// 			g_status = 1;
+// 			return (1);
+// 		}
+// 		i++;
+// 	}
+// 	if (!args[1])
+// 	{
+// 		newpwd = ft_getenv("HOME", *envp);
+// 		if (!newpwd || newpwd[0] == 0)
+// 		{
+// 			free(oldpwd);
+// 			free(newpwd);
+// 			g_status = 1;
+// 			return (1);
+// 		}
+// 	}
+// 	else if (ft_strncmp(args[1], "-", 1) == 0)
+// 		newpwd = ft_getenv("OLDPWD", *envp);
+// 	else
+// 	{
+// 		newpwd = args[1];
+// 		needfree = 0;
+// 	}
+// 	if (!newpwd || chdir(newpwd) != 0)
+// 	{
+// 		printf("bash: cd: %s: No such file or directory\n", newpwd);
+// 		free(oldpwd);
+// 		// free(newpwd);
+// 		g_status = 1;
+// 		return (1);
+// 	}
+// 	if (needfree == 1)
+// 		free(newpwd);
+// 	ft_setenv("OLDPWD", oldpwd, envp);
+// 	free(oldpwd);
+// 	// free(newpwd);
+// 	newcurrentpwd = getcwd(NULL, 0);
+// 	if (newcurrentpwd)
+// 	{
+// 		ft_setenv("PWD", newcurrentpwd, envp);
+// 		free(newcurrentpwd);
+// 	}
+// 	return (0);
+// }
 
 // int	main(int argc, char **argv, char **env)
 // {
