@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 10:56:52 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/25 19:58:27 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/26 08:23:05 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,10 +145,10 @@ int	ft_heredoc(char *safeword, t_cmd *cmd, t_data *s_k)
 	}
 	if (pid == 0)
 	{
-		// signal(SIGINT, signal_heredoc);
 		close (pipefd[0]);
 		while (1)
-		{printf ("g_status : %d\n", g_status);
+		{
+			printf ("g_status : %d\n", g_status);
 			tmp = readline(">");
 			signal(SIGINT, signal_heredoc);
 			if (tmp == NULL)
@@ -178,7 +178,7 @@ int	ft_heredoc(char *safeword, t_cmd *cmd, t_data *s_k)
 				free_cmd(cmd);
 				free_data(&s_k);
 				free(s_k);
-				exit (0) ;
+				exit (0);
 			}
 			if (tmp)
 			{

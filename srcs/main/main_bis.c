@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bis.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:24:25 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/06/25 12:50:31 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/26 08:21:47 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,26 +37,13 @@ int	check_arguments(int argc, char **argv)
 	return (0);
 }
 
-
-
-	// if (!str)
-	// 	return (1);
-	// while (str[i])
-	// {
-	// 	if (str[i] == '"')
-	// 		d_quote++;
-	// 	if (str[i] == '\'')
-	// 		quote++;
-	// 	i++;
-	// }
-
 char	*trim_quottage(char *str, int i, int j)
 {
 	char	*dest;
 	char	*tmp;
 
 	if (!str)
-		return NULL;
+		return (NULL);
 	tmp = ft_strdup(str);
 	while (tmp[i++])
 	{
@@ -69,7 +56,7 @@ char	*trim_quottage(char *str, int i, int j)
 	while (tmp[i])
 	{
 		if (tmp[i] != '\'' && tmp[i] != '"')
-					dest[j++] = tmp[i];
+			dest[j++] = tmp[i];
 		i++;
 	}
 	dest[j] = '\0';
@@ -96,7 +83,7 @@ int	check_exit_args(char *str)
 		if (tmp[0] == '-' || tmp[0] == '+')
 			i++;
 		if (tmp[i] == '\0')
-			break;
+			break ;
 		while (tmp[i] == ' ' || (tmp[i] >= 8 && tmp[i] <= 13))
 		{
 			if (tmp[i - 1] > ' ')
@@ -127,6 +114,7 @@ int	check_exit_args(char *str)
 	free(tmp);
 	return (g_status);
 }
+
 int	handle_exit_command(char *str, t_data **suprem_knowledge)
 {
 	int	exit_value;

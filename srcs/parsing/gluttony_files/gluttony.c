@@ -6,7 +6,7 @@
 /*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:33:27 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/06/24 15:20:44 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/26 08:14:07 by pjurdana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	handle_quote_case(char *dest, char **src, char *quote)
 int	should_continue_copying(char **src, t_data **s_k)
 {
 	static int	quote;
-	
+
 	if (!**src)
 		return (0);
 	if ((**src == '\'' || **src == '"') && quote == 1)
@@ -81,13 +81,10 @@ void	handle_standard_token(t_data **s_k, char **str, int *i)
 
 	len = 0;
 	len = glt_count_letters(*str, s_k);
-	// printf ("LEN : %d\n", len);
 	if (len > 0)
 	{
 		(*s_k)->glutto_tab[*i] = malloc(len + 1);
 		glt_copy_word((*s_k)->glutto_tab[*i], str, len, s_k);
-		// printf("glutto_tab[%d]: |%s|\n\n", *i, (*s_k)->glutto_tab[*i]);
-
 		(*i)++;
 	}
 	if ((*i) == 10)
