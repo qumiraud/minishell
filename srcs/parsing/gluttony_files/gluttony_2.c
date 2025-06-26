@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 14:54:32 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/06/26 13:49:53 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/26 14:00:52 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	handle_single_redirect(t_data **s_k, char **str, int *i, char op)
 
 void	process_character(t_data **s_k, char **str, int *i)
 {
-	printf("PAR LAAAA str = %s\n\n", *str);
 	if (**str == '$' && *(*str + 1) == '"')
 		handle_dollar_quote(s_k, str, i);
 	if (**str == '$' && *(*str + 1) == '\'')
