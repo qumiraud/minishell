@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gluttony.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:33:27 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/06/26 08:14:07 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/26 13:51:17 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,6 @@ void	handle_standard_token(t_data **s_k, char **str, int *i)
 		glt_copy_word((*s_k)->glutto_tab[*i], str, len, s_k);
 		(*i)++;
 	}
-	if ((*i) == 10)
-		exit(0);
 }
 
 int	allocate_glutto_tab(t_data **s_k, char *str)

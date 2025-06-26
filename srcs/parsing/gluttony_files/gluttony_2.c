@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gluttony_2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 14:54:32 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/06/26 08:13:47 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/26 13:49:53 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	handle_single_redirect(t_data **s_k, char **str, int *i, char op)
 
 void	process_character(t_data **s_k, char **str, int *i)
 {
+	printf("PAR LAAAA str = %s\n\n", *str);
 	if (**str == '$' && *(*str + 1) == '"')
 		handle_dollar_quote(s_k, str, i);
 	if (**str == '$' && *(*str + 1) == '\'')
