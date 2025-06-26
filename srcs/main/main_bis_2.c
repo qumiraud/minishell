@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:25:55 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/06/26 09:17:29 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/26 10:55:19 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ void	handle_str(char *str, t_data **s_k, t_cmd *cmd)
 	add_history(str);
 	fill_suprem_knowledge(s_k, str);
 	cmd = parse_cmd((*s_k)->glutto_tab);
-	// print_tab(*s_k);
-	// print_command_list(cmd);
 	handle_exec(*s_k, cmd, 0);
 }
 

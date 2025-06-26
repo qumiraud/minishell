@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 15:56:04 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/05/21 15:56:04 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/26 10:51:38 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,18 @@
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char	*s3;
-	char	*str1;
-	char	*str2;
-	char	*start;
+	size_t	len1;
+	size_t	len2;
+	char	*result;
 
+	len1 = ft_strlen(s1);
+	len2 = ft_strlen(s2);
 	if (!s1 || !s2)
 		return (NULL);
-	str1 = (char *) s1;
-	str2 = (char *) s2;
-	s3 = ft_calloc(ft_strlen(s1) + ft_strlen(s2) + 1, sizeof(char));
-	if (!s3)
+	result = ft_calloc(len1 + len2 + 1, sizeof(char));
+	if (!result)
 		return (NULL);
-	start = s3;
-	while (*str1)
-	{
-		*s3 = *str1;
-		s3++;
-		str1++;
-	}
-	while (*str2)
-	{
-		*s3 = *str2;
-		s3++;
-		str2++;
-	}
-	*s3 = '\0';
-	return (start);
+	ft_memcpy(result, s1, len1);
+	ft_memcpy(result + len1, s2, len2);
+	return (result);
 }

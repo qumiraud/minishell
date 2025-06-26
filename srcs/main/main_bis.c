@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bis.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjurdana <pjurdana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:24:25 by pjurdana          #+#    #+#             */
-/*   Updated: 2025/06/26 08:21:47 by pjurdana         ###   ########.fr       */
+/*   Updated: 2025/06/26 11:10:53 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,6 @@ char	*input_with_space(char *str)
 	free (str);
 	str = NULL;
 	return (new_str);
-}
-
-int	check_arguments(int argc, char **argv)
-{
-	if (argc > 1)
-	{
-		argv[0] = NULL;
-		return (1);
-	}
-	return (0);
 }
 
 char	*trim_quottage(char *str, int i, int j)
@@ -62,57 +52,6 @@ char	*trim_quottage(char *str, int i, int j)
 	dest[j] = '\0';
 	free(tmp);
 	return (dest);
-}
-
-int	check_exit_args(char *str)
-{
-	int		i;
-	int		arg_nbr;
-	char	*tmp;
-
-	i = 0;
-	arg_nbr = 0;
-	if (ft_strlen(str) <= 5)
-		return (0);
-	str += 5;
-	tmp = trim_quottage(str, 0, 0);
-	while (tmp[i])
-	{
-		if (tmp[i] == '\'' || tmp[i] == '"')
-			i++;
-		if (tmp[0] == '-' || tmp[0] == '+')
-			i++;
-		if (tmp[i] == '\0')
-			break ;
-		while (tmp[i] == ' ' || (tmp[i] >= 8 && tmp[i] <= 13))
-		{
-			if (tmp[i - 1] > ' ')
-				arg_nbr ++;
-			i++;
-		}
-		if (tmp[i] == '\'' || tmp[i] == '"')
-			i++;
-		if (arg_nbr > 0)
-		{
-			printf("bash: exit: too many arguments\n");
-			g_status = 1;
-			free (tmp);
-			return (1);
-		}
-		if (tmp[i] < '0' || tmp[i] > '9')
-		{
-			printf("%c : tmp[i]\n", tmp[i]);
-			printf("bash: exit: %s: numeric argument required\n", tmp);
-			g_status = 1;
-			free(tmp);
-			return (2);
-		}
-		i++;
-	}
-	if (tmp)
-		g_status = ft_atoi(tmp);
-	free(tmp);
-	return (g_status);
 }
 
 int	handle_exit_command(char *str, t_data **suprem_knowledge)

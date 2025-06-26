@@ -6,47 +6,11 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 10:07:52 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/26 09:22:01 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/26 13:15:59 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	free_and_exit_in_child_p(t_data *s_k, t_cmd *cmd, int ex_code)
-{
-	free_cmd(cmd);
-	free_data(&s_k);
-	free(s_k);
-	exit(ex_code);
-}
-
-int	end_of_multipipe(int *prev_pipe_read)
-{
-	if (*prev_pipe_read != -1)
-		close(*prev_pipe_read);
-	while (wait(&g_status) > 0)
-		;
-	return (g_status);
-}
-
-void	to_execve(t_data *s_k, t_cmd *current_cmd, t_cmd *cmd)
-{
-	char	*pathway;
-
-	pathway = get_way(s_k->tab_env, current_cmd->args);
-	if (!pathway)
-	{
-		str_error("bash :", current_cmd->args[0], "command not found");
-		free_and_exit_in_child_p(s_k, cmd, 127);
-	}
-	if (execve(pathway, current_cmd->args, s_k->tab_env) == -1)
-	{
-		if (ft_strcmp(current_cmd->args[0], pathway) == 0)
-			free(pathway);
-		str_error("bash :", current_cmd->args[0], "command not found");
-		free_and_exit_in_child_p(s_k, cmd, 127);
-	}
-}
 
 pid_t	set_pipe_and_fork(t_cmd *current_cmd, int *current_pipe)
 {
@@ -106,11 +70,13 @@ void	parent_proc(t_cmd *current_cmd, int *prev_pipe_read, int *current_pipe)
 	}
 }
 
-void	handle_child_process(t_data *s_k, t_cmd *cmd, t_cmd *current_cmd,
-	int *current_pipe, int prev_pipe_read)
+static void	handle_child_process(t_data *s_k, t_cmd *cmd,
+		t_cmd *current_cmd, t_pipe_ctx *pipe_ctx)
 {
-	in_or_out_redir(current_cmd, current_pipe, prev_pipe_read, 1);
-	in_or_out_redir(current_cmd, current_pipe, prev_pipe_read, 2);
+	in_or_out_redir(current_cmd, pipe_ctx->current_pipe,
+		pipe_ctx->prev_pipe_read, 1);
+	in_or_out_redir(current_cmd, pipe_ctx->current_pipe,
+		pipe_ctx->prev_pipe_read, 2);
 	if (current_cmd->input_file || current_cmd->output_file)
 		handle_redirection(current_cmd, s_k);
 	if (ft_is_builtin(current_cmd->args[0]))
@@ -124,10 +90,11 @@ void	handle_child_process(t_data *s_k, t_cmd *cmd, t_cmd *current_cmd,
 
 int	ft_exec_multipipe(t_data *s_k, t_cmd *cmd)
 {
-	pid_t	pid;
-	int		prev_pipe_read;
-	int		current_pipe[2];
-	t_cmd	*current_cmd;
+	pid_t		pid;
+	int			prev_pipe_read;
+	int			current_pipe[2];
+	t_cmd		*current_cmd;
+	t_pipe_ctx	pipe_ctx;
 
 	prev_pipe_read = -1;
 	current_cmd = cmd;
@@ -137,8 +104,11 @@ int	ft_exec_multipipe(t_data *s_k, t_cmd *cmd)
 		if (pid == -1)
 			return (1);
 		if (pid == 0)
-			handle_child_process(s_k, cmd, current_cmd,
-				current_pipe, prev_pipe_read);
+		{
+			pipe_ctx.current_pipe = current_pipe;
+			pipe_ctx.prev_pipe_read = prev_pipe_read;
+			handle_child_process(s_k, cmd, current_cmd, &pipe_ctx);
+		}
 		parent_proc(current_cmd, &prev_pipe_read, current_pipe);
 		current_cmd = current_cmd->next;
 	}

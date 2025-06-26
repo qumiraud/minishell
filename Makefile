@@ -6,7 +6,7 @@
 #    By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/24 08:15:59 by qumiraud          #+#    #+#              #
-#    Updated: 2025/06/26 10:02:25 by qumiraud         ###   ########.fr        #
+#    Updated: 2025/06/26 11:25:44 by qumiraud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,6 @@ SRC =	srcs/main/main.c\
 		srcs/main/main_bis.c\
 		srcs/main/main_bis_2.c\
 		srcs/main/handle_readline.c\
-		srcs/main/print_test.c\
 		srcs/utils/lst_utils.c\
 		srcs/utils/utils.c\
 		srcs/utils/utils_2.c\
@@ -36,7 +35,7 @@ SRC =	srcs/main/main.c\
 		srcs/parsing/fill_tab_env.c\
 		srcs/exec/ft_exec.c\
 		srcs/exec/multipipe.c\
-		srcs/exec/singlepipe.c\
+		srcs/exec/multipipe_handler.c\
 		srcs/exec/nopipe.c\
 		srcs/exec/no_pipe_utils.c\
 		srcs/exec/pathway.c\
@@ -63,15 +62,12 @@ SRC =	srcs/main/main.c\
 		srcs/builtin/unset.c\
 		srcs/builtin/env.c\
 		srcs/builtin/exit.c\
-
-
-
+		srcs/builtin/exit_handler.c\
 
 INC = includes
 
 OBJ_DIR = .obj
 OBJ = $(SRC:srcs/%/%.c=$(OBJ_DIR)/%.o)
-
 
 LIBS = libft
 LIBFT = libft/libft.a

@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:35 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/26 10:03:34 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/26 11:27:57 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,12 @@ typedef struct s_data
 	t_cmd		*cmd;
 }	t_data;
 
+typedef struct s_pipe_ctx
+{
+	int	*current_pipe;
+	int	prev_pipe_read;
+}	t_pipe_ctx;
+
 typedef struct s_echo_data
 {
 	int	i;
@@ -84,12 +90,8 @@ typedef struct s_echo_data
 //? ***********SOURCES**********************************************?/
 //**********MAIN_DIR*************************************************/
 int			main(int argc, char **argv, char **envp);
-void		print_tab(t_data *s_k);//a supp
-void		print_env(t_data *s_k);//a supp
-void		print_all(t_data *s_k);//a supp
 void		free_cmd(t_cmd *cmd);
 int			handle_readline(char *str, t_data **s_k, t_cmd *cmd);
-int			check_arguments(int argc, char **argv);
 int			handle_exit_command(char *str, t_data **suprem_knowledge);
 int			handle_null_input(char *str, t_cmd *cmd, t_data **suprem_knowledge);
 void		process_input_string(char **str, t_data **suprem_knowledge);
@@ -97,6 +99,7 @@ void		process_input_string_2(char *str, t_data **s_k, t_cmd *cmd);
 void		handle_ending(t_data **s_k, int exit_code);
 void		handle_str(char *str, t_data **s_k, t_cmd *cmd);
 void		cleanup_data_tabs(t_data **s_k);
+char		*trim_quottage(char *str, int i, int j);
 
 //**********UTILS_DIR********************************************/
 void		free_tab(char **tab);
@@ -110,6 +113,7 @@ void		free_glutto_tab_array(t_data **s_k);
 void		cleanup_data_tabs(t_data **s_k);
 int			quote_verif(char *str, t_data **s_k);
 void		pipe_quota(char *str, t_data **s_k);
+int			check_arguments(int argc, char **argv);
 
 //**********PARSING_DIR*********************************************/
 int			is_whitespace(char c);
@@ -177,7 +181,6 @@ int			cmd_nt_fd(char *str);
 int			init_pipefd(int *pipefd);
 int			handle_exec(t_data *s_k, t_cmd *cmd, int i);
 int			ft_exec_multipipe(t_data *s_k, t_cmd *cmd);
-int			ft_exec_singlepipe(t_data *s_k, t_cmd *cmd);
 int			ft_exec_nopipe(t_data *s_k, t_cmd *cmd);
 char		*get_way(char **env, char **rl_tab);
 int			ft_exec_builtin(t_data *s_k, t_cmd *cmd);
@@ -189,18 +192,17 @@ void		safe_close(int fd);
 void		free_and_exit_in_child_p(t_data *s_k, t_cmd *cmd, int ex_code);
 void		ft_child_cleanup_and_exit(t_data *s_k);
 void		ft_exec_builtin_child(t_data *s_k, t_cmd *cmd);
-void		safe_close(int fd);
 void		setup_middle_even_cmd(int pipefd1[2], int pipefd2[2]);
 void		setup_middle_odd_cmd(int pipefd1[2], int pipefd2[2]);
 void		setup_last_cmd(int i, int pipefd1[2], int pipefd2[2]);
-void		setup_pipe(int i, int pipe_quo, int pipefd1[2], int pipefd2[2]);
 int			handle_input_redirection(t_cmd *cmd, t_data *s_k, int fd);
-int		handle_output_redirection(t_cmd *cmd, int fd);
-int			handle_redirection(t_cmd *cmd, t_data *s_k);
+int			handle_output_redirection(t_cmd *cmd, int fd);
 void		exit_in_heredoc(char *tmp, int *pipefd, t_cmd *cmd, t_data *s_k);
 void		handle_heredoc_input(int pipefd[2],
 				char *safeword, t_cmd *cmd, t_data *s_k);
-
+int			open_input(t_cmd *cmd, t_data *s_k);
+void		to_execve(t_data *s_k, t_cmd *current_cmd, t_cmd *cmd);
+int			end_of_multipipe(int *prev_pipe_read);
 
 //**********SIGNALS_DIR**********************************************/
 void		setup_signal(void);
@@ -228,8 +230,13 @@ void		add_new_var2(char ***envp, char *arg);
 int			ft_pwd(void);
 int			ft_unset(char **args, char ***envp, int i, int j);
 void		ft_exit(int err_value);
-void		print_command_list(t_cmd *cmd_list);
 void		free_s_k(t_data **s_k);
 void		free_glt(t_data **s_k);
+int			check_exit_args(char *str);
+int			validate_exit_argument(char *tmp);
+int			validate_argument_char(char *tmp, int arg_nbr, int i);
+int			handle_whitespace(char *tmp, int *i, int *arg_nbr);
+int			skip_special_chars(char *tmp, int *i);
+int			handle_argument_errors(char *tmp, int arg_nbr, char c);
 
 #endif

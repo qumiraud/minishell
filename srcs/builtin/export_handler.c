@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 19:44:00 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/25 19:48:28 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/26 11:39:23 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ int	check_arg_export_2(char *str, int i)
 {
 	while (str[i] && str[i] != '=')
 		i++;
-	printf("i : %d\n\n", i);
 	while (str[i])
 	{
 		i++;
