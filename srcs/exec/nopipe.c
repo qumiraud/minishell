@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 17:33:12 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/23 12:03:16 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/26 09:27:47 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	open_input(t_cmd *cmd, t_data *s_k)
 {
 	int	fd;
-	// printf("cmd->heredoc : %d\n", cmd->here_doc);
+
 	if (cmd->here_doc)
 	{
 		fd = ft_heredoc(cmd->input_file, cmd, s_k);
@@ -102,6 +102,16 @@ void	ft_exec_external(t_data *s_k, t_cmd *cmd)
 	}
 }
 
+void	handle_nopipe(t_cmd *cmd, t_data *s_k)
+{
+	if (ft_setup_redirections(cmd, s_k) == -1)
+		exit(1);
+	if (ft_is_builtin(cmd->args[0]))
+		ft_exec_builtin_child(s_k, cmd);
+	else
+		ft_exec_external(s_k, cmd);
+}
+
 int	ft_exec_nopipe(t_data *s_k, t_cmd *cmd)
 {
 	pid_t	pid;
@@ -117,12 +127,7 @@ int	ft_exec_nopipe(t_data *s_k, t_cmd *cmd)
 		return (1);
 	else if (pid == 0)
 	{
-		if (ft_setup_redirections(cmd, s_k) == -1)
-			exit(1);
-		if (ft_is_builtin(cmd->args[0]))
-			ft_exec_builtin_child(s_k, cmd);
-		else
-			ft_exec_external(s_k, cmd);
+		handle_nopipe(cmd, s_k);
 		ft_child_cleanup_and_exit(s_k);
 	}
 	else
@@ -130,6 +135,5 @@ int	ft_exec_nopipe(t_data *s_k, t_cmd *cmd)
 		wait(&g_status);
 		g_status %= 255;
 	}
-	// printf("g_status after nopipe : %d\n", g_status);
 	return (0);
 }

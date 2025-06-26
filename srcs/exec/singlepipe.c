@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 17:04:47 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/25 19:57:47 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/26 08:29:44 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 // {
 // 	char	*pathway;
 
-// 	if ((cmd->output_file || cmd->input_file) && handle_redirection(cmd, s_k) == 1)
+// 	if ((cmd->output_file || cmd->input_file)
+		//&& handle_redirection(cmd, s_k) == 1)
 // 		free_and_exit_in_child_p(s_k, original_cmd, 1);
 // 	if (ft_is_builtin(cmd->args[0]))
 // 	{

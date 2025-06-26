@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 08:41:35 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/25 20:00:17 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/26 10:03:34 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,7 @@ int			cmd_nt_fd(char *str);
 
 //**********EXEC_DIRECTORY*****************************************/
 int			init_pipefd(int *pipefd);
-int			handle_exec(t_data *s_k, t_cmd *cmd);
+int			handle_exec(t_data *s_k, t_cmd *cmd, int i);
 int			ft_exec_multipipe(t_data *s_k, t_cmd *cmd);
 int			ft_exec_singlepipe(t_data *s_k, t_cmd *cmd);
 int			ft_exec_nopipe(t_data *s_k, t_cmd *cmd);
@@ -189,6 +189,18 @@ void		safe_close(int fd);
 void		free_and_exit_in_child_p(t_data *s_k, t_cmd *cmd, int ex_code);
 void		ft_child_cleanup_and_exit(t_data *s_k);
 void		ft_exec_builtin_child(t_data *s_k, t_cmd *cmd);
+void		safe_close(int fd);
+void		setup_middle_even_cmd(int pipefd1[2], int pipefd2[2]);
+void		setup_middle_odd_cmd(int pipefd1[2], int pipefd2[2]);
+void		setup_last_cmd(int i, int pipefd1[2], int pipefd2[2]);
+void		setup_pipe(int i, int pipe_quo, int pipefd1[2], int pipefd2[2]);
+int			handle_input_redirection(t_cmd *cmd, t_data *s_k, int fd);
+int		handle_output_redirection(t_cmd *cmd, int fd);
+int			handle_redirection(t_cmd *cmd, t_data *s_k);
+void		exit_in_heredoc(char *tmp, int *pipefd, t_cmd *cmd, t_data *s_k);
+void		handle_heredoc_input(int pipefd[2],
+				char *safeword, t_cmd *cmd, t_data *s_k);
+
 
 //**********SIGNALS_DIR**********************************************/
 void		setup_signal(void);

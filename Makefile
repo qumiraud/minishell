@@ -6,14 +6,14 @@
 #    By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/24 08:15:59 by qumiraud          #+#    #+#              #
-#    Updated: 2025/06/25 20:01:00 by qumiraud         ###   ########.fr        #
+#    Updated: 2025/06/26 10:02:25 by qumiraud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -g #-fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -g
 
 SRC =	srcs/main/main.c\
 		srcs/main/main_bis.c\
@@ -41,6 +41,8 @@ SRC =	srcs/main/main.c\
 		srcs/exec/no_pipe_utils.c\
 		srcs/exec/pathway.c\
 		srcs/exec/utils_exec.c\
+		srcs/exec/utils_exec2.c\
+		srcs/exec/utils_exec3.c\
 		srcs/parsing/gluttony_files/glt_letters.c\
 		srcs/parsing/gluttony_files/glt_letters_2.c\
 		srcs/parsing/gluttony_files/glt_words.c\

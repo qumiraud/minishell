@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 13:41:45 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/25 14:06:15 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/26 09:17:52 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,11 @@ int	init_pipefd(int *pipefd)
 	}
 	return (0);
 }
-void	update_variable( char **str, char **env, int x, int i)
+
+void	update_variable(char **str, char **env, int x, int i)
 {
 	char	*tmp;
+
 	if (!str)
 		return ;
 	if (i == 1)
@@ -31,8 +33,8 @@ void	update_variable( char **str, char **env, int x, int i)
 		(*str)--;
 		tmp = (*str);
 		(*str) = ft_strdupandfree(ft_itoa(g_status));
-		free(tmp);
-		return;
+		free (tmp);
+		return ;
 	}
 	else if (i == 2)
 	{
@@ -40,7 +42,7 @@ void	update_variable( char **str, char **env, int x, int i)
 		(*str)--;
 		free(*str);
 		*str = tmp;
-		return;
+		return ;
 	}
 }
 
@@ -50,21 +52,21 @@ void	ft_expand_variable(char **str, char **env)
 	int		i;
 
 	i = 0;
-	(*str) ++;
+	(*str)++;
 	if (*str[0] == '\0')
-		return;
+		return ;
 	strlen = ft_strlen(*str);
 	if (ft_strcmp(*str, "?"))
 	{
 		update_variable(str, env, 0, 1);
-		return;
+		return ;
 	}
 	while (env[i])
 	{
-		if (!ft_strncmp(*str, env[i], strlen) /*&& env[i][strlen + 1] == '='*/)
+		if (!ft_strncmp(*str, env[i], strlen))
 		{
 			update_variable(str, env, i, 2);
-			return;
+			return ;
 		}
 		i++;
 	}
@@ -72,32 +74,28 @@ void	ft_expand_variable(char **str, char **env)
 	*str[0] = '\0';
 }
 
-int	handle_exec(t_data *s_k, t_cmd *cmd)
+int	handle_exec(t_data *s_k, t_cmd *cmd, int i)
 {
-	int		i;
 	int		j;
 	t_cmd	*tmp;
 
-	i = 0;
 	tmp = cmd;
-		while (tmp->args[i])
+	while (tmp->args[i])
+	{
+		j = 0;
+		while (tmp->args[i][j])
 		{
-			j = 0;
-			while(tmp->args[i][j])
+			if (tmp->args[i][j] == '$' && tmp->args[i][j + 1] != '\0')
 			{
-				if (tmp->args[i][j] == '$' && tmp->args[i][j + 1] != '\0')
-				{
-					ft_expand_variable(&(tmp)->args[i], s_k->tab_env);
-					break ;
-				}
-				j++;
+				ft_expand_variable(&(tmp)->args[i], s_k->tab_env);
+				break ;
 			}
-			i++;
+			j++;
 		}
+		i++;
+	}
 	if (s_k->pipe_quo >= 1)
 		ft_exec_multipipe(s_k, cmd);
-	// else if (s_k->pipe_quo == 1)
-	// 	ft_exec_singlepipe(s_k, cmd);
 	else if (s_k->pipe_quo == 0)
 		ft_exec_nopipe(s_k, cmd);
 	free_cmd(cmd);

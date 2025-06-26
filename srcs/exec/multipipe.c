@@ -6,7 +6,7 @@
 /*   By: qumiraud <qumiraud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 10:07:52 by qumiraud          #+#    #+#             */
-/*   Updated: 2025/06/23 12:04:25 by qumiraud         ###   ########.fr       */
+/*   Updated: 2025/06/26 09:22:01 by qumiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,10 +125,12 @@ void	handle_child_process(t_data *s_k, t_cmd *cmd, t_cmd *current_cmd,
 int	ft_exec_multipipe(t_data *s_k, t_cmd *cmd)
 {
 	pid_t	pid;
-	int		prev_pipe_read = -1;
+	int		prev_pipe_read;
 	int		current_pipe[2];
-	t_cmd	*current_cmd = cmd;
+	t_cmd	*current_cmd;
 
+	prev_pipe_read = -1;
+	current_cmd = cmd;
 	while (current_cmd)
 	{
 		pid = set_pipe_and_fork(current_cmd, current_pipe);
